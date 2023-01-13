@@ -6,7 +6,7 @@
 #    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/12 13:28:41 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/01/12 18:06:19 by ssabbaji         ###   ########.fr        #
+#    Updated: 2023/01/13 15:03:13 by ssabbaji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ clean:
 	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(MINILIBX)
 	@echo ${GREEN}"$(NAME) : nadafa mina l iman ..."
 
 re: fclean all
