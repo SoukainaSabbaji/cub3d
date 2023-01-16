@@ -6,7 +6,7 @@
 #    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/01/16 14:34:33 by ssabbaji         ###   ########.fr        #
+#    Updated: 2023/01/16 14:38:00 by ssabbaji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,14 +44,11 @@ ${MINILIBX}:
 	@make -C $(MINILIBX_DIRECTORY)
 
 clean:
-	@rm -f ${OBJ}
-	@make clean -C $(MINILIBX_DIRECTORY)
-	@echo $(RED) "Clean done"
+	rm -rf $(OBJ)
 
 fclean: clean
-	@rm -f ${NAME}
-	@make fclean -C $(MINILIBX_DIRECTORY)
-	@echo $(RED) "Fclean done"
+	rm -rf $(NAME) $(MINILIBX)
+	$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
+	@echo ${GREEN}"$(NAME) : nadafa mina l iman ..."
 
 re: fclean all
-
