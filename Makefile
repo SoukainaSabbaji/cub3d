@@ -5,18 +5,19 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/12 13:28:41 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/01/13 15:03:13 by ssabbaji         ###   ########.fr        #
+#    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
+#    Updated: 2023/01/16 14:34:33 by ssabbaji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = map
 CC = gcc
-FLAGS = -W -W -W
-LIBRARIES = -lmlx -lm -framework OpenGL -framework AppKit
+FLAGS = -W -W -W 
 
-MINILIBX = $(MINILIBX_DIRECTORY)libmlxa.a
-MINILIBX_DIRECTORY = ./minilibx/
+# Libraries for GLFW
+LIBRARIES = -I include -lglfw -L "/Users/ssabbaji/.brew/opt/glfw/lib/"
+MINILIBX = $(MINILIBX_DIRECTORY)libmlx42.a
+MINILIBX_DIRECTORY = ./MLX42/
 MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
 SOURCES_DIRECTORY = ./sources/
@@ -30,26 +31,27 @@ SRC = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJ = ${SRC:.c=.o}
 
-OBJ_BONUS = ${SRC_BONUS:.c=.o}
-
 %.o: %.c ./includes/minimap.h
 	$(CC) $(FLAGS) -o $@ -c $< 
 
 all: ${NAME}
 
-${NAME}: ${OBJ} ${MINILIBX}
-	$(CC) $(FLAGS) $(OBJ) -o ${NAME} $(LIBRARIES) -I $(MINILIBX_HEADERS) -fsanitize=address
-	@echo ${PURPLE}"$(NAME): Compiling"
+${NAME}: ${MINILIBX} ${OBJ}
+	$(CC) $(MINILIBX) $(OBJ) -o ${NAME} $(LIBRARIES)
+	@echo $(GREEN) "Compilation done"
 
-$(MINILIBX):
-	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
-	@echo ${PURPLE}"$(NAME): creating mlx"
+${MINILIBX}:
+	@make -C $(MINILIBX_DIRECTORY)
 
 clean:
-	rm -rf $(OBJ)
+	@rm -f ${OBJ}
+	@make clean -C $(MINILIBX_DIRECTORY)
+	@echo $(RED) "Clean done"
 
 fclean: clean
-	rm -rf $(NAME) $(MINILIBX)
-	@echo ${GREEN}"$(NAME) : nadafa mina l iman ..."
+	@rm -f ${NAME}
+	@make fclean -C $(MINILIBX_DIRECTORY)
+	@echo $(RED) "Fclean done"
 
 re: fclean all
+
