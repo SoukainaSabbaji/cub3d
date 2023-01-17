@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:33 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/17 17:07:56 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ t_map *get_map(char *map_path)
     return (map);
 }
 
-void draw_square(int color, int x, int y, int size)
+void draw_square(int color, int x, int y, int size, int win_width, int win_height)
 {
     int i = 0;
     int j = 0;
@@ -150,9 +150,10 @@ void draw_square(int color, int x, int y, int size)
     {
         while (j < size)
         {
-            // printf("x: %d, y: %d\n",x ,y );
-            // printf("x: %d, y: %d\n",x + i ,y + j );
-            mlx_put_pixel(g_img, x+i , y+j , color);
+            int nx = x + i;
+            int ny = y + j;
+            if (nx > 0 && nx < win_width && ny > 0 && ny < win_height)
+                mlx_put_pixel(g_img, nx , ny , color);
             j++;
         }
         j = 0;
@@ -160,16 +161,15 @@ void draw_square(int color, int x, int y, int size)
     }
 }
 
-void draw_map(t_map *map, int win_width, int win_height)
+void draw_map(mlx_t *mlx,t_map *map, int win_width, int win_height)
 {
-    // int square_size = min(win_width / map->width, win_height / map->height);
-    int square_size = 64;
+    int square_size = min(win_width / map->width, win_height / map->height);
+    // int square_size = 64;
     int color = 0;
     int i = 0;
     int j = 0;
-    (void)win_height;
-    (void)win_width;
     
+    g_img = mlx_new_image(mlx, win_width, win_height);
     while (i < map->height)
     {
         while (j < map->width)
@@ -180,7 +180,7 @@ void draw_map(t_map *map, int win_width, int win_height)
                 color = 0x00000000;
             int x = j * square_size;
             int y = i * square_size;
-            draw_square(color, x, y, square_size);
+            draw_square(color, x, y, square_size, win_width, win_height);
             j++;
         }
         j = 0;
@@ -209,12 +209,12 @@ int32_t main()
 
     map = get_map("/Users/ssabbaji/Desktop/cub3d/maptest.txt");
     print_map_array(map);
-    mlx = mlx_init(map->height * 64, map->width * 64, "MLX42", true);
+    mlx = mlx_init(map->width * 64, map->height * 64, "MLX42", true);
     if (!mlx)
         exit(EXIT_FAILURE);
     g_img = mlx_new_image(mlx, 128, 128); 
     // memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
-    draw_map(map, map->height * 64, map->width * 64);
+    draw_map(mlx,map, map->height * 64, map->width * 64);
     mlx_image_to_window(mlx, g_img, 0, 0);
     mlx_loop(mlx);
     mlx_terminate(mlx);
