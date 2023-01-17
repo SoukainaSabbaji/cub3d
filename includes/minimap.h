@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/16 14:17:16 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:44:57 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 
 typedef struct s_map
 {
-    int **map;
+    char   **map;
     int height;
     int width;
-}   t_map;
+}   t_map; 
 
 typedef struct s_cube
 {

@@ -6,13 +6,13 @@
 #    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/01/16 14:38:00 by ssabbaji         ###   ########.fr        #
+#    Updated: 2023/01/16 18:25:23 by ssabbaji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = map
 CC = gcc
-FLAGS = -W -W -W 
+FLAGS = -Werror -Wextra -Wall -g
 
 # Libraries for GLFW
 LIBRARIES = -I include -lglfw -L "/Users/ssabbaji/.brew/opt/glfw/lib/"
@@ -37,7 +37,7 @@ OBJ = ${SRC:.c=.o}
 all: ${NAME}
 
 ${NAME}: ${MINILIBX} ${OBJ}
-	$(CC) $(MINILIBX) $(OBJ) -o ${NAME} $(LIBRARIES)
+	$(CC) $(MINILIBX) $(OBJ) -o ${NAME} $(LIBRARIES) -fsanitize=address
 	@echo $(GREEN) "Compilation done"
 
 ${MINILIBX}:

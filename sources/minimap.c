@@ -6,34 +6,49 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/16 14:34:49 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:05:33 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 
-void    get_map_dims(FILE *mapFile, int *height , int *width)
+
+mlx_image_t *g_img;
+
+
+int min(int a, int b)
+{
+    return (a < b) ? a : b;
+}
+
+void get_map_dims(FILE *mapFile, int *height, int *width)
 {
     int lines = 0;
     int columns = 0;
     char line[255];
 
     if (mapFile == NULL)
-        return ;
+        return;
     fgets(line, sizeof(line), mapFile);
+    int i = 0;
     if (strlen(line))
     {
-        columns = strlen(line) - 1;
+        while (i < (int)strlen(line))
+        {
+            if (line[i] == '0' || line[i] == '1')
+                columns++;
+            i++;
+        }
         lines++;
     }
-    while (fgets(line, sizeof(line), mapFile)) 
+    while (fgets(line, sizeof(line), mapFile))
         lines++;
     fclose(mapFile);
     *height = lines;
     *width = columns;
 }
 
-void    print_map_array(t_map *map)
+void print_map_array(t_map *map)
 {
     int i = 0;
     int j = 0;
@@ -41,7 +56,7 @@ void    print_map_array(t_map *map)
     {
         while (j < map->width)
         {
-            printf("%d ", map->map[i][j]);
+            printf("%c ", map->map[i][j]);
             j++;
         }
         printf("\n");
@@ -50,196 +65,158 @@ void    print_map_array(t_map *map)
     }
 }
 
-int **create_map(FILE *mapFile, int MAP_HEIGHT, int MAP_WIDTH)
+char **create_map(int MAP_HEIGHT, int MAP_WIDTH)
 {
-    int **map;
-
-    map = (int **)malloc(sizeof(int *) * MAP_HEIGHT);
-    for (int i = 0; i < MAP_HEIGHT; i++) 
-        map[i] = (int *)malloc(sizeof(int) * MAP_WIDTH);
-    rewind(mapFile); // set the file pointer back to the beginning of the file
-    for (int i = 0; i < MAP_HEIGHT; i++) 
-    {
-        for (int j = 0; j < MAP_WIDTH; j++) 
-        {
-            char c;
-            while ((c = fgetc(mapFile)) != EOF) // read one character at a time
-            {
-                if (c == '1' || c == '0') // if the character is a '1' or '0'
-                {
-                    ungetc(c, mapFile); // push the character back to the file
-                    fscanf(mapFile, "%d", &map[i][j]); // read the integer
-                    break;
-                }
-            }
-        }
-    }
-    fclose(mapFile);
-    return (map);
-}
-
-
-
-
-
-void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x < 0 || x >= cube->map->width || y < 0 || y >= cube->map->height) 
-    {
-        printf("Error: Invalid pixel coordinates (x = %d, y = %d)\n", x, y);
-        return;
-    }
-    dst = cube->img_data + (y * cube->line_size + x * (cube->bpp / 8));
-    *(unsigned int *)dst = color;
-}
-
-// void    draw_cube(t_cube *cube)
-// {
-    
-// }
-
-// void drawMap(t_cube *cube, t_map *map) 
-// {
-//     if (cube == NULL || cube->map == NULL) 
-//     {
-//         printf("Error: cube or cube->map is null\n");
-//         return;
-//     }
-//     for (int i = 0; i < map->height; i++) 
-//     {
-//         for (int j = 0; j < map->width; j++) 
-//         {
-//             if (map->map[i][j] == 1) 
-//                 my_mlx_pixel_put(cube, j, i, 0xFFFFFF);
-//             else 
-//                 my_mlx_pixel_put(cube, j, i, 0x000000);
-//         }
-//     }
-// }
-
-void drawMap(t_cube *cube, t_map *map) 
-{
+    char **map;
     int i = 0;
     int j = 0;
-    print_map_array(map);
-    if (cube == NULL || cube->map == NULL) 
+
+    map = (char **)malloc(sizeof(char *) * MAP_HEIGHT);
+    if (map == NULL)
+        return (NULL);
+    while (i < MAP_HEIGHT)
     {
-        printf("Error: cube or cube->map is null\n");
-        return;
+        map[i] = (char *)malloc(sizeof(char) * MAP_WIDTH);
+        if (map[i] == NULL)
+            return (NULL);
+        i++;
     }
-    while (i < map->height)
+    i = 0;
+    while (i < MAP_HEIGHT)
     {
-        while (j < map->width)
+        j = 0;
+        while (j < MAP_WIDTH)
         {
-            int color;
-            if (map->map[i][j] == 1)
-            {
-                printf("color\n");
-                color = 0x001da32d;
-            } 
-            else 
-                color = 0x00a31d1d;
-            for (int k = 0; k < 10; k++) 
-            {
-                for (int l = 0; l < 10; l++) 
-                {
-                    // my_mlx_pixel_put(cube, j*10 + k, i*10 + l, color);
-                    mlx_pixel_put(cube->mlx, cube->win, j*10 + k, i*10 + l, color);
-                    // printf("x = %d, y = %d, color = %d\n", j*10 + k, i*10 + l, color);
-                }
-            }
+            map[i][j] = '0';
             j++;
         }
         i++;
     }
-} 
+    return (map);
+}
 
+void fill_map_array(FILE *mapFile, t_map *map)
+{
+    int i = 0;
+    int j = 0;
+    char line[255];
 
+    while (fgets(line, sizeof(line), mapFile))
+    {
+        while (line[j])
+        {
+            if (line[j] == ' ' || line[j] == '\n')
+                j++;
+            else
+            {
+                // there's a huge ass trqi3a here fix it later
+                map->map[i][j - j / 2] = line[j];
+                j++;
+            }
+        }
+        j = 0;
+        i++;
+    }
+    fclose(mapFile);
+}
 
-t_cube  *init_cube(t_cube *cube)
+t_map *get_map(char *map_path)
+{
+    FILE *mapFile;
+    t_map *map;
+
+    map = (t_map *)calloc(1, sizeof(t_map));
+    if (map == NULL)
+        return (NULL);
+    mapFile = fopen(map_path, "r");
+    if (mapFile == NULL)
+    {
+        printf("Error: fopen() failed\n");
+        return (NULL);
+    }
+    get_map_dims(mapFile, &map->height, &map->width);
+    map->map = create_map(map->height, map->width);
+    mapFile = fopen(map_path, "r");
+    fill_map_array(mapFile, map);
+    return (map);
+}
+
+void draw_square(int color, int x, int y, int size)
+{
+    int i = 0;
+    int j = 0;
+    
+    while (i < size)
+    {
+        while (j < size)
+        {
+            // printf("x: %d, y: %d\n",x ,y );
+            // printf("x: %d, y: %d\n",x + i ,y + j );
+            mlx_put_pixel(g_img, x+i , y+j , color);
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+}
+
+void draw_map(t_map *map, int win_width, int win_height)
+{
+    // int square_size = min(win_width / map->width, win_height / map->height);
+    int square_size = 64;
+    int color = 0;
+    int i = 0;
+    int j = 0;
+    (void)win_height;
+    (void)win_width;
+    
+    while (i < map->height)
+    {
+        while (j < map->width)
+        {
+            if (map->map[i][j] == '1')
+                color = 0xFFFFFFFF;
+            else if (map->map[i][j] == '0')
+                color = 0x00000000;
+            int x = j * square_size;
+            int y = i * square_size;
+            draw_square(color, x, y, square_size);
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+}
+
+t_cube *init_cube(t_cube *cube)
 {
     cube = (t_cube *)malloc(sizeof(t_cube));
-    cube->mlx = mlx_init();
+    cube->mlx = mlx_init(cube->map->width, cube->map->height, "Hello world!", true);
     if (cube->mlx == NULL)
     {
         printf("Error: mlx_init() failed\n");
         return (NULL);
     }
     cube->img_ptr = mlx_new_image(cube->mlx, 500, 500);
-    cube->img_data = mlx_get_data_addr(cube->img_ptr, &(cube->bpp), &(cube->line_size), &(cube->endian));
-    cube->win = mlx_new_window(cube->mlx, 500, 500, "Hello world!");
+    memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
     return (cube);
 }
 
-// int main()
-// {
-//     int MAP_HEIGHT = 0;
-//     int MAP_WIDTH = 0;
-//     int     **map;
-//     t_map   *map_data;
-//     t_cube  *cube;
-    
-    
-//     cube = init_cube(NULL);
-//     FILE *mapFile = fopen("maptest.txt", "r");
-//     if (mapFile == NULL) 
-//     {
-//         printf("Error: Invalid map file");
-//         return 1;
-//     }
-//     map_data = (t_map *)malloc(sizeof(t_map));
-//     get_map_dims(mapFile,&MAP_HEIGHT, &MAP_WIDTH);
-//     if (MAP_HEIGHT <= 0 || MAP_WIDTH <= 0) 
-//     {
-//         printf("Error: Invalid map dimensions (height = %d, width = %d)\n", MAP_HEIGHT, MAP_WIDTH);
-//         return 1;
-//     }
-//     map = create_map(mapFile, MAP_HEIGHT, MAP_WIDTH);
-//     fclose(mapFile);
-//     map_data->map = map;
-//     map_data->height = MAP_HEIGHT;
-//     map_data->width = MAP_WIDTH;
-//     drawMap(cube, map_data);
-//     mlx_put_image_to_window(cube->mlx, cube->win, cube->img_ptr, 0, 0);
-//     mlx_loop(cube->mlx);
-//     // printf("MAP_HEIGHT = %d, MAP_WIDTH = %d\n", MAP_HEIGHT, MAP_WIDTH);
-// }
-
-
-int main()
+int32_t main()
 {
-    int MAP_HEIGHT = 0;
-    int MAP_WIDTH = 0;
-    int     **map;
-    t_map   *map_data;
-    t_cube  *cube;
-    
-    
-    cube = init_cube(NULL);
-    FILE *mapFile = fopen("maptest.txt", "r");
-    if (mapFile == NULL) 
-    {
-        printf("Error: Invalid map file");
-        return 1;
-    }
-    map_data = (t_map *)malloc(sizeof(t_map));
-    get_map_dims(mapFile,&MAP_HEIGHT, &MAP_WIDTH);
-    if (MAP_HEIGHT <= 0 || MAP_WIDTH <= 0) 
-    {
-        printf("Error: Invalid map dimensions (height = %d, width = %d)\n", MAP_HEIGHT, MAP_WIDTH);
-        return 1;
-    }
-    map = create_map(mapFile, MAP_HEIGHT, MAP_WIDTH);
-    fclose(mapFile);
-    map_data->map = map;
-    map_data->height = MAP_HEIGHT;
-    map_data->width = MAP_WIDTH;
-    drawMap(cube, map_data);
-    if (cube->img_ptr == NULL)
-        printf("img_ptr is null\n");
-    mlx_put_image_to_window(cube->mlx, cube->win, cube->img_ptr, 500, 500);
-    mlx_loop(cube->mlx);
-    // printf("MAP_HEIGHT = %d, MAP_WIDTH = %d\n", MAP_HEIGHT, MAP_WIDTH);
+    mlx_t *mlx;
+    t_map *map;
+
+    map = get_map("/Users/ssabbaji/Desktop/cub3d/maptest.txt");
+    print_map_array(map);
+    mlx = mlx_init(map->height * 64, map->width * 64, "MLX42", true);
+    if (!mlx)
+        exit(EXIT_FAILURE);
+    g_img = mlx_new_image(mlx, 128, 128); 
+    // memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
+    draw_map(map, map->height * 64, map->width * 64);
+    mlx_image_to_window(mlx, g_img, 0, 0);
+    mlx_loop(mlx);
+    mlx_terminate(mlx);
+    return (EXIT_SUCCESS);
 }
