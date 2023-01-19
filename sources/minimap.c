@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/19 18:00:30 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:36:44 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
                 map->map[i][j - j / 2] = line[j];
                 if (map->map[i][j - j / 2] == '1')
                 {
-                    wall[g_wall_count].x = (j - j / 2) * 64;
-                    wall[g_wall_count].y = i * 64;
+                    wall[g_wall_count].x = (j - j / 2) * 64 + 64;
+                    wall[g_wall_count].y = i * 64 + 64;
                     g_wall_count++;
                 }
                 j++;
@@ -184,20 +184,41 @@ t_map *get_map(char *map_path)
     return (map);
 }
 
-bool is_on_wall(int x, int y) 
-{
-    int i = 0;
+// bool is_on_wall(int x, int y) 
+// {
+//     int i = 0;
     
+//     while (i < g_wall_count)
+//     {
+//         if (x >= g_wall[i].x && x <= g_wall[i].x + 64 &&
+//             y >= g_wall[i].y && y <= g_wall[i].y + 64) {
+//                 printf("wall at %d, %d\n", x,y);
+//             return true;
+//         }
+//         i++;
+//     }
+//     return false;
+// }
+
+bool    is_on_wall(int x, int y)
+{
+    int i;
+
+    i = 0;
     while (i < g_wall_count)
     {
         if (x >= g_wall[i].x && x <= g_wall[i].x + 64 &&
-            y >= g_wall[i].y && y <= g_wall[i].y + 64) {
-            return true;
-        }
+            y >= g_wall[i].y && y <= g_wall[i].y + 64)
+            {
+        printf("wall at %d, %d\n", x,y);
+            return (true);
+                
+            }
         i++;
     }
-    return false;
+    return (false);
 }
+
 
 void hook_2(void *param) 
 {
