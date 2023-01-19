@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/18 17:20:44 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:00:30 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #define BPP sizeof(int32_t)
 
 mlx_image_t *g_img;
-mlx_image_t *g_player;
+mlx_image_t *g_player_img;
 mlx_t *g_mlx;
 int g_wall_count = 0;
+t_player *g_player;
+t_wall *g_wall;
 
-
-
-void    ft_putstr_fd(const char *s, int fd)
+void ft_putstr_fd(const char *s, int fd)
 {
     int i;
 
@@ -138,9 +138,9 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
                 map->map[i][j - j / 2] = line[j];
                 if (map->map[i][j - j / 2] == '1')
                 {
-                    wall[g_wall_count].x = (j - j / 2) * 64; 
+                    wall[g_wall_count].x = (j - j / 2) * 64;
                     wall[g_wall_count].y = i * 64;
-                    g_wall_count++;                   
+                    g_wall_count++;
                 }
                 j++;
             }
@@ -152,7 +152,7 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
     return (wall);
 }
 
-void    print_wall_coords(t_wall *wall)
+void print_wall_coords(t_wall *wall)
 {
     int i = 0;
     while (i < g_wall_count)
@@ -166,8 +166,7 @@ t_map *get_map(char *map_path)
 {
     FILE *mapFile;
     t_map *map;
-    t_wall *wall;
-    
+
     map = (t_map *)calloc(1, sizeof(t_map));
     if (map == NULL)
         return (NULL);
@@ -180,59 +179,73 @@ t_map *get_map(char *map_path)
     get_map_dims(mapFile, &map->height, &map->width);
     map->map = create_map(map->height, map->width);
     mapFile = fopen(map_path, "r");
-    wall = fill_map_array(mapFile, map);
-    print_wall_coords(wall);
+    g_wall = fill_map_array(mapFile, map);
+    print_wall_coords(g_wall);
     return (map);
 }
 
-void hook_2(void *param)
+bool is_on_wall(int x, int y) 
+{
+    int i = 0;
+    
+    while (i < g_wall_count)
+    {
+        if (x >= g_wall[i].x && x <= g_wall[i].x + 64 &&
+            y >= g_wall[i].y && y <= g_wall[i].y + 64) {
+            return true;
+        }
+        i++;
+    }
+    return false;
+}
+
+void hook_2(void *param) 
 {
     mlx_t *mlx;
 
     mlx = param;
-    if (mlx_is_key_down(mlx, MLX_KEY_UP))
-        g_player->instances[0].y -= 5;
-    if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-        g_player->instances[0].y += 5;
-    if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-        g_player->instances[0].x -= 5;
-    if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-        g_player->instances[0].x += 5;
+    if (mlx_is_key_down(mlx, MLX_KEY_UP)) 
+    {
+        if (!is_on_wall(g_player->x, g_player->y - 5)) 
+        {
+            g_player_img->instances[0].y -= 5;
+            g_player->y -= 5;
+        }
+    }
+    if (mlx_is_key_down(mlx, MLX_KEY_DOWN)) 
+    {
+        if (!is_on_wall(g_player->x, g_player->y + 5)) 
+        {
+            g_player_img->instances[0].y += 5;
+            g_player->y += 5;
+        }
+    }
+    if (mlx_is_key_down(mlx, MLX_KEY_LEFT)) 
+    {
+        if (!is_on_wall(g_player->x - 5, g_player->y)) 
+        {
+            g_player_img->instances[0].x -= 5;
+            g_player->x -= 5;
+        }
+    }
+    if (mlx_is_key_down(mlx, MLX_KEY_RIGHT)) 
+    {
+        if (!is_on_wall(g_player->x + 5, g_player->y)) 
+        {
+            g_player_img->instances[0].x += 5;
+            g_player->x += 5;
+        }
+    }
 }
 
-// void draw_player(int color, int x, int y, int size)
-// {
-//     int i = 0;
-//     int j = 0;
-
-//     while (i < size)
-//     {
-//         while (j < size)
-//         {
-//             printf("alo\n");
-//             mlx_put_pixel(g_player, x, y, color);
-//             j++;
-//         }
-//         j = 0;
-//         i++;
-//     }
-//     mlx_image_to_window(g_mlx, g_player, 200, 200);
-//     mlx_loop_hook(g_mlx, &hook_2, g_mlx);
-// }
-
-
-// static int get_rgba(int r, int g, int b, int a)
-// {
-//     return (r << 24 | g << 16 | b << 8 | a);
-// }
 
 void draw_player(int color, int x, int y, int size)
 {
     (void)color;
     (void)size;
-    
-    memset(g_player->pixels, 250, 16 * 16 * BPP);
-    mlx_image_to_window(g_mlx, g_player, x, y);
+
+    memset(g_player_img->pixels, 250, 16 * 16 * BPP);
+    mlx_image_to_window(g_mlx, g_player_img, x, y);
     mlx_loop_hook(g_mlx, &hook_2, g_mlx);
 }
 
@@ -246,7 +259,7 @@ void draw_square(int color, int x, int y, int size, int win_width, int win_heigh
     {
         size /= 4;
         draw_player(color, x, y, size);
-        return ;
+        return;
     }
     while (i < size)
     {
@@ -265,6 +278,7 @@ void draw_square(int color, int x, int y, int size, int win_width, int win_heigh
 
 void draw_map(mlx_t *mlx, t_map *map, int win_width, int win_height)
 {
+
     int square_size = min(win_width / map->width, win_height / map->height);
     // int square_size = 64;
     int color = 0;
@@ -272,6 +286,7 @@ void draw_map(mlx_t *mlx, t_map *map, int win_width, int win_height)
     int j = 0;
 
     g_img = mlx_new_image(mlx, win_width, win_height);
+    g_player = (t_player *)malloc(sizeof(t_player));
     while (i < map->height)
     {
         while (j < map->width)
@@ -283,7 +298,10 @@ void draw_map(mlx_t *mlx, t_map *map, int win_width, int win_height)
             else if (map->map[i][j] == 'P')
             {
                 color = 0x00ffffff;
-                g_player = mlx_new_image(mlx, 16, 16);
+                g_player_img = mlx_new_image(mlx, 16, 16);
+                g_player->x = j - j / 2 * square_size;
+                g_player->y = i * square_size;
+                g_player->img = g_player_img;
             }
             int x = j * square_size;
             int y = i * square_size;
@@ -324,9 +342,9 @@ int32_t main()
 
     map = get_map("/Users/ssabbaji/Desktop/cub3d/maptest.txt");
     print_map_array(map);
-    g_mlx = mlx_init(map->width * 64, map->height * 64, "MLX42", true);
+    g_mlx = mlx_init(map->width * 64, map->height * 64, "42pelotas", true);
     if (!g_mlx)
-       ft_error();
+        ft_error();
     g_img = mlx_new_image(g_mlx, 128, 128);
     // memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
     draw_map(g_mlx, map, map->height * 64, map->width * 64);

@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/18 17:28:27 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:35:55 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_player
 {
     int         x;
     int         y;
-    mlx_image_t *player_img;
+    mlx_image_t *img;
 }   t_player;
 
 #endif
