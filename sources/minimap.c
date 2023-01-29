@@ -121,6 +121,7 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
 {
     int i = 0;
     int j = 0;
+    int k = 0;
     char line[255];
     t_wall *wall;
 
@@ -129,28 +130,27 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
     {
         while (line[j])
         {
-            if (line[j] == ' ' || line[j] == '\n')
-                j++;
-            else
+            if (line[j] != ' ' && line[j] != '\n')
             {
-                // there's a huge ass trqi3a here fix it later
-                // j -= j/2;
-                map->map[i][j - j / 2] = line[j];
-                if (map->map[i][j - j / 2] == '1')
+                map->map[i][k] = line[j];
+                if (map->map[i][k] == '1')
                 {
-                    wall[g_wall_count].x = (j - j / 2) * 64 + 64;
+                    wall[g_wall_count].x = k * 64 + 64;
                     wall[g_wall_count].y = i * 64 + 64;
                     g_wall_count++;
                 }
-                j++;
+                k++;
             }
+            j++;
         }
         j = 0;
+        k = 0;
         i++;
     }
     fclose(mapFile);
     return (wall);
 }
+
 
 void print_wall_coords(t_wall *wall)
 {
@@ -334,19 +334,19 @@ void draw_map(mlx_t *mlx, t_map *map, int win_width, int win_height)
     }
 }
 
-t_cube *init_cube(t_cube *cube)
-{
-    cube = (t_cube *)malloc(sizeof(t_cube));
-    cube->mlx = mlx_init(cube->map->width, cube->map->height, "Hello world!", true);
-    if (cube->mlx == NULL)
-    {
-        printf("Error: mlx_init() failed\n");
-        return (NULL);
-    }
-    cube->img_ptr = mlx_new_image(cube->mlx, 500, 500);
-    memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
-    return (cube);
-}
+// t_cube *init_cube(t_cube *cube)
+// {
+//     cube = (t_cube *)malloc(sizeof(t_cube));
+//     cube->mlx = mlx_init(cube->map->width, cube->map->height, "Hello world!", true);
+//     if (cube->mlx == NULL)
+//     {
+//         printf("Error: mlx_init() failed\n");
+//         return (NULL);
+//     }
+//     cube->img_ptr = mlx_new_image(cube->mlx, 500, 500);
+//     memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
+//     return (cube);
+// }
 
 void hook(void *param)
 {
