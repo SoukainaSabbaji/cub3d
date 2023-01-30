@@ -43,32 +43,7 @@ int min(int a, int b)
     return (a < b) ? a : b;
 }
 
-void get_map_dims(FILE *mapFile, int *height, int *width)
-{
-    int lines = 0;
-    int columns = 0;
-    char line[255];
 
-    if (mapFile == NULL)
-        return;
-    fgets(line, sizeof(line), mapFile);
-    int i = 0;
-    if (strlen(line))
-    {
-        while (i < (int)strlen(line))
-        {
-            if (line[i] == '0' || line[i] == '1')
-                columns++;
-            i++;
-        }
-        lines++;
-    }
-    while (fgets(line, sizeof(line), mapFile))
-        lines++;
-    fclose(mapFile);
-    *height = lines;
-    *width = columns;
-}
 
 void print_map_array(t_map *map)
 {
@@ -125,7 +100,6 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
     char line[255];
     t_wall *wall;
 
-    wall = (t_wall *)malloc(sizeof(t_wall) * 100);
     while (fgets(line, sizeof(line), mapFile))
     {
         while (line[j])
@@ -147,10 +121,11 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
         k = 0;
         i++;
     }
+    wall = (t_wall *)malloc(sizeof(t_wall) * g_wall_count);
+
     fclose(mapFile);
     return (wall);
 }
-
 
 void print_wall_coords(t_wall *wall)
 {
@@ -184,10 +159,10 @@ t_map *get_map(char *map_path)
     return (map);
 }
 
-// bool is_on_wall(int x, int y) 
+// bool is_on_wall(int x, int y)
 // {
 //     int i = 0;
-    
+
 //     while (i < g_wall_count)
 //     {
 //         if (x >= g_wall[i].x && x <= g_wall[i].x + 64 &&
@@ -200,7 +175,7 @@ t_map *get_map(char *map_path)
 //     return false;
 // }
 
-bool    is_on_wall(int x, int y)
+bool is_on_wall(int x, int y)
 {
     int i;
 
@@ -209,56 +184,53 @@ bool    is_on_wall(int x, int y)
     {
         if (x >= g_wall[i].x && x <= g_wall[i].x + 64 &&
             y >= g_wall[i].y && y <= g_wall[i].y + 64)
-            {
-        printf("wall at %d, %d\n", x,y);
+        {
+            printf("wall at %d, %d\n", x, y);
             return (true);
-                
-            }
+        }
         i++;
     }
     return (false);
 }
 
-
-void hook_2(void *param) 
+void hook_2(void *param)
 {
     mlx_t *mlx;
 
     mlx = param;
-    if (mlx_is_key_down(mlx, MLX_KEY_UP)) 
+    if (mlx_is_key_down(mlx, MLX_KEY_UP))
     {
-        if (!is_on_wall(g_player->x, g_player->y - 5)) 
+        if (!is_on_wall(g_player->x, g_player->y - 5))
         {
             g_player_img->instances[0].y -= 5;
             g_player->y -= 5;
         }
     }
-    if (mlx_is_key_down(mlx, MLX_KEY_DOWN)) 
+    if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
     {
-        if (!is_on_wall(g_player->x, g_player->y + 5)) 
+        if (!is_on_wall(g_player->x, g_player->y + 5))
         {
             g_player_img->instances[0].y += 5;
             g_player->y += 5;
         }
     }
-    if (mlx_is_key_down(mlx, MLX_KEY_LEFT)) 
+    if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
     {
-        if (!is_on_wall(g_player->x - 5, g_player->y)) 
+        if (!is_on_wall(g_player->x - 5, g_player->y))
         {
             g_player_img->instances[0].x -= 5;
             g_player->x -= 5;
         }
     }
-    if (mlx_is_key_down(mlx, MLX_KEY_RIGHT)) 
+    if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
     {
-        if (!is_on_wall(g_player->x + 5, g_player->y)) 
+        if (!is_on_wall(g_player->x + 5, g_player->y))
         {
             g_player_img->instances[0].x += 5;
             g_player->x += 5;
         }
     }
 }
-
 
 void draw_player(int color, int x, int y, int size)
 {

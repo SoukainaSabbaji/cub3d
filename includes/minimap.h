@@ -13,6 +13,9 @@
 #ifndef MINIMAP_H
 #define MINIMAP_H
 
+#define WALL '1'
+#define EMPTY '0'
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,8 +25,8 @@
 typedef struct s_map
 {
     char   **map;
-    int height;
-    int width;
+    int     height;
+    int     width;
 }   t_map; 
 
 typedef struct s_cube
@@ -50,5 +53,18 @@ typedef struct s_player
     int         y;
     mlx_image_t *img;
 }   t_player;
+
+
+typedef struct s_iter
+{
+    int i;
+    int j;
+}   t_iter;
+
+
+
+/**********************-Functions**********************/
+void    get_map_dims(FILE *mapFile, int *height, int *width);
+
 
 #endif
