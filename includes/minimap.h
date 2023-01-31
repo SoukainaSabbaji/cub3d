@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/31 12:58:27 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/31 16:31:34 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "math.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_map
@@ -59,6 +60,7 @@ typedef struct s_iter
 {
     int i;
     int j;
+    int k;
 }   t_iter;
 
 

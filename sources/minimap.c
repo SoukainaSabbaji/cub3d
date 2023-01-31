@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/31 13:43:51 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/31 16:34:37 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ mlx_t *g_mlx;
 int g_wall_count = 0;
 t_player *g_player;
 t_wall *g_wall;
+// char **g_map;
+t_map *g_map;
 
 void ft_putstr_fd(const char *s, int fd)
 {
@@ -43,8 +45,6 @@ int min(int a, int b)
     return (a < b) ? a : b;
 }
 
-
-
 void print_map_array(t_map *map)
 {
     int i = 0;
@@ -53,7 +53,7 @@ void print_map_array(t_map *map)
     {
         while (j < map->width)
         {
-            printf("%c ", map->map[i][j]);
+            printf("%c", map->map[i][j]);
             j++;
         }
         printf("\n");
@@ -92,7 +92,6 @@ char **create_map(int MAP_HEIGHT, int MAP_WIDTH)
     return (map);
 }
 
-
 int count_walls(FILE *mapFile)
 {
     int i = 0;
@@ -115,9 +114,9 @@ int count_walls(FILE *mapFile)
         j = 0;
         i++;
     }
-    printf("count: %d\n", count);
     return (count);
 }
+
 void print_wall_coords(t_wall *wall)
 {
     int i = 0;
@@ -128,42 +127,118 @@ void print_wall_coords(t_wall *wall)
     }
 }
 
+// t_wall *fill_map_array(FILE *mapFile, t_map *map)
+// {
+//     t_iter iter;
+//     char line[255];
+//     int  count = 0;
+//     t_wall *wall;
+
+//     g_wall_count = count_walls(mapFile);
+//     wall = (t_wall *)malloc(sizeof(t_wall) * g_wall_count);
+//     while (fgets(line, sizeof(line), mapFile))
+//     {
+//         while (line[iter.j])
+//         {
+//             if (line[iter.j] != ' ' && line[iter.j] != '\n')
+//             {
+//                 map->map[iter.i][iter.k] = line[iter.j];
+//                 if (map->map[iter.i][iter.k] == WALL)
+//                 {
+//                     printf("im here\n");
+//                     wall[count].x = iter.k * 64 + 64;
+//                     wall[count].y = iter.i * 64 + 64;
+//                     // printf("x: %d, y: %d\n", wall[count].x, wall[g_wall_count].y);
+//                     count++;
+//                 }
+//                 iter.k++;
+//             }
+//             iter.j++;
+//         }
+//         iter.j = 0;
+//         iter.k = 0;
+//         iter.i++;
+//     }
+//     fclose(mapFile);
+//     return (wall);
+// }
+
+// t_wall *fill_map_array(FILE *mapFile, t_map *map)
+// {
+//     t_iter iter;
+//     char line[255];
+//     int count = 0;
+//     t_wall *wall;
+
+//     // iter = (t_iter){0, 0, 0};
+//     // printf("i, j, k: %d, %d, %d\n", iter.i, iter.j, iter.k);
+//     // g_wall_count = count_walls(mapFile);
+//     printf("g_wall_count: %d\n", g_wall_count);
+//     wall = (t_wall *)malloc(sizeof(t_wall) * g_wall_count);
+//     // wall = (t_wall *)malloc(sizeof(t_wall) * 100);
+//     while (fgets(line, sizeof(line), mapFile))
+//     {
+//         while (line[iter.j])
+//         {
+//             if (line[iter.j] == ' ' || line[iter.j] == '\n')
+//                 iter.j++;
+//             else
+//             {
+//                 // there's a huge ass trqi3a here fix it later
+//                 // j -= j/2;
+//                 map->map[iter.i][iter.j - iter.j / 2] = line[iter.j];
+//                 if (map->map[iter.i][iter.j - iter.j / 2] == '1')
+//                 {
+//                     printf("im here\n");
+//                     wall[count].x = (iter.j - iter.j / 2) * 64;
+//                     wall[count].y = iter.i * 64;
+//                     count++;
+//                     // printf("x: %d, y: %d\n", wall[count].x, wall[g_wall_count].y);
+//                 }
+//                 iter.j++;
+//             }
+//         }
+//         iter.j = 0;
+//         iter.i++;
+//     }
+//     fclose(mapFile);
+//     return (wall);
+// }
+
 t_wall *fill_map_array(FILE *mapFile, t_map *map)
 {
     int i = 0;
     int j = 0;
-    int k = 0;
     char line[255];
     t_wall *wall;
-    
-    g_wall_count = count_walls(mapFile);
-    wall = (t_wall *)malloc(sizeof(t_wall) * g_wall_count);
+
+    wall = (t_wall *)malloc(sizeof(t_wall) * 100);
     while (fgets(line, sizeof(line), mapFile))
     {
         while (line[j])
         {
-            if (line[j] != ' ' && line[j] != '\n')
+            if (line[j] == ' ' || line[j] == '\n')
+                j++;
+            else
             {
-                map->map[i][k] = line[j];
-                if (map->map[i][k] == WALL)
+                // there's a huge ass trqi3a here fix it later
+                // j -= j/2;
+                map->map[i][j - j / 2] = line[j];
+                if (map->map[i][j - j / 2] == '1')
                 {
-                    printf("im here\n");
-                    wall[g_wall_count].x = k * 64 + 64;
-                    wall[g_wall_count].y = i * 64 + 64;
-                    printf("x: %d, y: %d\n", wall[g_wall_count].x, wall[g_wall_count].y);
+                    wall[g_wall_count].y = (j - j / 2) * 64;
+                    wall[g_wall_count].x = i * 64;
+                    g_wall_count++;
                 }
-                k++;
+                j++;
             }
-            j++;
         }
         j = 0;
-        k = 0;
         i++;
     }
     fclose(mapFile);
     return (wall);
 }
-
 
 t_map *get_map(char *map_path)
 {
@@ -181,9 +256,10 @@ t_map *get_map(char *map_path)
     }
     get_map_dims(mapFile, map);
     map->map = create_map(map->height, map->width);
+    g_map = map;
     mapFile = fopen(map_path, "r");
     g_wall = fill_map_array(mapFile, map);
-    // print_wall_coords(g_wall);
+    print_wall_coords(g_wall);
     return (map);
 }
 
@@ -203,20 +279,33 @@ t_map *get_map(char *map_path)
 //     return false;
 // }
 
+// bool is_on_wall(int x, int y)
+// {
+//     int i;
+
+//     i = 0;
+//     while (i < g_wall_count)
+//     {
+//         if (x  >= g_wall[i].x && x <= g_wall[i].x + 64 &&
+//             y >= g_wall[i].y && y <= g_wall[i].y + 64)
+//         {
+//             printf("wall at %d, %d\n", g_wall[i].x, g_wall[i].y);
+//             return (true);
+//         }
+//         i++;
+//     }
+//     return (false);
+// }
+
+
+
 bool is_on_wall(int x, int y)
 {
-    int i;
-
-    i = 0;
-    while (i < g_wall_count)
+    int square_size = min(g_map->width * 64 / g_map->width, g_map->height * 64 / g_map->height);
+    if (g_map->map[(int)round((float)y / square_size)][(int)round((float)x / square_size)] == '1')
     {
-        if (x >= g_wall[i].x && x <= g_wall[i].x + 64 &&
-            y >= g_wall[i].y && y <= g_wall[i].y + 64)
-        {
-            printf("wall at %d, %d\n", x, y);
-            return (true);
-        }
-        i++;
+        printf("wall at %c, %d, %d\n",g_map->map[(int)round((float)y / square_size)][(int)round((float)x / square_size)], (int)round((float)x / square_size), (int)ceil((float)y / square_size));
+        return (true);
     }
     return (false);
 }
@@ -228,34 +317,42 @@ void hook_2(void *param)
     mlx = param;
     if (mlx_is_key_down(mlx, MLX_KEY_UP))
     {
-        if (!is_on_wall(g_player->x, g_player->y - 5))
-        {
-            g_player_img->instances[0].y -= 5;
-            g_player->y -= 5;
-        }
-    }
-    if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-    {
-        if (!is_on_wall(g_player->x, g_player->y + 5))
+        g_player_img->instances[0].y -= 5;
+        g_player->y -= 5;
+        if (is_on_wall(g_player->x, g_player->y))
         {
             g_player_img->instances[0].y += 5;
             g_player->y += 5;
         }
     }
+    if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+    {
+        g_player_img->instances[0].y += 5;
+        g_player->y += 5;
+        if (is_on_wall(g_player->x, g_player->y))
+        {
+            g_player_img->instances[0].y -= 5;
+            g_player->y -= 5;
+        }
+    }
     if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
     {
-        if (!is_on_wall(g_player->x - 5, g_player->y))
+        g_player_img->instances[0].x -= 5;
+        g_player->x -= 5;
+        if (is_on_wall(g_player->x, g_player->y))
         {
-            g_player_img->instances[0].x -= 5;
-            g_player->x -= 5;
+            g_player_img->instances[0].x += 5;
+            g_player->x += 5;
         }
     }
     if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
     {
-        if (!is_on_wall(g_player->x + 5, g_player->y))
+        g_player_img->instances[0].x += 5;
+        g_player->x += 5;
+        if (is_on_wall(g_player->x, g_player->y))
         {
-            g_player_img->instances[0].x += 5;
-            g_player->x += 5;
+            g_player_img->instances[0].x -= 5;
+            g_player->x -= 5;
         }
     }
 }
@@ -272,7 +369,6 @@ void draw_player(int color, int x, int y, int size)
 
 void draw_square(int color, int x, int y, int size, int win_width, int win_height)
 {
-
     int i = 0;
     int j = 0;
 
@@ -288,7 +384,7 @@ void draw_square(int color, int x, int y, int size, int win_width, int win_heigh
         {
             int nx = x + i;
             int ny = y + j;
-            if (nx > 0 && nx < win_width && ny > 0 && ny < win_height)
+            if (nx >= 0 && nx < win_width && ny >= 0 && ny < win_height)
                 mlx_put_pixel(g_img, nx, ny, color);
             j++;
         }
@@ -320,12 +416,16 @@ void draw_map(mlx_t *mlx, t_map *map, int win_width, int win_height)
             {
                 color = 0x00ffffff;
                 g_player_img = mlx_new_image(mlx, 16, 16);
-                g_player->x = j - j / 2 * square_size;
+                // g_player->x = j * square_size + square_size / 2;
+                g_player->x = j * square_size ;
+                // g_player->y = i * square_size + square_size / 2;
                 g_player->y = i * square_size;
+                printf("player at %d, %d\n", g_player->x, g_player->y);
                 g_player->img = g_player_img;
             }
             int x = j * square_size;
             int y = i * square_size;
+            printf("square at %d, %d\n", x, y);
             draw_square(color, x, y, square_size, win_width, win_height);
             j++;
         }
@@ -366,9 +466,9 @@ int32_t main()
     g_mlx = mlx_init(map->width * 64, map->height * 64, "42pelotas", true);
     if (!g_mlx)
         ft_error();
-    g_img = mlx_new_image(g_mlx, 128, 128);
+    g_img = mlx_new_image(g_mlx, map->width * 64, map->height * 64);
     // memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
-    draw_map(g_mlx, map, map->height * 64, map->width * 64);
+    draw_map(g_mlx, map, map->width * 64, map->height * 64);
     mlx_image_to_window(g_mlx, g_img, 0, 0);
     mlx_loop_hook(g_mlx, &hook, g_mlx);
     mlx_loop(g_mlx);
