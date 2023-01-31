@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/18 17:35:55 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:58:27 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_iter
 
 
 /**********************-Functions**********************/
-void    get_map_dims(FILE *mapFile, int *height, int *width);
+void    get_map_dims(FILE *mapFile, t_map *map);
 
 
 #endif

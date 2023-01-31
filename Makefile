@@ -6,7 +6,7 @@
 #    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/01/16 18:25:23 by ssabbaji         ###   ########.fr        #
+#    Updated: 2023/01/31 11:52:15 by ssabbaji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ MINILIBX_DIRECTORY = ./MLX42/
 MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
 SOURCES_DIRECTORY = ./sources/
-SOURCES_LIST = minimap.c 
+SOURCES_LIST = minimap.c parsing.c main.c
 
 GREEN			=	"\033[1;32m"
 PURPLE			=	"\x1b[35m"

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/31 11:51:48 by ssabbaji          #+#    #+#             */
+/*   Updated: 2023/01/31 11:51:48 by ssabbaji         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minimap.h"
 
-static void get_map_dims(FILE *mapFile, t_map *map)
+void get_map_dims(FILE *mapFile, t_map *map)
 {
     int lines = 0;
     int columns = 0;
@@ -27,7 +39,7 @@ static void get_map_dims(FILE *mapFile, t_map *map)
     map->width = columns;
 }
 
-static int check_map_chars(t_map *map)
+int check_map_chars(t_map *map)
 {
    t_iter iter;
 
@@ -35,13 +47,13 @@ static int check_map_chars(t_map *map)
     {
         while (iter.j < map->width)
         {
-            if (map->map[i][j] != WALL && \
-                map->map[i][j] != EMPTY && \
-                map->map[i][j] != 'W' && \
-                map->map[i][j] != 'S' && \
-                map->map[i][j] != 'E' && \
-                map->map[i][j] != 'N' && \
-                map->map[i][j] != ' ')
+            if (map->map[iter.i][iter.j] != WALL && \
+                map->map[iter.i][iter.j] != EMPTY && \
+                map->map[iter.i][iter.j] != 'W' && \
+                map->map[iter.i][iter.j] != 'S' && \
+                map->map[iter.i][iter.j] != 'E' && \
+                map->map[iter.i][iter.j] != 'N' && \
+                map->map[iter.i][iter.j] != ' ')
                 return (0);
             iter.j++;
         }
@@ -51,7 +63,7 @@ static int check_map_chars(t_map *map)
     return (1);
 }
 
-static int check_map_walls(t_map *map)
+int check_map_walls(t_map *map)
 {
     t_iter iter;
 
@@ -61,12 +73,12 @@ static int check_map_walls(t_map *map)
         {
             if (iter.i == 0 || iter.i == map->height - 1)
             {
-                if (map->map[i][j] != WALL)
+                if (map->map[iter.i][iter.j] != WALL)
                     return (0);
             }
             else if (iter.j == 0 || iter.j == map->width - 1)
             {
-                if (map->map[i][j] != WALL)
+                if (map->map[iter.i][iter.j] != WALL)
                     return (0);
             }
             iter.j++;
@@ -77,9 +89,8 @@ static int check_map_walls(t_map *map)
     return (1);
 }
 
-//next function checks if a wall is enclosed 
 
-static int check_map_enclosed(t_map *map)
+int check_map_enclosed(t_map *map)
 {
     t_iter iter;
 
@@ -87,12 +98,12 @@ static int check_map_enclosed(t_map *map)
     {
         while (iter.j < map->width)
         {
-            if (map->map[i][j] == WALL)
+            if (map->map[iter.i][iter.j] == WALL)
             {
-                if (map->map[i - 1][j] == EMPTY || \
-                    map->map[i + 1][j] == EMPTY || \
-                    map->map[i][j - 1] == EMPTY || \
-                    map->map[i][j + 1] == EMPTY)
+                if (map->map[iter.i - 1][iter.j] == EMPTY || \
+                    map->map[iter.i + 1][iter.j] == EMPTY || \
+                    map->map[iter.i][iter.j - 1] == EMPTY || \
+                    map->map[iter.i][iter.j + 1] == EMPTY)
                     return (0);
             }
             iter.j++;

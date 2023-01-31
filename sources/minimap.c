@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/19 18:36:44 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:43:51 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ char **create_map(int MAP_HEIGHT, int MAP_WIDTH)
     return (map);
 }
 
-t_wall *fill_map_array(FILE *mapFile, t_map *map)
+
+int count_walls(FILE *mapFile)
 {
     int i = 0;
     int j = 0;
-    int k = 0;
+    int count = 0;
     char line[255];
-    t_wall *wall;
 
     while (fgets(line, sizeof(line), mapFile))
     {
@@ -106,27 +106,18 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
         {
             if (line[j] != ' ' && line[j] != '\n')
             {
-                map->map[i][k] = line[j];
-                if (map->map[i][k] == '1')
-                {
-                    wall[g_wall_count].x = k * 64 + 64;
-                    wall[g_wall_count].y = i * 64 + 64;
-                    g_wall_count++;
-                }
-                k++;
+                if (line[j] == WALL)
+                    count++;
+                j++;
             }
             j++;
         }
         j = 0;
-        k = 0;
         i++;
     }
-    wall = (t_wall *)malloc(sizeof(t_wall) * g_wall_count);
-
-    fclose(mapFile);
-    return (wall);
+    printf("count: %d\n", count);
+    return (count);
 }
-
 void print_wall_coords(t_wall *wall)
 {
     int i = 0;
@@ -136,6 +127,43 @@ void print_wall_coords(t_wall *wall)
         i++;
     }
 }
+
+t_wall *fill_map_array(FILE *mapFile, t_map *map)
+{
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    char line[255];
+    t_wall *wall;
+    
+    g_wall_count = count_walls(mapFile);
+    wall = (t_wall *)malloc(sizeof(t_wall) * g_wall_count);
+    while (fgets(line, sizeof(line), mapFile))
+    {
+        while (line[j])
+        {
+            if (line[j] != ' ' && line[j] != '\n')
+            {
+                map->map[i][k] = line[j];
+                if (map->map[i][k] == WALL)
+                {
+                    printf("im here\n");
+                    wall[g_wall_count].x = k * 64 + 64;
+                    wall[g_wall_count].y = i * 64 + 64;
+                    printf("x: %d, y: %d\n", wall[g_wall_count].x, wall[g_wall_count].y);
+                }
+                k++;
+            }
+            j++;
+        }
+        j = 0;
+        k = 0;
+        i++;
+    }
+    fclose(mapFile);
+    return (wall);
+}
+
 
 t_map *get_map(char *map_path)
 {
@@ -151,11 +179,11 @@ t_map *get_map(char *map_path)
         printf("Error: fopen() failed\n");
         return (NULL);
     }
-    get_map_dims(mapFile, &map->height, &map->width);
+    get_map_dims(mapFile, map);
     map->map = create_map(map->height, map->width);
     mapFile = fopen(map_path, "r");
     g_wall = fill_map_array(mapFile, map);
-    print_wall_coords(g_wall);
+    // print_wall_coords(g_wall);
     return (map);
 }
 
@@ -284,9 +312,9 @@ void draw_map(mlx_t *mlx, t_map *map, int win_width, int win_height)
     {
         while (j < map->width)
         {
-            if (map->map[i][j] == '1')
+            if (map->map[i][j] == WALL)
                 color = 0xFFFFFFFF;
-            else if (map->map[i][j] == '0')
+            else if (map->map[i][j] == EMPTY)
                 color = 0x00000000;
             else if (map->map[i][j] == 'P')
             {
@@ -345,6 +373,5 @@ int32_t main()
     mlx_loop_hook(g_mlx, &hook, g_mlx);
     mlx_loop(g_mlx);
     mlx_terminate(g_mlx);
-    printf("wall count :%d\n", g_wall_count);
     return (EXIT_SUCCESS);
 }
