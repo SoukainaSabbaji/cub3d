@@ -113,3 +113,28 @@ int check_map_enclosed(t_map *map)
     }
     return (1);
 }
+
+int count_walls(FILE *mapFile)
+{
+    int i = 0;
+    int j = 0;
+    int count = 0;
+    char line[255];
+
+    while (fgets(line, sizeof(line), mapFile))
+    {
+        while (line[j])
+        {
+            if (line[j] != ' ' && line[j] != '\n')
+            {
+                if (line[j] == WALL)
+                    count++;
+                j++;
+            }
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+    return (count);
+}

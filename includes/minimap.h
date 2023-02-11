@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/07 17:43:42 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:16:59 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 #define PLAYER_RATIO PLAYER_SIZE / WALL_SIZE
 #define MMAP_WALL_COLOR  0xFFFFFFFF
 #define PLAYER_COLOR 0xFF0000FF
+#define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
-
 
 
 typedef struct s_fcoord
@@ -79,7 +79,7 @@ typedef struct s_player
 {
     t_coord     map_pos;
     t_fcoord    world_pos;
-    t_fcoord    dir;
+    t_fcoord    dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
     mlx_image_t *img;
     float      rot_angle;
     float      fov;
@@ -94,7 +94,12 @@ typedef struct s_iter
     int k;
 }   t_iter;
 
-
+typedef struct s_ray
+{
+    t_fcoord    ray_dir; //direction of the ray in world space matches the player's direction
+    t_fcoord    ray_origin; //origin of the ray in world space matches the player's position
+    // t_coord     step; //step to take in the map
+}   t_ray;
 
 /**********************-Functions**********************/
 void    get_map_dims(FILE *mapFile, t_map *map);
@@ -102,5 +107,29 @@ void    get_map_dims(FILE *mapFile, t_map *map);
 void draw_player(int color, t_coord pos, t_coord mini_map_size, int size);
 
 void    draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
+
+void hook_2(void *param);
+void hook(void *param);
+
+void draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
+void draw_line(t_coord p1, t_coord p2, int color);
+
+
+void move_player(t_fcoord move);
+
+int count_walls(FILE *mapFile);
+
+void ft_putstr_fd(const char *s, int fd);
+void ft_error(void);
+int min(int a, int b);
+
+
+
+mlx_image_t *g_img;
+mlx_image_t *g_player_img;
+mlx_t *g_mlx;
+t_player *g_player;
+t_wall *g_wall;
+t_map *g_map;
 
 #endif

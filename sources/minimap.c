@@ -6,43 +6,14 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/07 13:43:47 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:15:54 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 #define BPP sizeof(int32_t)
-
-mlx_image_t *g_img;
-mlx_image_t *g_player_img;
-mlx_t *g_mlx;
 int g_wall_count = 0;
-t_player *g_player;
-t_wall *g_wall;
-t_map *g_map;
 
-void ft_putstr_fd(const char *s, int fd)
-{
-    int i;
-
-    i = 0;
-    while (s[i])
-    {
-        write(fd, &s[i], 1);
-        i++;
-    }
-}
-
-static void ft_error(void)
-{
-    ft_putstr_fd(mlx_strerror(mlx_errno), 2);
-    exit(EXIT_FAILURE);
-}
-
-int min(int a, int b)
-{
-    return (a < b) ? a : b;
-}
 
 void print_map_array(t_map *map)
 {
@@ -91,30 +62,7 @@ char **create_map(int MAP_HEIGHT, int MAP_WIDTH)
     return (map);
 }
 
-int count_walls(FILE *mapFile)
-{
-    int i = 0;
-    int j = 0;
-    int count = 0;
-    char line[255];
 
-    while (fgets(line, sizeof(line), mapFile))
-    {
-        while (line[j])
-        {
-            if (line[j] != ' ' && line[j] != '\n')
-            {
-                if (line[j] == WALL)
-                    count++;
-                j++;
-            }
-            j++;
-        }
-        j = 0;
-        i++;
-    }
-    return (count);
-}
 
 void print_wall_coords(t_wall *wall)
 {
@@ -158,6 +106,37 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
     fclose(mapFile);
     return (wall);
 }
+
+
+
+//calculate new coordinates x' and y' of a vector (x, y) rotated by angle theta
+
+void rotate_vector(float *x, float *y, float theta)
+{
+    float x1 = *x;
+    float y1 = *y;
+
+    *x = x1 * cos(theta) - y1 * sin(theta);
+    *y = x1 * sin(theta) + y1 * cos(theta);
+}
+
+//cast a ray from player's position and then rotate the ray by an angle theta
+
+// void    cast_rays(t_coord player_pos)
+// {
+//     int rays_n = 0;
+//     float theta = 60;
+//     int i = 0;
+//     float rotation_angle = theta / rays_n;
+//     rays_n = 100; //screen width normally
+
+//     while (i < rays_n)
+//     {
+//         rotate_vector(&ray_x, &ray_y, rotation_angle);
+//         draw_line(player_pos, (t_coord){player_pos.x + ray_x * 100, player_pos.y + ray_y * 100}, 0x00FF00);
+//         i++;
+//     }
+// }
 
 t_map *get_map(char *map_path)
 {
@@ -207,77 +186,15 @@ void move_player(t_fcoord move)
     }
 }
 
-void hook_2(void *param)
-{
-    mlx_t *mlx;
-
-    mlx = param;
-    //change angles after moving the player 
-    if (mlx_is_key_down(mlx, MLX_KEY_UP))
-        move_player((t_fcoord){0, -0.1});
-    if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-        move_player((t_fcoord){0, 0.1});
-    if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-        move_player((t_fcoord){-0.1, 0});
-    if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-        move_player((t_fcoord){0.1, 0});
-    
-}
-
-void draw_line(t_coord p1, t_coord p2, int color)
-{
-    int dx = p2.x - p1.x;
-    int dy = p2.y - p1.y;
-    int steps = 0;
-    float x = p1.x + 0.5;
-    float y = p1.y + 0.5;
-    int i = 0;
-
-    if (abs(dx) > abs(dy))
-        steps = abs(dx);
-    else
-        steps = abs(dy);
-    float x_inc = dx / (float)steps;
-    float y_inc = dy / (float)steps;
-    while (i <= steps)
-    {
-        mlx_put_pixel(g_img,x, y, color);
-        x += x_inc;
-        y += y_inc;
-        i++;
-    }
-}
-
-
-
-
 void draw_player(int color, t_coord pos, t_coord mini_map_size, int size)
 {
     draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, color, size);
-    draw_line((t_coord){pos.x, pos.y}, (t_coord){pos.x + size, pos.y + size}, PLAYER_COLOR);
-    draw_line((t_coord){pos.x + size, pos.y}, (t_coord){pos.x, pos.y + size * 2}, PLAYER_COLOR);
+    draw_line(pos, (t_coord){pos.x + size / 2, pos.y * 2 + size / 2}, RAY_COLOR);
     mlx_image_to_window(g_mlx, g_player_img, pos.x, pos.y);
+    // cast_rays((t_coord){pos.x + size / 2, pos.y + size / 2});
 }
 
-void draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size)
-{
-    int i = 0;
-    int j = 0;
 
-    while (i < size)
-    {
-        while (j < size)
-        {
-            int nx = pos.x + i;
-            int ny = pos.y + j;
-            if (nx >= 0 && nx < dims.x && ny >= 0 && ny < dims.y)
-                mlx_put_pixel(img, nx, ny, color);
-            j++;
-        }
-        j = 0;
-        i++;
-    }
-}
 
 void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size)
 {
@@ -317,21 +234,13 @@ void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size)
     }
 }
 
-void hook(void *param)
-{
-    mlx_t *mlx;
-
-    mlx = param;
-    if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-        mlx_close_window(mlx);
-}
 
 int32_t main()
 {
     t_map *map;
 
-    map = get_map("/Users/ssabbaji/Desktop/ngpl/maptest.txt");
-    print_map_array(map);
+    map = get_map("/Users/ssabbaji/Desktop/cub3d/maptest.txt");
+    print_map_array(map);    
     g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "42pelotas", true);
     if (!g_mlx)
         ft_error();
