@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/11 15:15:54 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:46:04 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,22 +120,24 @@ void rotate_vector(float *x, float *y, float theta)
     *y = x1 * sin(theta) + y1 * cos(theta);
 }
 
-//cast a ray from player's position and then rotate the ray by an angle theta
 
 // void    cast_rays(t_coord player_pos)
 // {
-//     int rays_n = 0;
-//     float theta = 60;
-//     int i = 0;
-//     float rotation_angle = theta / rays_n;
-//     rays_n = 100; //screen width normally
-
-//     while (i < rays_n)
-//     {
-//         rotate_vector(&ray_x, &ray_y, rotation_angle);
-//         draw_line(player_pos, (t_coord){player_pos.x + ray_x * 100, player_pos.y + ray_y * 100}, 0x00FF00);
-//         i++;
-//     }
+//     // int rays_n = 0;
+//     // float theta = 60;
+//     // int i = 0;
+//     // rays_n = 3; //screen width normally
+//     // float rotation_angle = theta / rays_n;
+    
+//     // float ray_x = player_pos.x;
+//     // float ray_y = player_pos.y + 16 * 5;
+//     // rotate_vector(&ray_x, &ray_y, 30);
+//     // while (i < rays_n)
+//     // {
+//         // rotate_vector(&ray_x, &ray_y, rotation_angle);
+//         // draw_line(player_pos, (t_coord){player_pos.x + ray_x, player_pos.y + ray_y}, RAY_COLOR);
+//         // i++;
+//     // }
 // }
 
 t_map *get_map(char *map_path)
@@ -188,10 +190,16 @@ void move_player(t_fcoord move)
 
 void draw_player(int color, t_coord pos, t_coord mini_map_size, int size)
 {
-    draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, color, size);
-    draw_line(pos, (t_coord){pos.x + size / 2, pos.y * 2 + size / 2}, RAY_COLOR);
+    draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, color, size / 2);
+    // draw_line(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
+    ft_drawline(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
+    float ray_x = pos.x;
+    float ray_y = pos.y + 16 * 5;
+    rotate_vector(&ray_x, &ray_y, -30);
+    // draw_line(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
+    ft_drawline(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
     mlx_image_to_window(g_mlx, g_player_img, pos.x, pos.y);
-    // cast_rays((t_coord){pos.x + size / 2, pos.y + size / 2});
+    // cast_rays(pos);
 }
 
 

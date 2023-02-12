@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/11 15:16:59 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:46:21 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ typedef struct s_fcoord
     // float dx;
     // float dy;
 }               t_fcoord;
+
+typedef struct s_cord
+{
+    int d;
+    int error;
+    int slope;
+}               t_cord;
 
 typedef struct s_coord
 {
@@ -113,7 +120,7 @@ void hook(void *param);
 
 void draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 void draw_line(t_coord p1, t_coord p2, int color);
-
+void	ft_drawline(t_coord p1, t_coord p2, int color);
 
 void move_player(t_fcoord move);
 
