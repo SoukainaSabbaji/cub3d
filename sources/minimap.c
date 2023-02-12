@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/12 15:46:04 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/12 18:56:46 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,13 +191,13 @@ void move_player(t_fcoord move)
 void draw_player(int color, t_coord pos, t_coord mini_map_size, int size)
 {
     draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, color, size / 2);
-    // draw_line(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
-    ft_drawline(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
+    draw_line((t_coord){pos.x + size / 5, pos.y + size / 5}, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
+    // ft_drawline(pos, (t_coord){pos.x, pos.y - size * 5}, RAY_COLOR);
     float ray_x = pos.x;
-    float ray_y = pos.y + 16 * 5;
-    rotate_vector(&ray_x, &ray_y, -30);
-    // draw_line(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
-    ft_drawline(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
+    float ray_y = pos.y - size * 5;
+    rotate_vector(&ray_x, &ray_y, 30);
+    draw_line((t_coord){pos.x + size / 5, pos.y + size / 5}, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
+    // ft_drawline(pos, (t_coord){ray_x,ray_y}, RAY_COLOR);
     mlx_image_to_window(g_mlx, g_player_img, pos.x, pos.y);
     // cast_rays(pos);
 }
