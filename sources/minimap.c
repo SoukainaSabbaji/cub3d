@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/12 15:46:04 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/13 11:26:47 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,10 +191,10 @@ void move_player(t_fcoord move)
 void draw_player(int color, t_coord pos, t_coord mini_map_size, int size)
 {
     draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, color, size / 2);
-    // draw_line(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
-    ft_drawline(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
+    draw_line(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
+    // ft_drawline(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
     float ray_x = pos.x;
-    float ray_y = pos.y + 16 * 5;
+    float ray_y = pos.y - size * 5;
     rotate_vector(&ray_x, &ray_y, -30);
     // draw_line(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
     ft_drawline(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
@@ -247,7 +247,7 @@ int32_t main()
 {
     t_map *map;
 
-    map = get_map("/Users/ssabbaji/Desktop/cub3d/maptest.txt");
+    map = get_map("/Users/makacem/Desktop/tempcub/maptest.txt");
     print_map_array(map);    
     g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "42pelotas", true);
     if (!g_mlx)
