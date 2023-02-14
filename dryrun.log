@@ -1,7 +1,0 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory `/Users/ssabbaji/Desktop/cub3d'
-gcc -Werror -Wextra -Wall -g -o sources/minimap.o -c sources/minimap.c 
-gcc ./MLX42/libmlx42.a ./sources/parsing.o ./sources/main.o ./sources/lodev.o ./sources/drawing.o ./sources/hooks.o ./sources/helper.o ./sources/minimap.o -o map -I include -lglfw -L "/Users/makacem/goinfre/homebrew/Cellar/glfw/3.3.8/lib" -fsanitize=address -Ofast
-echo "\033[1;32m" "Compilation done"
-make: Leaving directory `/Users/ssabbaji/Desktop/cub3d'
- 

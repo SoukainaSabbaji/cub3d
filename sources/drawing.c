@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/13 12:36:07 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:51:04 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int 
                 if (dist < radius * radius && (nx >= 0 && nx < dims.x && ny >= 0 && ny < dims.y))
                     mlx_put_pixel(img, nx, ny, color);
             }
-        }
+        } 
 }
 
 void draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size)

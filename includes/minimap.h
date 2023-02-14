@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/13 12:36:10 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:42:47 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@
 #define PLAYER_SIZE 16 
 #define PLAYER_RATIO PLAYER_SIZE / WALL_SIZE
 #define MMAP_WALL_COLOR  0xFFFFFFFF
+#define MMAP_EMPTY_COLOR 0xFF000000
 #define PLAYER_COLOR 0xFF0000FF
+// #define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
 
