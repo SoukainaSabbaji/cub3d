@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 15:35:07 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:46:10 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,12 @@ void    get_map_dims(FILE *mapFile, t_map *map);
 
 void draw_player(t_coord pos, t_coord mini_map_size, int size);
 
-void    draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 
 void hook_2(void *param);
 void hook(void *param);
 
-void draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void draw_line(t_coord p1, t_coord p2, int color);
+t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
+void    draw_line(t_coord p1, t_coord p2, int color);
 void	ft_drawline(t_coord p1, t_coord p2, int color);
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 

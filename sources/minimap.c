@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 15:37:05 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:33:45 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void    cast_rays(t_player *player)
 {
     int rays_n = 0;
     int i = 0;
-    rays_n = 100; //screen width normally
+    rays_n = 480; //screen width normally
     
     // float ray_x = player_pos.x ;
     g_player->fov = 60;
@@ -224,12 +224,17 @@ void call_hooks()
 void draw_player(t_coord pos, t_coord mini_map_size, int size)
 {
     t_coord camera_pos;
-    
+    t_coord *points = NULL;
+
+    points = (t_coord *)calloc(size * size, sizeof(t_coord));
+    printf("number of pixels : %d\n",size *size);
     camera_pos.x = pos.x + size / 2;
     camera_pos.y = pos.y + size / 2;
     g_player->camera_plane = camera_pos;
     cast_rays(g_player);
-    draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, PLAYER_COLOR, 8);
+    points = draw_square(points, g_player_img, (t_coord){0, 0}, mini_map_size, PLAYER_COLOR, size);
+    rotate_player(points, size * size, 20);
+    draw_square(points, g_player_img, (t_coord){0, 0}, mini_map_size, PLAYER_COLOR, size);
     call_hooks();
     // (void)mini_map_size;
     (void)size;
@@ -265,13 +270,13 @@ void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size)
             {
                 t_coord wall_pos = (t_coord){.x = j * square_size,
                                             .y = i * square_size};
-                draw_square(g_img, wall_pos, mini_map_size, MMAP_WALL_COLOR, square_size - 1);
+                draw_square(NULL, g_img, wall_pos, mini_map_size, MMAP_WALL_COLOR, square_size - 1);
             }
             if (map->map[i][j] != WALL)
             {
                 t_coord empty_pos = (t_coord){.x = j * square_size,
                                             .y = i * square_size};
-                draw_square(g_img, empty_pos, mini_map_size, MMAP_EMPTY_COLOR, square_size - 1);
+                draw_square(NULL,g_img, empty_pos, mini_map_size, MMAP_EMPTY_COLOR, square_size - 1);
             }
             if (map->map[i][j] == PLAYER)
             {

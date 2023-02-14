@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 14:10:37 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:49:17 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int 
         } 
 }
 
-void draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size)
+t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size)
 {
     int i = 0;
     int j = 0;
-
+    
     while (i < size)
     {
         while (j < size)
@@ -41,12 +41,26 @@ void draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int siz
             int nx = pos.x + i;
             int ny = pos.y + j;
             if (nx >= 0 && nx < dims.x && ny >= 0 && ny < dims.y)
+            {
                 mlx_put_pixel(img, nx, ny, color);
+                if ((unsigned int)color == PLAYER_COLOR)
+                {
+                    t_iter iter;
+
+                    iter.i = 0;
+                    printf("index and value of coords in the points array[%d][%d, %d]\n", iter.i, nx, ny);
+                    points[iter.i].x = nx;
+                    points[iter.i].y = ny;
+                    iter.i++;
+                    
+                }
+            }
             j++;
         }
         j = 0;
         i++;
     }
+    return (points);
 }
 
 void draw_line(t_coord p1, t_coord p2, int color)
