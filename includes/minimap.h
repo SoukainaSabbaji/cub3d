@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 11:42:47 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:35:07 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ typedef struct s_cube
     t_map   *map;
     char    *img_data;
     void    *img_ptr;
-    int     bpp;
-    int     line_size;
-    int     endian;
 }   t_cube;
 
 typedef struct s_wall
@@ -90,6 +87,7 @@ typedef struct s_player
     t_fcoord    world_pos;
     t_fcoord    dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
     mlx_image_t *img;
+    t_coord    camera_plane;
     float      rot_angle;
     float      fov;
     
@@ -113,7 +111,7 @@ typedef struct s_ray
 /**********************-Functions**********************/
 void    get_map_dims(FILE *mapFile, t_map *map);
 
-void draw_player(int color, t_coord pos, t_coord mini_map_size, int size);
+void draw_player(t_coord pos, t_coord mini_map_size, int size);
 
 void    draw_square(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 

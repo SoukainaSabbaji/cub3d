@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 11:42:27 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:37:05 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,24 +121,23 @@ void rotate_vector(float *x, float *y, float theta)
 }
 
 
-void    cast_rays(t_coord player_pos)
+void    cast_rays(t_player *player)
 {
     int rays_n = 0;
-    float theta = 60;
     int i = 0;
     rays_n = 100; //screen width normally
-    theta = theta * M_PI / 180; //convert radians to degrees
-    float rotation_angle = theta / rays_n;
     
     // float ray_x = player_pos.x ;
-    // float ray_y = player_pos.y - 16 * 5;
-    float ray_x = player_pos.x + WALL_SIZE / 5;
-    float ray_y = player_pos.y + WALL_SIZE / 5;
-    rotate_vector(&ray_x, &ray_y, 30);
+    g_player->fov = 60;
+    float theta = g_player->fov * M_PI / 180; //convert radians to degrees
+    float rotation_angle = theta / rays_n;
+    float ray_x = player->camera_plane.x;
+    float ray_y = player->camera_plane.y;
+    rotate_vector(&ray_x, &ray_y, 30); //we rotate the ray by 30 degrees to the left so we can start from there
     while (i < rays_n)
     {
         rotate_vector(&ray_x, &ray_y, rotation_angle);
-        draw_line(player_pos, (t_coord){player_pos.x + ray_x, player_pos.y + ray_y}, RAY_COLOR);
+        draw_line(player->camera_plane, (t_coord){player->camera_plane.x + ray_x, player->camera_plane.y + ray_y}, RAY_COLOR);
         i++;
     }
 }
@@ -191,26 +190,58 @@ void move_player(t_fcoord move)
     }
 }
 
-void draw_player(int color, t_coord pos, t_coord mini_map_size, int size)
+void rotate_player(t_coord *points, int num_points,float angle)
 {
-    draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, color, size);
-    // (void)color;
+    float cos_theta = 0;
+    float sin_theta = 0;
+    t_coord point;
+   
+    int i = 0;
+    int x = 0;
+    int y = 0;
+    angle = angle * M_PI / 180;
+    cos_theta = cos(angle);
+    sin_theta = sin(angle);
+    while (i < num_points)
+    {
+        point = points[i];
+        x = point.x;
+        y = point.y;
+        
+        points[i].x = cos_theta * x - sin_theta * y;
+        points[i].y = sin_theta * x + cos_theta * y;
+        i++;
+    }
+}
+
+void call_hooks()
+{
+    
+    mlx_loop_hook(g_mlx, &hook, g_mlx);
+    mlx_loop_hook(g_mlx, &hook_2, g_mlx);
+}
+
+void draw_player(t_coord pos, t_coord mini_map_size, int size)
+{
+    t_coord camera_pos;
+    
+    camera_pos.x = pos.x + size / 2;
+    camera_pos.y = pos.y + size / 2;
+    g_player->camera_plane = camera_pos;
+    cast_rays(g_player);
+    draw_square(g_player_img, (t_coord){0, 0}, mini_map_size, PLAYER_COLOR, 8);
+    call_hooks();
     // (void)mini_map_size;
-    // (void)size;
+    (void)size;
     
     
     // draw_circle(g_player_img,(t_coord){0, 0}, mini_map_size, color, 20);
     // draw_line((t_coord){pos.x + size / 5, pos.y + size / 5}, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
     // draw_line(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR); 
-    // ft_drawline(pos, (t_coord){pos.x, pos.y - size * 5}, RAY_COLOR);
-    // float ray_x = pos.x;
-    // float ray_y = pos.y - size * 5;
     // rotate_vector(&ray_x, &ray_y, 30);
     // draw_line(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
     // draw_line((t_coord){pos.x + size / 5, pos.y + size / 5}, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
-    // ft_drawline(pos, (t_coord){ray_x,ray_y}, RAY_COLOR);
     mlx_image_to_window(g_mlx, g_player_img, pos.x, pos.y);
-    cast_rays(pos);
 }
 
 
@@ -259,7 +290,7 @@ void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size)
         j = 0;
         i++;
     }
-    draw_player(PLAYER_COLOR, player_pos,mini_map_size, 8);
+    draw_player(player_pos,mini_map_size, 8);
 }
 
 
@@ -276,8 +307,6 @@ int32_t main()
     //draw a red circle in the middle of the screen
     // draw_circle(g_img, (t_coord){map->width * WALL_SIZE / 2, map->height * WALL_SIZE / 2}, (t_coord){map->width * WALL_SIZE, map->height * WALL_SIZE}, RAY_COLOR, 16);
     mlx_image_to_window(g_mlx, g_img, 0, 0);
-    mlx_loop_hook(g_mlx, &hook, g_mlx);
-    mlx_loop_hook(g_mlx, &hook_2, g_mlx);
     mlx_loop(g_mlx);
     mlx_terminate(g_mlx);
     return (EXIT_SUCCESS);
