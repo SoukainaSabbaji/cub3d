@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 15:46:10 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:41:10 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
+#include <fcntl.h>
 #include "math.h"
 #include "../MLX42/include/MLX42/MLX42.h"
+#include "../libft/libft.h"
 
 #define WALL_SIZE 64
 #define PLAYER_SIZE 16 
@@ -126,9 +129,13 @@ void move_player(t_fcoord move);
 
 int count_walls(FILE *mapFile);
 
-void ft_putstr_fd(const char *s, int fd);
 void ft_error(void);
 int min(int a, int b);
+t_map *get_map(char *map_path);
+void print_map_array(t_map *map);
+void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size);
+void    ft_check_input(int nbr_of_args, char **args);
+
 
 
 

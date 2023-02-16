@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 17:49:17 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:18:03 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
-
 
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size)
 {
@@ -48,7 +47,6 @@ t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims
                     t_iter iter;
 
                     iter.i = 0;
-                    printf("index and value of coords in the points array[%d][%d, %d]\n", iter.i, nx, ny);
                     points[iter.i].x = nx;
                     points[iter.i].y = ny;
                     iter.i++;
