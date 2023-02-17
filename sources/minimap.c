@@ -6,14 +6,13 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 17:33:45 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:23:16 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 #define BPP sizeof(int32_t)
 int g_wall_count = 0;
-
 
 void print_map_array(t_map *map)
 {
@@ -121,23 +120,24 @@ void rotate_vector(float *x, float *y, float theta)
 }
 
 
-void    cast_rays(t_player *player)
+void    cast_rays(t_player *player,  t_coord dims)
 {
     int rays_n = 0;
     int i = 0;
     rays_n = 480; //screen width normally
     
-    // float ray_x = player_pos.x ;
     g_player->fov = 60;
     float theta = g_player->fov * M_PI / 180; //convert radians to degrees
     float rotation_angle = theta / rays_n;
     float ray_x = player->camera_plane.x;
     float ray_y = player->camera_plane.y;
+    // float ray_x = player->world_pos.x;
+    // float ray_y = player->world_pos.y;
     rotate_vector(&ray_x, &ray_y, 30); //we rotate the ray by 30 degrees to the left so we can start from there
     while (i < rays_n)
     {
         rotate_vector(&ray_x, &ray_y, rotation_angle);
-        draw_line(player->camera_plane, (t_coord){player->camera_plane.x + ray_x, player->camera_plane.y + ray_y}, RAY_COLOR);
+        draw_line(player->camera_plane, (t_coord){player->camera_plane.x + ray_x, player->camera_plane.y + ray_y}, RAY_COLOR, dims);
         i++;
     }
 }
@@ -185,12 +185,16 @@ void move_player(t_fcoord move)
     {
         g_player->world_pos = new_wpos;
         g_player->map_pos = new_mpos;
+        // g_player->camera_plane.x = g_player->world_pos.x + g_player->camera_
+        // g_player->camera_plane.x = g_player->world_pos.x ;
+        // g_player->camera_plane.y = g_player->world_pos.y ;
+        cast_rays(g_player, (t_coord){640, 512});
         g_player_img->instances[0].x = new_mpos.x * WALL_SIZE + WALL_SIZE / 2 - PLAYER_SIZE / 2;
         g_player_img->instances[0].y = new_mpos.y * WALL_SIZE + WALL_SIZE / 2 - PLAYER_SIZE / 2;
     }
 }
 
-void rotate_player(t_coord *points, int num_points,float angle)
+t_coord *rotate_player(t_coord *points, int num_points,float angle)
 {
     float cos_theta = 0;
     float sin_theta = 0;
@@ -199,6 +203,7 @@ void rotate_player(t_coord *points, int num_points,float angle)
     int i = 0;
     int x = 0;
     int y = 0;
+    
     angle = angle * M_PI / 180;
     cos_theta = cos(angle);
     sin_theta = sin(angle);
@@ -212,13 +217,24 @@ void rotate_player(t_coord *points, int num_points,float angle)
         points[i].y = sin_theta * x + cos_theta * y;
         i++;
     }
+    return (points);
 }
 
 void call_hooks()
 {
-    
     mlx_loop_hook(g_mlx, &hook, g_mlx);
     mlx_loop_hook(g_mlx, &hook_2, g_mlx);
+}
+
+
+void    print_coords(t_coord *points)
+{
+    int i = 0;
+    while (i < 64)
+    {
+        printf("x : %d, y : %d\n", points[i].x, points[i].y);
+        i++;
+    }
 }
 
 void draw_player(t_coord pos, t_coord mini_map_size, int size)
@@ -231,21 +247,12 @@ void draw_player(t_coord pos, t_coord mini_map_size, int size)
     camera_pos.x = pos.x + size / 2;
     camera_pos.y = pos.y + size / 2;
     g_player->camera_plane = camera_pos;
-    cast_rays(g_player);
+    cast_rays(g_player, mini_map_size);
     points = draw_square(points, g_player_img, (t_coord){0, 0}, mini_map_size, PLAYER_COLOR, size);
-    rotate_player(points, size * size, 20);
-    draw_square(points, g_player_img, (t_coord){0, 0}, mini_map_size, PLAYER_COLOR, size);
+    points = rotate_player(points, size * size, 20);
+    // print_coords(points);
+    // draw_square_2(points, g_player_img, MMAP_WALL_COLOR, size);
     call_hooks();
-    // (void)mini_map_size;
-    (void)size;
-    
-    
-    // draw_circle(g_player_img,(t_coord){0, 0}, mini_map_size, color, 20);
-    // draw_line((t_coord){pos.x + size / 5, pos.y + size / 5}, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR);
-    // draw_line(pos, (t_coord){pos.x, pos.y - size *5}, RAY_COLOR); 
-    // rotate_vector(&ray_x, &ray_y, 30);
-    // draw_line(pos, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
-    // draw_line((t_coord){pos.x + size / 5, pos.y + size / 5}, (t_coord){pos.x + ray_x, pos.y + ray_y}, RAY_COLOR);
     mlx_image_to_window(g_mlx, g_player_img, pos.x, pos.y);
 }
 
