@@ -6,9 +6,10 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/16 16:26:25 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:37:21 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minimap.h"
 
@@ -42,9 +43,13 @@ t_coord *draw_square(t_coord *points, mlx_image_t *img, t_coord pos, t_coord dim
                 mlx_put_pixel(img, nx, ny, color);
                 if ((unsigned int)color == PLAYER_COLOR)
                 {
-                    points[iter.k].x = nx;
-                    points[iter.k].y = ny;
-                    iter.k++;
+                    t_iter iter;
+
+                    iter.i = 0;
+                    points[iter.i].x = nx;
+                    points[iter.i].y = ny;
+                    iter.i++;
+                    
                 }
             }
             iter.j++;

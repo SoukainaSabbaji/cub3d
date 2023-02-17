@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/16 16:23:16 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:37:05 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,6 @@ void draw_player(t_coord pos, t_coord mini_map_size, int size)
 }
 
 
-
 void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size)
 {
 
@@ -303,23 +302,4 @@ void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size)
         i++;
     }
     draw_player(player_pos,mini_map_size, 8);
-}
-
-
-int32_t main()
-{
-    t_map *map;
-
-    map = get_map("/Users/ssabbaji/Desktop/cub3d/maptest.txt");
-    print_map_array(map);    
-    g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "42pelotas", true);
-    if (!g_mlx)
-        ft_error();
-    draw_map(g_mlx, map, (t_coord){map->width * WALL_SIZE, map->height * WALL_SIZE});
-    //draw a red circle in the middle of the screen
-    // draw_circle(g_img, (t_coord){map->width * WALL_SIZE / 2, map->height * WALL_SIZE / 2}, (t_coord){map->width * WALL_SIZE, map->height * WALL_SIZE}, RAY_COLOR, 16);
-    mlx_image_to_window(g_mlx, g_img, 0, 0);
-    mlx_loop(g_mlx);
-    mlx_terminate(g_mlx);
-    return (EXIT_SUCCESS);
 }
