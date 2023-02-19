@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/17 11:38:10 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:46:44 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,15 @@ typedef struct s_coord
 
 typedef struct s_map
 {
-    char   **map;
-    int     height;
-    int     width;
+    char        **map;
+    int         height;
+    int         width;
+    char        *n_texture;
+    char        *s_texture;
+    char        *w_texture;
+    char        *e_texture;
+    int         nbr_of_walls;
+    t_player    *player;
 }   t_map; 
 
 typedef struct s_cube
@@ -86,13 +92,13 @@ typedef struct s_wall
 
 typedef struct s_player
 {
-    t_coord     map_pos;
-    t_fcoord    world_pos;
-    t_fcoord    dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
-    mlx_image_t *img;
-    t_coord    camera_plane;
-    float      rot_angle;
-    float      fov;
+    t_coord         map_pos;
+    t_fcoord        world_pos;
+    t_fcoord        dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
+    mlx_image_t     *img;
+    t_coord         camera_plane;
+    float           rot_angle;
+    float           fov;
     
 }   t_player;
 
@@ -110,6 +116,33 @@ typedef struct s_ray
     t_fcoord    ray_origin; //origin of the ray in world space matches the player's position
     // t_coord     step; //step to take in the map
 }   t_ray;
+
+
+typedef struct s_game_data
+{
+    t_map       *map;
+    t_player    *player;
+    t_wall      *wall;
+    t_ray       *ray;
+    t_fcoord    *camera_plane;
+    t_fcoord    *ray_dir;
+    t_fcoord    *plane;
+    double      time;
+    double      old_time;
+    t_coord     *map_pos;
+    t_fcoord    *side_dist;
+    t_fcoord    *delta_dist;
+    double      *perp_wall_dist;
+    t_coord     *step;
+    int         hit;
+    int         side;
+    int         line_height;
+    int         draw_start;
+    int         draw_end;
+    double      move_speed;
+    double      rot_speed;
+    double      frame_time;
+}   t_game_data;
 
 /**********************-Functions**********************/
 void    get_map_dims(FILE *mapFile, t_map *map);
