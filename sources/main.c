@@ -19,7 +19,8 @@ int main(int argc, char **argv)
 	ft_check_input(argc, argv);
     map = get_map(argv[1]);
     print_map_array(map);
-    g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "cub3D", true);
+    //init map function to initialize mlx;
+    // g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "cub3D", true);
     if (!g_mlx)
         ft_error();
     draw_map(g_mlx, map, (t_coord){map->width * WALL_SIZE, map->height * WALL_SIZE});

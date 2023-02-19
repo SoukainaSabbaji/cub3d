@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/19 15:55:22 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:38:40 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,71 @@ void    drawing_calc(t_game_data *game)
     //which box of the map we're in
     game->map_pos->x = (int)game->player->world_pos.x;
     game->map_pos->y = (int)game->player->world_pos.y;
+    game->hit = 0;
+    //initialize deltaDist vars aaaand done with drawing calc
+    game->delta_dist->x = sqrt(1 + (game->ray_dir->y * game->ray_dir->y) / (game->ray_dir->x * game->ray_dir->x));
+    //this calculation is to avoid division by 0 (we're not in c++ hehe) and is the same as doing the following
+    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2)) \
+    // / pow(game->ray_dir->x, 2);
+    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2)) \    
+    // / pow(game->ray_dir->x, 2);
+    game->delta_dist->y = sqrt(1 + (game->ray_dir->x * game->ray_dir->x) / (game->ray_dir->y * game->ray_dir->y));
+    if (game->delta_dist->x == 0)
 }
 
-
-void    init_pregame_parse(t_game_data *game)
+void    init_player(t_game_data *game)
 {
-    
+    game->player->world_pos.x = 0;
+    game->player->world_pos.y = 0;
+    game->player->dir.x = 0;
+    game->player->dir.y = 0;
+    //are the dir variables the same as the ray_dir variables ?
+    //i literally have no idea
 }
-
 void    init_map(t_game_data *game)
 {
     game->map->e_texture = NULL;
     game->map->n_texture = NULL;
     game->map->s_texture = NULL;
     game->map->w_texture = NULL;
+    game->map->map = NULL;
     get_map_dims(game->map);
+}
+
+void    init_pregame_parse(t_game_data *game)
+{
+    init_map(game);
+    init_player(game);
+    game->screeen_height = 640;
+    game->screeen_width = 480;
+    game->cube->mlx = mlx_init(game->screeen_width,game->screeen_height, "cub3D", true);
+    game->cube->win = mlx_new_window(game->cube->mlx, game->screeen_width, game->screeen_height, "minimap");
+    game->img = mlx_new_image(game->cube->mlx, game->screeen_width, game->screeen_height);
+}
+
+void    start_drawing(t_game_data *game)
+{
+    game->x = 0;
+    while (game->x < game->screeen_width)
+    {
+        drawing_calc(game);
+        game->x++;
+    }
+}
+
+//the function to be put in mlx_loop_hook
+void   ready_start(void *ptr)
+{
+    t_game_data *game;
+
+    game = (t_game_data *)ptr;
+    mlx_clear_window(game->cube->mlx, game->cube->win);
+    start_drawing(game);
+    
 }
 
 
 /* steps to follow */
-// 1. init the game variables , like screeb width and height , pointers related to mlx and so on
+// 1. init_pregane_parse
 // 2. init_game_vars
 // 3. make a function that starts the game and put it in the mlx_loop_hook

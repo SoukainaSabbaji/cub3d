@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/19 15:56:23 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:28:16 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ typedef struct s_game_data
     t_player    *player;
     t_wall      *wall;
     t_ray       *ray;
+    t_cube      *cube;
+    mlx_image_t *img;
     t_fcoord    *camera_plane;
     t_fcoord    *ray_dir;
     t_fcoord    *plane;
@@ -179,10 +181,10 @@ void    ft_check_input(int nbr_of_args, char **args);
 
 
 
-mlx_image_t *g_img;
-mlx_image_t *g_player_img;
-mlx_t *g_mlx;
-t_player *g_player;
+mlx_image_t *g_img;//replaced by game->cube->img
+mlx_image_t *g_player_img; //wouldnt need this after moving to a 3D engine
+mlx_t *g_mlx; // replaced by game->cube->mlx
+t_player *g_player; //replaced by game->player
 t_wall *g_wall;
 t_map *g_map;
 
