@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/17 11:37:05 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:56:15 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ t_map *get_map(char *map_path)
         printf("Error: fopen() failed\n");
         return (NULL);
     }
-    get_map_dims(mapFile, map);
+    map->map_file = mapFile;
+    get_map_dims(map);
     map->map = create_map(map->height, map->width);
     g_map = map;
     mapFile = fopen(map_path, "r");

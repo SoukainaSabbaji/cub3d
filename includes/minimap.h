@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/17 15:46:44 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:56:23 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_coord
 typedef struct s_map
 {
     char        **map;
+    FILE        *map_file;
     int         height;
     int         width;
     char        *n_texture;
@@ -127,6 +128,7 @@ typedef struct s_game_data
     t_fcoord    *camera_plane;
     t_fcoord    *ray_dir;
     t_fcoord    *plane;
+    t_fcoord    *pos; //position of the player in the world
     double      time;
     double      old_time;
     t_coord     *map_pos;
@@ -140,12 +142,16 @@ typedef struct s_game_data
     int         draw_start;
     int         draw_end;
     double      move_speed;
-    double      rot_speed;
+    double      rot_angle;
     double      frame_time;
+    int         x;
+    int         screeen_width;
+    int         screeen_height;
+    char        start_dir;
 }   t_game_data;
 
 /**********************-Functions**********************/
-void    get_map_dims(FILE *mapFile, t_map *map);
+void    get_map_dims(t_map *map);
 
 void draw_player(t_coord pos, t_coord mini_map_size, int size);
 

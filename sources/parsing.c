@@ -12,15 +12,15 @@
 
 #include "../includes/minimap.h"
 
-void get_map_dims(FILE *mapFile, t_map *map)
+void get_map_dims(t_map *map)
 {
     int lines = 0;
     int columns = 0;
     char line[255];
 
-    if (mapFile == NULL)
+    if (map->map_file == NULL)
         return;
-    fgets(line, sizeof(line), mapFile);
+    fgets(line, sizeof(line), map->map_file);
     int i = 0;
     if (strlen(line))
     {
