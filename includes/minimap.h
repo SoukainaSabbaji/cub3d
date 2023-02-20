@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/19 18:58:35 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/20 11:26:14 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,16 @@ typedef struct s_coord
 
 typedef struct s_map
 {
-    char   **map;
-    int     height;
-    int     width;
+    char        **map;
+    FILE        *map_file;
+    int         height;
+    int         width;
+    char        *n_texture;
+    char        *s_texture;
+    char        *w_texture;
+    char        *e_texture;
+    int         nbr_of_walls;
+    t_player    *player;
 }   t_map; 
 
 typedef struct s_cube
@@ -86,13 +93,13 @@ typedef struct s_wall
 
 typedef struct s_player
 {
-    t_coord     map_pos;
-    t_fcoord    world_pos;
-    t_fcoord    dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
-    mlx_image_t *img;
-    t_coord    camera_plane;
-    float      rot_angle;
-    float      fov;
+    t_coord         map_pos;
+    t_fcoord        world_pos;
+    t_fcoord        dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
+    mlx_image_t     *img;
+    t_coord         camera_plane;
+    float           rot_angle;
+    float           fov;
     
 }   t_player;
 
@@ -111,7 +118,42 @@ typedef struct s_ray
     // t_coord     step; //step to take in the map
 }   t_ray;
 
+
+typedef struct s_game_data
+{
+    t_map       *map;
+    t_player    *player;
+    t_wall      *wall;
+    t_ray       *ray;
+    t_cube      *cube;
+    mlx_image_t *img;
+    t_fcoord    *camera_plane;
+    t_fcoord    *ray_dir;
+    t_fcoord    *plane;
+    t_fcoord    *pos; //position of the player in the world
+    double      time;
+    double      old_time;
+    t_coord     *map_pos;
+    t_fcoord    *side_dist;
+    t_fcoord    *delta_dist;
+    double      *perp_wall_dist;
+    t_coord     *step;
+    int         hit;
+    int         side;
+    int         line_height;
+    int         draw_start;
+    int         draw_end;
+    double      move_speed;
+    double      rot_angle;
+    double      frame_time;
+    int         x;
+    int         screeen_width;
+    int         screeen_height;
+    char        start_dir;
+}   t_game_data;
+
 /**********************-Functions**********************/
+void    get_map_dims(t_map *map);
 
 void draw_player(t_coord pos, t_coord mini_map_size, int size);
 
@@ -120,9 +162,10 @@ void hook_2(void *param);
 void hook(void *param);
 
 t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_line(t_coord p1, t_coord p2, int color);
+void    draw_line(t_coord p1, t_coord p2, int color, t_coord dims);
 void	ft_drawline(t_coord p1, t_coord p2, int color);
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
+void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size);
 
 void	move_player(t_fcoord move);
 
@@ -146,10 +189,10 @@ void	ft_check_player(char **table);
 void	ft_check_map2d(char **map2d);
 
 
-mlx_image_t *g_img;
-mlx_image_t *g_player_img;
-mlx_t *g_mlx;
-t_player *g_player;
+mlx_image_t *g_img;//replaced by game->cube->img
+mlx_image_t *g_player_img; //wouldnt need this after moving to a 3D engine
+mlx_t *g_mlx; // replaced by game->cube->mlx
+t_player *g_player; //replaced by game->player
 t_wall *g_wall;
 t_map *g_map;
 
