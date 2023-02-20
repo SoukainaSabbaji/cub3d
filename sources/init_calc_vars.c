@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/19 18:38:40 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:14:40 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,32 @@ void    init_game_dir(t_game_data *game)
 }
 
 
+void    calculate_step(t_game_data *game)
+{
+    //calculate step and initial sideDist
+    if (game->ray_dir->x < 0)
+    {
+        game->step->x = -1;
+        game->side_dist->x = (game->pos->x - game->map_pos->x) * game->delta_dist->x;
+    }
+    else
+    {
+        game->step->x = 1;
+        game->side_dist->x = (game->map_pos->x + 1.0 - game->pos->x) * game->delta_dist->x;
+    }
+    if (game->ray_dir->y < 0)
+    {
+        game->step->y = -1;
+        game->side_dist->y = (game->pos->y - game->map_pos->y) * game->delta_dist->y;
+    }
+    else
+    {
+        game->step->y = 1;
+        game->side_dist->y = (game->map_pos->y + 1.0 - game->pos->y) * game->delta_dist->y;
+    }
+    
+}
+
 void    drawing_calc(t_game_data *game)
 {
     // calculate ray position and direction
@@ -70,6 +96,8 @@ void    drawing_calc(t_game_data *game)
     //camera plane is the 3d version of planex and y , we normalize 
     //it by dividing it by the screen width so the camera plane
     //is always the same size and always centered on the player 
+    
+    
     game->camera_plane->x = 2 * game->x / (double)game->screeen_width - 1; //x-coordinate in camera space
     game->ray_dir->x = game->ray->ray_dir.x + game->plane->x * game->camera_plane->x;
     game->ray_dir->y = game->ray->ray_dir.y + game->plane->y * game->camera_plane->x;  
@@ -85,7 +113,7 @@ void    drawing_calc(t_game_data *game)
     // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2)) \    
     // / pow(game->ray_dir->x, 2);
     game->delta_dist->y = sqrt(1 + (game->ray_dir->x * game->ray_dir->x) / (game->ray_dir->y * game->ray_dir->y));
-    if (game->delta_dist->x == 0)
+    // if (game->delta_dist->x == 0) the rest to implement in a separate function
 }
 
 void    init_player(t_game_data *game)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/20 11:26:14 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/20 16:22:07 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_game_data
     t_fcoord    *delta_dist;
     double      *perp_wall_dist;
     t_coord     *step;
+    int         x;
     int         hit;
     int         side;
     int         line_height;
@@ -146,7 +147,6 @@ typedef struct s_game_data
     double      move_speed;
     double      rot_angle;
     double      frame_time;
-    int         x;
     int         screeen_width;
     int         screeen_height;
     char        start_dir;
@@ -187,6 +187,19 @@ void	ft_check_nbrof_players(char **table);
 void	ft_check_player_position(char **table);
 void	ft_check_player(char **table);
 void	ft_check_map2d(char **map2d);
+
+/******************* - teh fun stuff - *******************/
+void    drawing_calc(t_game_data *game);
+void    calculate_step(t_game_data *game);
+void    init_game_dir(t_game_data *game);
+void    ready_start(void *ptr);
+void    start_drawing(t_game_data *game);
+void    init_pregame_parse(t_game_data *game);
+void    init_map(t_game_data *game);
+void    init_player(t_game_data *game);
+void    init_game_vars(t_game_data *game);
+void    init_dda(t_game_data *data);
+void    calculate_line_height(t_game_data *data);
 
 
 mlx_image_t *g_img;//replaced by game->cube->img
