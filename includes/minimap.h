@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/16 10:41:10 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/19 18:58:35 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ typedef struct s_ray
 }   t_ray;
 
 /**********************-Functions**********************/
-void    get_map_dims(FILE *mapFile, t_map *map);
 
 void draw_player(t_coord pos, t_coord mini_map_size, int size);
 
@@ -125,18 +124,26 @@ void    draw_line(t_coord p1, t_coord p2, int color);
 void	ft_drawline(t_coord p1, t_coord p2, int color);
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 
-void move_player(t_fcoord move);
+void	move_player(t_fcoord move);
 
-int count_walls(FILE *mapFile);
+int		count_walls(FILE *mapFile);
 
-void ft_error(void);
-int min(int a, int b);
-t_map *get_map(char *map_path);
-void print_map_array(t_map *map);
-void draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size);
-void    ft_check_input(int nbr_of_args, char **args);
-
-
+void	ft_error(void);
+int		min(int a, int b);
+void	print_map_array(t_map *map);
+void	ft_check_input(int nbr_of_args, char **args);
+char	**ft_getmap2d(char *map_path);
+void    draw_map(mlx_t *mlx, t_map *map, t_coord mini_map_size);
+void	ft_check_first_line(char **table);
+void	ft_check_last_line(char **table);
+void	ft_check_frst_lst_char(char **table);
+void	ft_check_top_down(char **table);
+void	ft_check_left_right(char **table);
+int		ft_count_nbrof_player(char **table);
+void	ft_check_nbrof_players(char **table);
+void	ft_check_player_position(char **table);
+void	ft_check_player(char **table);
+void	ft_check_map2d(char **map2d);
 
 
 mlx_image_t *g_img;

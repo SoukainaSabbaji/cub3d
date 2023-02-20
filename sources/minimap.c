@@ -6,63 +6,13 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/15 13:37:40 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/18 20:40:31 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 #define BPP sizeof(int32_t)
 int g_wall_count = 0;
-
-
-void print_map_array(t_map *map)
-{
-    int i = 0;
-    int j = 0;
-    while (i < map->height)
-    {
-        while (j < map->width)
-        {
-            printf("%c", map->map[i][j]);
-            j++;
-        }
-        printf("\n");
-        j = 0;
-        i++;
-    }
-}
-
-char **create_map(int MAP_HEIGHT, int MAP_WIDTH)
-{
-    char **map;
-    int i = 0;
-    int j = 0;
-
-    map = (char **)malloc(sizeof(char *) * MAP_HEIGHT);
-    if (map == NULL)
-        return (NULL);
-    while (i < MAP_HEIGHT)
-    {
-        map[i] = (char *)malloc(sizeof(char) * MAP_WIDTH);
-        if (map[i] == NULL)
-            return (NULL);
-        i++;
-    }
-    i = 0;
-    while (i < MAP_HEIGHT)
-    {
-        j = 0;
-        while (j < MAP_WIDTH)
-        {
-            map[i][j] = '0';
-            j++;
-        }
-        i++;
-    }
-    return (map);
-}
-
-
 
 void print_wall_coords(t_wall *wall)
 {
@@ -141,29 +91,6 @@ void    cast_rays(t_player *player)
         i++;
     }
 }
-
-t_map *get_map(char *map_path)
-{
-    FILE *mapFile;
-    t_map *map;
-
-    map = (t_map *)calloc(1, sizeof(t_map));
-    if (map == NULL)
-        return (NULL);
-    mapFile = fopen(map_path, "r");
-    if (mapFile == NULL)
-    {
-        printf("Error: fopen() failed\n");
-        return (NULL);
-    }
-    get_map_dims(mapFile, map);
-    map->map = create_map(map->height, map->width);
-    g_map = map;
-    mapFile = fopen(map_path, "r");
-    g_wall = fill_map_array(mapFile, map);
-    return (map);
-}
-
 
 bool is_on_wall(int x, int y)
 {

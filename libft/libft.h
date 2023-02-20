@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 10:37:40 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/15 16:15:16 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/16 14:08:19 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <unistd.h>
+# include "get_next_line.h"
 
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
@@ -60,5 +61,6 @@ int			ft_printf(const char *str, ...);
 int			ft_putchar(char c);
 int			ft_putnbr(long int n);
 int			ft_putstr(char *s);
+char		*get_next_line(int fd);
 
 #endif

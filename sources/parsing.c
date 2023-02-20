@@ -12,32 +12,7 @@
 
 #include "../includes/minimap.h"
 
-void get_map_dims(FILE *mapFile, t_map *map)
-{
-    int lines = 0;
-    int columns = 0;
-    char line[255];
 
-    if (mapFile == NULL)
-        return;
-    fgets(line, sizeof(line), mapFile);
-    int i = 0;
-    if (strlen(line))
-    {
-        while (i < (int)strlen(line))
-        {
-            if (line[i] == '0' || line[i] == '1')
-                columns++;
-            i++;
-        }
-        lines++;
-    }
-    while (fgets(line, sizeof(line), mapFile))
-        lines++;
-    fclose(mapFile);
-    map->height = lines;
-    map->width = columns;
-}
 
 int check_map_chars(t_map *map)
 {
