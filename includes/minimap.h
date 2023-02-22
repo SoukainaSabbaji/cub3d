@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/22 18:00:36 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/22 20:38:40 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_map
     char        *w_texture;
     char        *e_texture;
     int         nbr_of_walls;
-    t_player    *player;
+    // t_player    *player;
 }   t_map; 
 
 typedef struct s_cube
@@ -146,17 +146,18 @@ typedef struct s_game_data
     t_ray       *ray;
     t_cube      *cube;
     mlx_image_t *img;
-    t_fcoord    *camera_plane;
-    t_fcoord    *ray_dir;
-    t_fcoord    *plane;
-    t_fcoord    *pos; //position of the player in the world
+    t_fcoord    camera_plane;
+    t_fcoord    ray_dir;
+    t_fcoord    plane;
+    t_fcoord    pos; //position of the player in the world
     double      time;
     double      old_time;
-    t_coord     *map_pos;
-    t_fcoord    *side_dist;
-    t_fcoord    *delta_dist;
-    double      *perp_wall_dist;
-    t_coord     *step;
+    t_coord     map_pos;
+    t_fcoord    side_dist;
+    t_fcoord    delta_dist;
+    double      perp_wall_dist;
+    t_coord     step;
+    int         x;
     int         hit;
     int         side;
     int         line_height;
@@ -165,7 +166,6 @@ typedef struct s_game_data
     double      move_speed;
     double      rot_angle;
     double      frame_time;
-    int         x;
     int         screeen_width;
     int         screeen_height;
     char        start_dir;
@@ -215,6 +215,19 @@ int		ft_2darrlen(char **arr);
 void	ft_free2darr(char **arr);
 
 
+
+/******************* - teh fun stuff - *******************/
+void    drawing_calc(t_game_data *game);
+void    calculate_step(t_game_data *game);
+void    init_game_dir(t_game_data *game);
+void    ready_start(void *ptr);
+void    start_drawing(t_game_data *game);
+void    init_pregame_parse(t_game_data *game);
+void    init_map(t_game_data *game);
+void    init_player(t_game_data *game);
+void    init_game_vars(t_game_data *game);
+void    init_dda(t_game_data *data);
+void    calculate_line_height(t_game_data *data);
 
 
 mlx_image_t *g_img;//replaced by game->cube->img
