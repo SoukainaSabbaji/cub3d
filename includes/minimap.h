@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/20 11:26:14 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/22 18:00:36 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,17 @@ typedef struct s_coord
     // int dy;
 }               t_coord;
 
+typedef struct s_player
+{
+    t_coord         map_pos;
+    t_fcoord        world_pos;
+    t_fcoord        dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
+    mlx_image_t     *img;
+    t_coord         camera_plane;
+    float           rot_angle;
+    float           fov;
+    
+}   t_player;
 
 typedef struct s_map
 {
@@ -91,17 +102,6 @@ typedef struct s_wall
     int y;
 }   t_wall;
 
-typedef struct s_player
-{
-    t_coord         map_pos;
-    t_fcoord        world_pos;
-    t_fcoord        dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
-    mlx_image_t     *img;
-    t_coord         camera_plane;
-    float           rot_angle;
-    float           fov;
-    
-}   t_player;
 
 
 typedef struct s_iter
@@ -117,6 +117,25 @@ typedef struct s_ray
     t_fcoord    ray_origin; //origin of the ray in world space matches the player's position
     // t_coord     step; //step to take in the map
 }   t_ray;
+
+typedef struct s_rgb
+{
+    int r;
+    int g;
+    int b;
+}   t_rgb;
+
+typedef struct s_elem
+{
+    char    *north;
+    char    *south;
+    char    *west;
+    char    *east;
+    t_rgb   floor;
+    t_rgb   ceiling;
+    char    **map;
+
+}   t_elem;
 
 
 typedef struct s_game_data
@@ -187,6 +206,15 @@ void	ft_check_nbrof_players(char **table);
 void	ft_check_player_position(char **table);
 void	ft_check_player(char **table);
 void	ft_check_map2d(char **map2d);
+t_elem	ft_getelem(char *map_filename);
+char	*ft_getpath(char	*file_name, char *direction);
+t_rgb	ft_getrgb(char *file_name, char *f_c);
+t_rgb	ft_rgberr(void);
+t_rgb	ft_getcolors(char *str);
+int		ft_2darrlen(char **arr);
+void	ft_free2darr(char **arr);
+
+
 
 
 mlx_image_t *g_img;//replaced by game->cube->img

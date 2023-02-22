@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_calc_vars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/19 18:38:40 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:35:02 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void    init_map(t_game_data *game)
     game->map->s_texture = NULL;
     game->map->w_texture = NULL;
     game->map->map = NULL;
-    get_map_dims(game->map);
+    get_map_dims(game->map);// placeholder for the new func
 }
 
 void    init_pregame_parse(t_game_data *game)

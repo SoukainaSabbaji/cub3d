@@ -32,9 +32,9 @@ void get_map_dims(t_map *map)
         }
         lines++;
     }
-    while (fgets(line, sizeof(line), mapFile))
+    while (fgets(line, sizeof(line), map->map_file))
         lines++;
-    fclose(mapFile);
+    fclose(map->map_file);
     map->height = lines;
     map->width = columns;
 }

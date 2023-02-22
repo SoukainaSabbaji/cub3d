@@ -15,18 +15,20 @@
 
 int	main(int argc, char **argv)
 {
-	char	**map2d;
+	t_elem	elem;
 
 	ft_check_input(argc, argv);
-    map = get_map(argv[1]);
-    print_map_array(map);
+	elem = ft_getelem(argv[1]);
+    
+
     //init map function to initialize mlx;
     // g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "cub3D", true);
-    if (!g_mlx)
-        ft_error();
-    draw_map(g_mlx, map, (t_coord){map->width * WALL_SIZE, map->height * WALL_SIZE});
-    mlx_image_to_window(g_mlx, g_img, 0, 0);
-    mlx_loop(g_mlx);
-    mlx_terminate(g_mlx);
+    // if (!g_mlx)
+    //     ft_error();
+    //draw_map(g_mlx, map, (t_coord){map->width * WALL_SIZE, map->height * WALL_SIZE});
+    //mlx_image_to_window(g_mlx, g_img, 0, 0);
+    // mlx_loop(g_mlx);
+    // mlx_terminate(g_mlx);
+	//system("leaks cub3D");
     return (EXIT_SUCCESS);
 }
