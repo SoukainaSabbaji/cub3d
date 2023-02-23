@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
     game = malloc(sizeof(t_game_data));
     ft_check_input(argc, argv);
     game->map = ft_getmap(argv[1]);
+    init_pregame_parse(game);
     //init map function to initialize mlx;
     // g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "cub3D", true);
     if (!g_mlx)

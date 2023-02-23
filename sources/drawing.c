@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/17 11:37:21 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:48:57 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,3 +148,4 @@ void ft_drawline(t_coord p1, t_coord p2, int color)
         }
     }
 }
+
