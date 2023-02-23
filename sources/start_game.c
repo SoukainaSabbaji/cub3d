@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:52:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 18:00:14 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:09:06 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void    start_drawing(t_game_data *game)
 {
     game->x = 0;
-    while (game->x < game->screeen_width)
+    while (game->x < game->screen_width)
     {
+        draw_floor_ceiling(game);
         drawing_calc(game);
         calculate_step(game);
         init_dda(game);

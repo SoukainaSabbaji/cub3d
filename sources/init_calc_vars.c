@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 17:59:12 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:34:06 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void    drawing_calc(t_game_data *game)
     //is always the same size and always centered on the player 
     
     
-    game->camera_plane.x = 2 * game->x / (double)game->screeen_width - 1; //x-coordinate in camera space
+    game->camera_plane.x = 2 * game->x / (double)game->screen_width - 1; //x-coordinate in camera space
     game->ray_dir.x = game->ray->ray_dir.x + game->plane.x * game->camera_plane.x;
     game->ray_dir.y = game->ray->ray_dir.y + game->plane.y * game->camera_plane.x;  
     //which box of the map we're in

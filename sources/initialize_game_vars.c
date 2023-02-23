@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 17:56:39 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:44:12 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ void    init_map(t_game_data *game)
     game->map->s_texture = NULL;
     game->map->w_texture = NULL;
     game->map->map = NULL;
-    get_map_dims(game->map);// placeholder for the new func
+    // get_map_dims(game->map);// placeholder for the new func
 }
 
 void    init_pregame_parse(t_game_data *game)
 {
     init_map(game);
     init_player(game);
-    game->screeen_height = 640;
-    game->screeen_width = 480;
-    game->cube->mlx = mlx_init(game->screeen_width,game->screeen_height, "cub3D", true);
+    game->screen_height = 640;
+    game->screen_width = 480;
+    game->cube->mlx = mlx_init(game->screen_width,game->screen_height, "cub3D", true);
     // game->image->img_data
-    // game->cube->win = mlx_new_window(game->cube->mlx, game->screeen_width, game->screeen_height, "minimap");
-    game->img = mlx_new_image(game->cube->mlx, game->screeen_width, game->screeen_height);
-    game->img->pixels = (int *)mlx_get_data_addr(game->image->img_ptr, &game->image->bpp, &game->image->size_line, &game->image->endian); 
+    // game->cube->win = mlx_new_window(game->cube->mlx, game->screen_width, game->screen_height, "minimap");
+    game->img = mlx_new_image(game->cube->mlx, game->screen_width, game->screen_height);
+    // game->img->pixels = (int *)mlx_get_data_addr(game->image->img_ptr, &game->image->bpp, &game->image->size_line, &game->image->endian); 
 }
 
 /* steps to follow */

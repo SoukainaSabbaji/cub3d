@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 17:48:57 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:22:44 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,3 +149,45 @@ void ft_drawline(t_coord p1, t_coord p2, int color)
     }
 }
 
+int     conv_rgb(t_rgb color)
+{
+    return (color.r << 16 | color.g << 8 | color.b);
+}
+
+void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color)
+{
+    int nx;
+    int ny;
+
+    nx = pos.x;
+    ny = pos.y;
+    while (nx < dims.x)
+    {
+        while (ny < dims.y)
+        {
+            mlx_put_pixel(img, nx, ny, color);
+            ny++;
+        }
+        ny = pos.y;
+        nx++;
+    }
+}
+
+void    draw_floor_ceiling(t_game_data *game)
+{
+    t_coord pos;
+    t_coord dims;
+    int color;
+
+    pos.x = 0;
+    pos.y = 0;
+    dims.x = game->screen_width / 2;
+    dims.y = game->screen_height;
+    color = conv_rgb(game->map->floor);
+    draw_rectangles(game->img, pos, dims, color);
+    pos.y = 0;
+    dims.x = game->screen_width;
+    dims.y = game->screen_height;
+    color = conv_rgb(game->map->ceiling);
+    draw_rectangles(game->img, pos, dims, color);
+}

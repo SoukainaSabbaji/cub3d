@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:14:30 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 16:03:15 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:22:57 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,35 +49,4 @@ void    calculate_line_height(t_game_data *game)
     game->draw_end = game->line_height / 2 + game->map->height / 2;
     if (game->draw_end >= game->map->height)
         game->draw_end = game->map->height - 1;
-}
-
-
-void    conv_rgb(t_rgb *color)
-{
-    int r;
-    int g;
-    int b;
-
-    r = color->r;
-    g = color->g;
-    b = color->b;
-    color->r = r;
-    color->g = g;
-    color->b = b;
-}
-
-void    draw_wall(t_game_data *game)
-{
-    int x;
-    int y;
-    t_rgb color;
-
-    x = game->x;
-    y = game->draw_start;
-    conv_rgb(&game->map->ceiling);
-    while (y < game->draw_end)
-    {
-        my_mlx_pixel_put(game, x, y, color);
-        y++;
-    }
 }

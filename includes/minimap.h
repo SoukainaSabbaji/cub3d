@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 15:29:42 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:26:01 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,8 @@ typedef struct s_game_data
     double      move_speed;
     double      rot_angle;
     double      frame_time;
-    int         screeen_width;
-    int         screeen_height;
+    int         screen_width;
+    int         screen_height;
     char        start_dir;
 }   t_game_data;
 
@@ -227,7 +227,9 @@ void    init_player(t_game_data *game);
 void    init_game_vars(t_game_data *game);
 void    init_dda(t_game_data *data);
 void    calculate_line_height(t_game_data *data);
-
+void    draw_floor_ceiling(t_game_data *game);
+void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
+int     conv_rgb(t_rgb color);
 
 mlx_image_t *g_img;//replaced by game->cube->img
 mlx_image_t *g_player_img; //wouldnt need this after moving to a 3D engine

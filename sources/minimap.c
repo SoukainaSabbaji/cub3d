@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/20 11:27:53 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/23 18:45:20 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ t_map *get_map(char *map_path)
         return (NULL);
     }
     map->map_file = mapFile;
-    get_map_dims(map);
+    // get_map_dims(map);
     map->map = create_map(map->height, map->width);
     g_map = map;
     mapFile = fopen(map_path, "r");
