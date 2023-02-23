@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 12:19:05 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:29:42 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,15 @@ typedef struct s_player
     
 }   t_player;
 
+
+typedef struct s_image
+{
+    void    *img_ptr;
+    char    *img_data;
+    int     bpp;
+    int     size_line;
+    int     endian;
+}   t_image;
 typedef struct s_map
 {
     char        **map;
@@ -135,6 +144,7 @@ typedef struct s_game_data
     t_ray       *ray;
     t_cube      *cube;
     mlx_image_t *img;
+    t_image     *image;
     t_fcoord    camera_plane;
     t_fcoord    ray_dir;
     t_fcoord    plane;
