@@ -17,13 +17,11 @@ int	main(int argc, char **argv)
 {
     t_game_data *game;
 
-	t_elem	elem;
-
-	ft_check_input(argc, argv);
-	elem = ft_getelem(argv[1]);
+    game = malloc(sizeof(t_game_data));
+    ft_check_input(argc, argv);
+    game->map = ft_getmap(argv[1]);
     
     //game->map = parse_map(map2d);
-
     //init map function to initialize mlx;
     // g_mlx = mlx_init(map->width * WALL_SIZE, map->height * WALL_SIZE, "cub3D", true);
     if (!g_mlx)

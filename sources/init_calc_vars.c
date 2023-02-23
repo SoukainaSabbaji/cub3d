@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_calc_vars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/22 20:40:28 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/23 12:51:27 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ void    drawing_calc(t_game_data *game)
     //initialize deltaDist vars aaaand done with drawing calc
     game->delta_dist.x = sqrt(1 + (game->ray_dir.y * game->ray_dir.y) / (game->ray_dir.x * game->ray_dir.x));
     //this calculation is to avoid division by 0 (we're not in c++ hehe) and is the same as doing the following
-    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2)) \
+    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2)) 
     // / pow(game->ray_dir->x, 2);
-    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2)) \    
+    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2))    
     // / pow(game->ray_dir->x, 2);
     game->delta_dist.y = sqrt(1 + (game->ray_dir.x * game->ray_dir.x) / (game->ray_dir.y * game->ray_dir.y));
     // if (game->delta_dist->x == 0) the rest to implement in a separate function
@@ -142,7 +142,7 @@ void    init_pregame_parse(t_game_data *game)
     game->screeen_height = 640;
     game->screeen_width = 480;
     game->cube->mlx = mlx_init(game->screeen_width,game->screeen_height, "cub3D", true);
-    game->cube->win = mlx_new_window(game->cube->mlx, game->screeen_width, game->screeen_height, "minimap");
+    // game->cube->win = mlx_new_window(game->cube->mlx, game->screeen_width, game->screeen_height, "minimap");
     game->img = mlx_new_image(game->cube->mlx, game->screeen_width, game->screeen_height);
 }
 
@@ -162,7 +162,7 @@ void   ready_start(void *ptr)
     t_game_data *game;
 
     game = (t_game_data *)ptr;
-    mlx_clear_window(game->cube->mlx, game->cube->win);
+    // mlx_clear_window(game->cube->mlx, game->cube->win);
     start_drawing(game);
     
 }

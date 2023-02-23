@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: makacem <makacem@student.42.fr>            +#+  +:+       +#+         #
+#    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/02/22 20:40:11 by makacem          ###   ########.fr        #
+#    Updated: 2023/02/23 12:21:56 by ssabbaji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,12 @@ CC = gcc
 FLAGS = -Werror -Wextra -Wall -g
 
 ifeq ($(shell uname), Darwin)
-	LIBRARIES = -I include -lglfw -L "/Users/makacem/goinfre/homebrew/Cellar/glfw/3.3.8/lib"
+	LIBRARIES = -I include -lglfw -L "/Users/ssabbaji/.brew/opt/glfw/lib/"
 else
 	LIBRARIES = -ldl -lglfw3 -pthread -lm -I ./includes/minimap.h
 endif
 MINILIBX = $(MINILIBX_DIRECTORY)libmlx42.a libft/libft.a
-MINILIBX_DIRECTORY = ./MLX42/build/
+MINILIBX_DIRECTORY = ./MLX42/
 MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
 SOURCES_DIRECTORY = ./sources/
@@ -49,7 +49,7 @@ OBJ = ${SRC:.c=.o}
 %.o: %.c ./includes/minimap.h
 	$(CC) $(FLAGS) -o $@ -c $< 
 
-all: ${NAME}
+all:	${NAME}
 
 ${NAME}: ${MINILIBX} ${OBJ}
 	@make -C ./libft
