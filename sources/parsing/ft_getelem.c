@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 t_map	*ft_getmap(char *map_filename)
 {

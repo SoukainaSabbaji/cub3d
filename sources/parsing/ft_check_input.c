@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 21:06:17 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/16 10:43:00 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:23:52 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 void	ft_check_input(int nbr_of_args, char **args)
 {

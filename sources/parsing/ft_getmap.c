@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:16:10 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/22 19:18:03 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:22:48 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 int	ft_getnbrof_lines(char *file_name);
 char **ft_getmap2d_table(int nbrof_lines, char *file_name);

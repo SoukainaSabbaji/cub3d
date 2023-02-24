@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 18:26:01 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:15:34 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_ray
 typedef struct s_game_data
 {
     t_map       *map;
+    void        *mlx;
     t_player    *player;
     t_wall      *wall;
     t_ray       *ray;
