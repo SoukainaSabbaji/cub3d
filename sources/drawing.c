@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/24 14:51:27 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:28:14 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,16 @@ void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size)
 }
 
 
-void draw_line(t_coord p1, t_coord p2, int color ,t_coord dims)
+void draw_line(t_game_data *game, int color)
 {
+
+    t_coord p1;
+    t_coord p2;
+
+    p1.x = game->x;
+    p1.y = game->draw_start;
+    p2.x = game->x;
+    p2.y = game->draw_end;
     int dx = p2.x - p1.x;
     int dy = p2.y - p1.y;
     int steps = 0;
@@ -92,8 +100,6 @@ void draw_line(t_coord p1, t_coord p2, int color ,t_coord dims)
     float y_inc = dy / (float)steps;
     while (i <= steps)
     {
-        (void)dims;
-        // if (x >= 0 && x < dims.x && y >= 0 && y < dims.y)
         mlx_put_pixel(g_img, x, y, color);
         x += x_inc;
         y += y_inc;
@@ -156,23 +162,7 @@ int     conv_rgb(t_rgb color)
 
 void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color)
 {
-    // int nx;
-    // int ny;
-
-    // nx = pos.x;
-    // ny = pos.y;
-    // while (nx < dims.x)
-    // {
-    //     while (ny < dims.y)
-    //     {
-    //         mlx_put_pixel(img, nx, ny, color);
-    //         ny++;
-    //     }
-    //     ny = pos.y;
-    //     nx++;
-    // }
     t_iter iter = {0, 0, 0};
-    (void)(color);
     while (iter.i < dims.x)
     {
         while (iter.j < dims.y)

@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/24 14:32:09 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/25 14:00:55 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,34 @@ void    init_game_vars(t_game_data *game)
     init_game_dir(game);
 }
 
+void    find_player_pos(t_game_data *game)
+{
+    //iterate through the map array and find the position of the player
+    
+    t_map *map = game->map;
+    int i = 0;
+    int j = 0;
+    while (i < map->height)
+    {
+        while (j < map->width)
+        {
+            if (map->map[i][j] == 'N' || map->map[i][j] == 'S' || map->map[i][j] == 'E' || map->map[i][j] == 'W')
+            {
+                game->player->world_pos.x = j;
+                game->player->world_pos.y = i;
+                printf("player pos: %f, %f\n", game->player->world_pos.x, game->player->world_pos.y);
+                return ;
+            }
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+}
+
 void    init_player(t_game_data *game)
 {
-    game->player->world_pos.x = 0;
-    game->player->world_pos.y = 0;
-    game->player->dir.x = 0;
-    game->player->dir.y = 0;
-    //are the dir variables the same as the ray_dir variables ?
-    //i literally have no idea
+    find_player_pos(game);
 }
 
 void    init_map(t_game_data *game)
@@ -41,13 +61,14 @@ void    init_map(t_game_data *game)
     game->map->s_texture = NULL;
     game->map->w_texture = NULL;
     game->map->map = NULL;
+    game->map->width = 0;
+    game->map->height = 0;
     // get_map_dims(game->map);// placeholder for the new func
 }
 
 void    init_pregame_parse(t_game_data *game)
 {
     init_map(game);
-    // init_player(game);
     game->screen_height = 480;
     game->screen_width = 640;
     // game->image->img_data

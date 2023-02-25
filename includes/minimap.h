@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/24 14:15:34 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:00:59 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 #include "math.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
+#include "/Users/ssabbaji/.brew/Cellar/glfw/3.3.8/include/GLFW/glfw3.h"
+
+// #include "../MLX42/include/MLX42/MLX42_Int.h"
 
 #define WALL_SIZE 64
 #define PLAYER_SIZE 16 
@@ -36,6 +39,7 @@
 // #define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
+
 
 
 typedef struct s_fcoord
@@ -181,8 +185,7 @@ void hook_2(void *param);
 void hook(void *param);
 
 t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_line(t_coord p1, t_coord p2, int color, t_coord dims);
-void	ft_drawline(t_coord p1, t_coord p2, int color);
+void    draw_line(t_game_data *game, int color);
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size);
 
@@ -213,7 +216,7 @@ t_rgb	ft_rgberr(void);
 t_rgb	ft_getcolors(char *str);
 int		ft_2darrlen(char **arr);
 void	ft_free2darr(char **arr);
-
+int	    ft_getnbrof_lines(char *file_name);
 
 
 /******************* - teh fun stuff - *******************/
@@ -231,6 +234,15 @@ void    calculate_line_height(t_game_data *data);
 void    draw_floor_ceiling(t_game_data *game);
 void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
 int     conv_rgb(t_rgb color);
+
+// void glfw_clear_window(GLFWwindow* window)
+// {
+//     int width, height;
+//     glfwGetFramebufferSize(window, &width, &height);
+//     glViewport(0, 0, width, height);
+//     glClear(GL_COLOR_BUFFER_BIT);
+// }
+
 
 mlx_image_t *g_img;//replaced by game->cube->img
 mlx_image_t *g_player_img; //wouldnt need this after moving to a 3D engine

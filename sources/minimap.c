@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 18:45:20 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:30:03 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ void    cast_rays(t_player *player,  t_coord dims)
     while (i < rays_n)
     {
         rotate_vector(&ray_x, &ray_y, rotation_angle);
-        draw_line(player->camera_plane, (t_coord){player->camera_plane.x + ray_x, player->camera_plane.y + ray_y}, RAY_COLOR, dims);
+        (void)dims;
+        // draw_line(player->camera_plane, (t_coord){player->camera_plane.x + ray_x, player->camera_plane.y + ray_y}, RAY_COLOR, dims);
         i++;
     }
 }
