@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
+#    By: makacem <makacem@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/02/23 12:21:56 by ssabbaji         ###   ########.fr        #
+#    Updated: 2023/02/24 17:34:55 by makacem          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,17 +19,17 @@ CC = gcc
 FLAGS = -Werror -Wextra -Wall -g
 
 ifeq ($(shell uname), Darwin)
-	LIBRARIES = -I include -lglfw -L "/Users/ssabbaji/.brew/opt/glfw/lib/"
+	LIBRARIES = -I include -lglfw -L "/Users/makacem/goinfre/homebrew/Cellar/glfw/3.3.8/lib"
 else
 	LIBRARIES = -ldl -lglfw3 -pthread -lm -I ./includes/minimap.h
 endif
 MINILIBX = $(MINILIBX_DIRECTORY)libmlx42.a libft/libft.a
-MINILIBX_DIRECTORY = ./MLX42/
+MINILIBX_DIRECTORY = ./MLX42/build/
 MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
 SOURCES_DIRECTORY = ./sources/
-SOURCES_LIST = parsing.c main.c lodev.c drawing.c hooks.c helper.c minimap.c ft_check_input.c \
-				ft_getmap.c ft_check_line.c ft_check_map2d.c ft_check_player.c init_calc_vars.c \
+SOURCES_LIST = parsing.c main.c lodev.c drawing.c helper.c ft_check_input.c \
+				ft_getmap.c ft_check_line.c ft_check_map2d.c ft_check_player.c \
 				perform_dda.c \
 				ft_getcolors.c ft_getelem.c ft_getpath.c ft_getrgb.c \
 
@@ -53,7 +53,7 @@ all:	${NAME}
 
 ${NAME}: ${MINILIBX} ${OBJ}
 	@make -C ./libft
-	$(CC) $(MINILIBX) $(OBJ) -o ${NAME} $(LIBRARIES)
+	$(CC) $(MINILIBX) $(OBJ) -o ${NAME} $(LIBRARIES) -fsanitize=address
 	@echo $(GREEN) "Compilation done"
 
 ${MINILIBX}:

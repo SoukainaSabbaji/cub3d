@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/23 12:19:05 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/25 20:36:15 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #include "../libft/libft.h"
 
 #define WALL_SIZE 64
-#define PLAYER_SIZE 16 
+#define PLAYER_SIZE 16
 #define PLAYER_RATIO PLAYER_SIZE / WALL_SIZE
 #define MMAP_WALL_COLOR  0xFFFFFFFF
 #define MMAP_EMPTY_COLOR 0xFF000000
