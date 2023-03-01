@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/28 14:37:19 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:22:20 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,16 @@ void    calculate_step(t_game_data *game)
     
 }
 
+t_fcoord normalize_vector(t_fcoord vector)
+{
+    double  len;
+
+    len = vector_size(vector);
+    vector.x /= len;
+    vector.y /= len;
+    return (vector);
+}
+
 void    drawing_calc(t_game_data *game)
 {
     // calculate ray position and direction
@@ -82,7 +92,7 @@ void    drawing_calc(t_game_data *game)
     //it by dividing it by the screen width so the camera plane
     //is always the same size and always centered on the player 
     game->camera_plane.x = 2 * game->x / (double)game->screen_width - 1; //x-coordinate in camera space
-    game->ray_dir.x = game->player->dir.x + game->plane.x * game->camera_plane.x;
+    game->ray_dir.x = game->player->dir.x + game->plane.x * game->camera_plane.x ;
     game->ray_dir.y = game->player->dir.y + game->plane.y * game->camera_plane.x;  
     //which box of the map we're in
     game->map_pos.x = (int)game->player->world_pos.x;
@@ -97,7 +107,6 @@ void    drawing_calc(t_game_data *game)
     // / pow(game->ray_dir->x, 2);
     game->delta_dist.y = sqrt(1 + (game->ray_dir.x * game->ray_dir.x) / (game->ray_dir.y * game->ray_dir.y));
     // if (game->delta_dist->x == 0) the rest to implement in a separate function
-    
 }
 
 

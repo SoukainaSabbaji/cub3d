@@ -12,6 +12,8 @@
 
 #include "../includes/minimap.h"
 
+int color = 0x00FF0000;
+
 int ft_getnbrof_cols(char **map)
 {
     int i;

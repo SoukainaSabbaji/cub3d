@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/28 13:56:55 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:04:57 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
 
-
+extern int color;
 
 typedef struct s_fcoord
 {
@@ -151,7 +151,7 @@ typedef struct s_game_data
     t_coord     map_pos;
     t_fcoord    side_dist;
     t_fcoord    delta_dist;
-    double      perp_wall_dist;
+    double      perp_wall_dis;
     t_coord     step;
     int         x;
     int         hit;
@@ -228,6 +228,7 @@ void    draw_floor_ceiling(t_game_data *game);
 void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
 int     conv_rgb(t_rgb color);
 int     ft_getnbrof_cols(char **map);
+float   vector_size(t_fcoord coord);
 
 // void glfw_clear_window(GLFWwindow* window)
 // {
