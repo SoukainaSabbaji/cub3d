@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/25 12:30:03 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:11:40 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,38 +110,38 @@ t_wall *fill_map_array(FILE *mapFile, t_map *map)
 
 //calculate new coordinates x' and y' of a vector (x, y) rotated by angle theta
 
-void rotate_vector(float *x, float *y, float theta)
-{
-    float x1 = *x;
-    float y1 = *y;
+// void rotate_vector(float *x, float *y, float theta)
+// {
+//     float x1 = *x;
+//     float y1 = *y;
 
-    *x = x1 * cos(theta) - y1 * sin(theta);
-    *y = x1 * sin(theta) + y1 * cos(theta);
-}
+//     *x = x1 * cos(theta) - y1 * sin(theta);
+//     *y = x1 * sin(theta) + y1 * cos(theta);
+// }
 
 
-void    cast_rays(t_player *player,  t_coord dims)
-{
-    int rays_n = 0;
-    int i = 0;
-    rays_n = 480; //screen width normally
+// void    cast_rays(t_player *player,  t_coord dims)
+// {
+//     int rays_n = 0;
+//     int i = 0;
+//     rays_n = 480; //screen width normally
     
-    g_player->fov = 60;
-    float theta = g_player->fov * M_PI / 180; //convert radians to degrees
-    float rotation_angle = theta / rays_n;
-    float ray_x = player->camera_plane.x;
-    float ray_y = player->camera_plane.y;
-    // float ray_x = player->world_pos.x;
-    // float ray_y = player->world_pos.y;
-    rotate_vector(&ray_x, &ray_y, 30); //we rotate the ray by 30 degrees to the left so we can start from there
-    while (i < rays_n)
-    {
-        rotate_vector(&ray_x, &ray_y, rotation_angle);
-        (void)dims;
-        // draw_line(player->camera_plane, (t_coord){player->camera_plane.x + ray_x, player->camera_plane.y + ray_y}, RAY_COLOR, dims);
-        i++;
-    }
-}
+//     g_player->fov = 60;
+//     float theta = g_player->fov * M_PI / 180; //convert radians to degrees
+//     float rotation_angle = theta / rays_n;
+//     float ray_x = player->camera_plane.x;
+//     float ray_y = player->camera_plane.y;
+//     // float ray_x = player->world_pos.x;
+//     // float ray_y = player->world_pos.y;
+//     // rotate_vector(&ray_x, &ray_y, 30); //we rotate the ray by 30 degrees to the left so we can start from there
+//     while (i < rays_n)
+//     {
+//         // rotate_vector(&ray_x, &ray_y, rotation_angle);
+//         (void)dims;
+//         // draw_line(player->camera_plane, (t_coord){player->camera_plane.x + ray_x, player->camera_plane.y + ray_y}, RAY_COLOR, dims);
+//         i++;
+//     }
+// }
 
 t_map *get_map(char *map_path)
 {
@@ -190,7 +190,7 @@ void move_player(t_fcoord move)
         // g_player->camera_plane.x = g_player->world_pos.x + g_player->camera_
         // g_player->camera_plane.x = g_player->world_pos.x ;
         // g_player->camera_plane.y = g_player->world_pos.y ;
-        cast_rays(g_player, (t_coord){640, 512});
+        // cast_rays(g_player, (t_coord){640, 512});
         g_player_img->instances[0].x = new_mpos.x * WALL_SIZE + WALL_SIZE / 2 - PLAYER_SIZE / 2;
         g_player_img->instances[0].y = new_mpos.y * WALL_SIZE + WALL_SIZE / 2 - PLAYER_SIZE / 2;
     }
@@ -249,7 +249,7 @@ void draw_player(t_coord pos, t_coord mini_map_size, int size)
     camera_pos.x = pos.x + size / 2;
     camera_pos.y = pos.y + size / 2;
     g_player->camera_plane = camera_pos;
-    cast_rays(g_player, mini_map_size);
+    // cast_rays(g_player, mini_map_size);
     points = draw_square(points, g_player_img, (t_coord){0, 0}, mini_map_size, PLAYER_COLOR, size);
     points = rotate_player(points, size * size, 20);
     // print_coords(points);

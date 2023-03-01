@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/25 15:00:59 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:56:55 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,20 +133,12 @@ typedef struct s_iter
     int k;
 }   t_iter;
 
-typedef struct s_ray
-{
-    t_fcoord    ray_dir; //direction of the ray in world space matches the player's direction
-    t_fcoord    ray_origin; //origin of the ray in world space matches the player's position
-    // t_coord     step; //step to take in the map
-}   t_ray;
-
 typedef struct s_game_data
 {
     t_map       *map;
     void        *mlx;
     t_player    *player;
     t_wall      *wall;
-    t_ray       *ray;
     t_cube      *cube;
     mlx_image_t *img;
     t_image     *image;
@@ -186,6 +178,7 @@ void hook(void *param);
 
 t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 void    draw_line(t_game_data *game, int color);
+// void draw_line(t_coord p1, t_coord p2, int color ,mlx_image_t *img);
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size);
 
@@ -225,7 +218,7 @@ void    calculate_step(t_game_data *game);
 void    init_game_dir(t_game_data *game);
 void    ready_start(void *ptr);
 void    start_drawing(t_game_data *game);
-void    init_pregame_parse(t_game_data *game);
+void    init_pregame_parse(t_game_data *game, char **argv);
 void    init_map(t_game_data *game);
 void    init_player(t_game_data *game);
 void    init_game_vars(t_game_data *game);
@@ -234,6 +227,7 @@ void    calculate_line_height(t_game_data *data);
 void    draw_floor_ceiling(t_game_data *game);
 void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
 int     conv_rgb(t_rgb color);
+int     ft_getnbrof_cols(char **map);
 
 // void glfw_clear_window(GLFWwindow* window)
 // {

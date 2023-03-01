@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/25 12:28:14 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:57:22 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,31 @@ void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size)
 }
 
 
+// void draw_line(t_coord p1, t_coord p2, int color ,mlx_image_t *img)
+// {
+//     int dx = p2.x - p1.x;
+//     int dy = p2.y - p1.y;
+//     int steps = 0;
+//     float x = p1.x + 0.5;
+//     float y = p1.y + 0.5;
+//     int i = 0;
+
+//     if (abs(dx) > abs(dy))
+//         steps = abs(dx);
+//     else
+//         steps = abs(dy);
+//     float x_inc = dx / (float)steps;
+//     float y_inc = dy / (float)steps;
+//     while (i <= steps)
+//     {
+//         // if (x >= 0 && x < dims.x && y >= 0 && y < dims.y)
+//         mlx_put_pixel(img, x, y, color);
+//         x += x_inc;
+//         y += y_inc;
+//         i++;
+//     }
+// }
+
 void draw_line(t_game_data *game, int color)
 {
 
@@ -91,7 +116,8 @@ void draw_line(t_game_data *game, int color)
     float x = p1.x + 0.5;
     float y = p1.y + 0.5;
     int i = 0;
-
+    // printf("p1.x = %d, p1.y = %d, p2.x = %d, p2.y = %d", p1.x, p1.y, p2.x, p2.y);
+    (void)color;
     if (abs(dx) > abs(dy))
         steps = abs(dx);
     else
@@ -100,7 +126,7 @@ void draw_line(t_game_data *game, int color)
     float y_inc = dy / (float)steps;
     while (i <= steps)
     {
-        mlx_put_pixel(g_img, x, y, color);
+        mlx_put_pixel(game->img, x, y, color);
         x += x_inc;
         y += y_inc;
         i++;

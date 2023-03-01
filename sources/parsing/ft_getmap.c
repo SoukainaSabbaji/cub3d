@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:16:10 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/25 14:53:48 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:26:32 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char **ft_getmap2d_table(int nbrof_lines, char *file_name)
 				*temp = line;
 				temp++;
 				line = get_next_line(fd);
-				
 			}
 			*temp = NULL;
 			close(fd);
@@ -96,6 +95,5 @@ char **ft_getmap2d_table(int nbrof_lines, char *file_name)
 		line = get_next_line(fd);
 	}
 	*temp = NULL;
-	close(fd);
-	return (map);
+	return (temp);
 }

@@ -1,18 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 13:33:49 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/15 13:33:49 by makacem          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   main.c                                             :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2023/02/15 13:33:49 by makacem           #+#    #+#             */
+// /*   Updated: 2023/02/15 13:33:49 by makacem          ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
 #include "../includes/minimap.h"
-
-//count the number of characters in the longest line of the map
 
 int ft_getnbrof_cols(char **map)
 {
@@ -41,11 +39,7 @@ int	main(int argc, char **argv)
 
     game = malloc(sizeof(t_game_data));
     ft_check_input(argc, argv);
-    game->map = ft_getmap(argv[1]);
-    init_pregame_parse(game);
-    game->map->height = ft_getnbrof_lines(argv[1]);
-    printf("height = %d\n", game->map->height);
-    // game->map->width = ft_getnbrof_cols(game->map->map);
+    init_pregame_parse(game, argv);
     game->mlx = mlx_init(game->screen_width,game->screen_height, "cub3D", true);
     game->img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
     if (!game->mlx)
@@ -57,3 +51,16 @@ int	main(int argc, char **argv)
     mlx_terminate(game->mlx);
     return (EXIT_SUCCESS);
 }
+
+
+
+/*
+- posX/posY : pos.x = game->player->world_pos.x; pos.y = game->player->world_pos.y;
+- dirX/dirY : game->player->dir.x = -1; game->player->dir.y = 0; depending on the start orientation
+- planeX/planeY : game->plane.x = 0; game->plane.y = 0.66; depending on the start orientation
+- cameraX : game->camera.x = 2 * x / (double)game->screen_width - 1;
+- rayDirX : game->ray_dir.x = game->player->dir.x + game->plane.x * game->camera.x;
+- rayDirY : game->ray_dir.y = game->player->dir.y + game->plane.y * game->camera.x;
+- mapX : game->map.x = (int)game->player->world_pos.x;
+- mapY : game->map.y = (int)game->player->world_pos.y;
+*/
