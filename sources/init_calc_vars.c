@@ -85,8 +85,8 @@ void    drawing_calc(t_game_data *game)
     game->ray_dir.x = game->player->dir.x + game->plane.x * game->camera_plane.x ;
     game->ray_dir.y = game->player->dir.y + game->plane.y * game->camera_plane.x;  
     //which box of the map we're in
-    game->map_pos.x = (int)game->player->world_pos.x;
-    game->map_pos.y = (int)game->player->world_pos.y;
+    game->map_pos.x = (int)game->pos.x;
+    game->map_pos.y = (int)game->pos.x;
     game->hit = 0;
     //initialize deltaDist vars aaaand done with drawing calc
     game->delta_dist.x = sqrt(1 + (game->ray_dir.y * game->ray_dir.y) / (game->ray_dir.x * game->ray_dir.x));

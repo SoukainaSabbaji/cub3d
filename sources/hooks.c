@@ -57,14 +57,6 @@ void hook_2(void *param)
 
 }
 
-void call_hooks()
-{   
-    g_game->move_speed = 0.1;
-    g_game->rot_angle = 0.1;
-    mlx_loop_hook(g_game->mlx, &hook, g_mlx);
-    mlx_loop_hook(g_game->mlx, &hook_2, g_mlx);
-}
-
 void    esc_keyhook(mlx_key_data_t data, void *param)
 {
     mlx_t *mlx;
