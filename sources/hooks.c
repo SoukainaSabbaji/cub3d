@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:53:01 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/14 14:10:51 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:19:42 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,61 @@ void hook(void *param)
 
     mlx = param;
     if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+    {
+        printf("Escape key pressed\n"   );
         mlx_close_window(mlx);
+    }
 }
+
 
 void hook_2(void *param)
 {
     mlx_t *mlx;
 
     mlx = param;
-    //rotate player
-    // if (mlx_is_key_down(mlx, MLX_KEY_UP))
-    //     rotate_player(0.1);
-    // if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-    //     rotate_player(-0.1);
-    // if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-    //     rotate_player(0.1);
-    // if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-    //     rotate_player(-0.1);
+    t_fcoord old_dir;
+    t_fcoord old_plane;
+    old_dir = g_game->player->dir;
+    old_plane = g_game->plane;
     if (mlx_is_key_down(mlx, MLX_KEY_W))
-        move_player((t_fcoord){0, -0.1});
+    {
+        if (g_game->map->map[(int)(g_game->map_pos.x + g_game->player->dir.x * g_game->move_speed)][(int)(g_game->map_pos.y)] == '0')
+            g_game->map_pos.x += g_game->player->dir.x * g_game->move_speed;
+    } 
     if (mlx_is_key_down(mlx, MLX_KEY_S))
-        move_player((t_fcoord){0, 0.1});
+    {
+        if (g_game->map->map[(int)(g_game->map_pos.x - g_game->player->dir.x * g_game->move_speed)][(int)(g_game->map_pos.y)] == '0')
+            g_game->map_pos.x -= g_game->player->dir.x * g_game->move_speed;
+    }
     if (mlx_is_key_down(mlx, MLX_KEY_A))
-        move_player((t_fcoord){-0.1, 0});
+    {
+        g_game->player->dir.x = g_game->player->dir.x * cos(g_game->rot_angle) - g_game->player->dir.y * sin(g_game->rot_angle);
+        g_game->player->dir.y = old_dir.x * sin(g_game->rot_angle) + g_game->player->dir.y * cos(g_game->rot_angle);
+    }
     if (mlx_is_key_down(mlx, MLX_KEY_D))
-        move_player((t_fcoord){0.1, 0});
+    {
+        g_game->player->dir.x = g_game->player->dir.x * cos(-g_game->rot_angle) - g_game->player->dir.y * sin(-g_game->rot_angle);
+        g_game->player->dir.y = old_dir.x * sin(-g_game->rot_angle) + g_game->player->dir.y * cos(-g_game->rot_angle);
+    }
+
+}
+
+void call_hooks()
+{   
+    g_game->move_speed = 0.1;
+    g_game->rot_angle = 0.1;
+    mlx_loop_hook(g_game->mlx, &hook, g_mlx);
+    mlx_loop_hook(g_game->mlx, &hook_2, g_mlx);
+}
+
+void    esc_keyhook(mlx_key_data_t data, void *param)
+{
+    mlx_t *mlx;
+
+    mlx = param;
+    if (data.key == MLX_KEY_ESCAPE && data.action == MLX_PRESS)
+    {
+        mlx_close_window(mlx);
+    }
+        // mlx_close_window(mlx);
 }

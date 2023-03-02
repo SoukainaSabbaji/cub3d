@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 14:07:46 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:03:08 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,8 @@ float       vector_size(t_fcoord coord);
 t_fcoord    normalize_vector(t_fcoord vector);
 int         valid_coord(t_coord coord, t_map *map);
 t_coord     get_coord(int x, int y);
+void        call_hooks();
+void        esc_keyhook(mlx_key_data_t data, void *param);
 
 // void glfw_clear_window(GLFWwindow* window)
 // {
@@ -248,5 +250,6 @@ mlx_t *g_mlx; // replaced by game->cube->mlx
 t_player *g_player; //replaced by game->player
 t_wall *g_wall;
 t_map *g_map;
+t_game_data *g_game;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 13:44:24 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:15:47 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,11 +223,11 @@ t_coord *rotate_player(t_coord *points, int num_points,float angle)
     return (points);
 }
 
-void call_hooks()
-{
-    mlx_loop_hook(g_mlx, &hook, g_mlx);
-    mlx_loop_hook(g_mlx, &hook_2, g_mlx);
-}
+// void call_hooks()
+// {
+//     mlx_loop_hook(g_mlx, &hook, g_mlx);
+//     mlx_loop_hook(g_mlx, &hook_2, g_mlx);
+// }
 
 
 void    print_coords(t_coord *points)
