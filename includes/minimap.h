@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/01 16:04:57 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:07:46 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,22 +213,25 @@ int	    ft_getnbrof_lines(char *file_name);
 
 
 /******************* - teh fun stuff - *******************/
-void    drawing_calc(t_game_data *game);
-void    calculate_step(t_game_data *game);
-void    init_game_dir(t_game_data *game);
-void    ready_start(void *ptr);
-void    start_drawing(t_game_data *game);
-void    init_pregame_parse(t_game_data *game, char **argv);
-void    init_map(t_game_data *game);
-void    init_player(t_game_data *game);
-void    init_game_vars(t_game_data *game);
-void    init_dda(t_game_data *data);
-void    calculate_line_height(t_game_data *data);
-void    draw_floor_ceiling(t_game_data *game);
-void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
-int     conv_rgb(t_rgb color);
-int     ft_getnbrof_cols(char **map);
-float   vector_size(t_fcoord coord);
+void        drawing_calc(t_game_data *game);
+void        calculate_step(t_game_data *game);
+void        init_game_dir(t_game_data *game);
+void        ready_start(void *ptr);
+void        start_drawing(t_game_data *game);
+void        init_pregame_parse(t_game_data *game, char **argv);
+void        init_map(t_game_data *game);
+void        init_player(t_game_data *game);
+void        init_game_vars(t_game_data *game);
+void        init_dda(t_game_data *data);
+void        calculate_line_height(t_game_data *data);
+void        draw_floor_ceiling(t_game_data *game);
+void        draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
+int         conv_rgb(t_rgb color);
+int         ft_getnbrof_cols(char **map);
+float       vector_size(t_fcoord coord);
+t_fcoord    normalize_vector(t_fcoord vector);
+int         valid_coord(t_coord coord, t_map *map);
+t_coord     get_coord(int x, int y);
 
 // void glfw_clear_window(GLFWwindow* window)
 // {

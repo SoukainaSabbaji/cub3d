@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/27 14:50:38 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:40:19 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,31 @@ void    init_player(t_game_data *game)
     find_player_pos(game);
 }
 
+void    print_map_arr(char **map)
+{
+    int i = 0;
+    int j = 0;
+    while (map[i])
+    {
+        while (map[i][j])
+        {
+            printf("%c", map[i][j]);
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+}
+
 void    init_pregame_parse(t_game_data *game, char **argv)
 {
     game->map = ft_getmap(argv[1]);
+    // print_map_arr(game->map->map);
     game->map->height = ft_getnbrof_lines(argv[1]);
     game->map->width = ft_getnbrof_cols(game->map->map);
     game->screen_height = 480;
     game->screen_width = 640;
+    print_map_array(game->map);
     init_player(game);
     // game->image->img_data
     // game->cube->win = mlx_new_window(game->cube->mlx, game->screen_width, game->screen_height, "minimap");

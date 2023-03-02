@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/01 15:22:20 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:05:10 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,6 @@ void    calculate_step(t_game_data *game)
         game->side_dist.y = (game->map_pos.y + 1.0 - game->pos.y) * game->delta_dist.y;
     }
     
-}
-
-t_fcoord normalize_vector(t_fcoord vector)
-{
-    double  len;
-
-    len = vector_size(vector);
-    vector.x /= len;
-    vector.y /= len;
-    return (vector);
 }
 
 void    drawing_calc(t_game_data *game)

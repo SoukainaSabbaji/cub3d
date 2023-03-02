@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/28 12:11:40 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:44:24 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void print_map_array(t_map *map)
     int j = 0;
     while (i < map->height)
     {
+        j = 0;
         while (j < map->width)
         {
             printf("%c", map->map[i][j]);
             j++;
         }
         printf("\n");
-        j = 0;
+        // printf("\n");
         i++;
     }
 }

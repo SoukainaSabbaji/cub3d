@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:52:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/01 12:24:41 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:47:49 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void    start_drawing(t_game_data *game)
         calculate_step(game);
         init_dda(game);
         calculate_line_height(game);
-        if (game->side == 0)
-            color = MMAP_WALL_COLOR;
-        else 
-            color = MMAP_EMPTY_COLOR;
-        draw_line(game, color);
+        // if (game->side == 0)
+        //     color = MMAP_WALL_COLOR;
+        // else 
+        //     color = MMAP_EMPTY_COLOR;
+        draw_line(game, MMAP_EMPTY_COLOR);
         game->x++;
     }
 }

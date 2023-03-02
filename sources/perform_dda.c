@@ -6,16 +6,11 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:14:30 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/01 16:21:14 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:44:27 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
-
-float vector_size(t_fcoord coord)
-{
-    return sqrt(pow(coord.x, 2) + pow(coord.y, 2));
-}
 
 double  calculate_perp(t_game_data *game)
 {
@@ -43,7 +38,7 @@ double  calculate_perp(t_game_data *game)
 
 void init_dda(t_game_data *game)
 {
-    while (!game->hit)
+    while (!game->hit && valid_coord(game->map_pos, game->map))
     {
         if (game->side_dist.x < game->side_dist.y)
         {
@@ -57,18 +52,13 @@ void init_dda(t_game_data *game)
             game->map_pos.y += game->step.y;
             game->side = 1;
         }
-        if (game->map->map[game->map_pos.x][game->map_pos.y] == '1')
+        // printf("map_pos.x = %d, map_pos.y = %d\n", game->map_pos.x, game->map_pos.y);
+        if (game->map->map[game->map_pos.y][game->map_pos.x] == '1')
             game->hit = 1;
     }
     game->perp_wall_dis = calculate_perp(game);
 }
 
-    // if (game->side == 0)
-    //     game->perp_wall_dis = fabs((game->map_pos.x - game->player->world_pos.x + \
-	// 	    (1 - game->step.x) / 2) / game->ray_dir.x);
-    // else
-    //     game->perp_wall_dis = fabs((game->map_pos.y - game->player->world_pos.y + \
-	// 	    (1 - game->step.y) / 2) / game->ray_dir.y);
 void calculate_line_height(t_game_data *game)
 {
     // calculate height of line to draw on screen
