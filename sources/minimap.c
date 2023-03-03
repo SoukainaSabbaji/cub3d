@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:52:54 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 16:15:47 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:25:24 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ void draw_player(t_coord pos, t_coord mini_map_size, int size)
     points = rotate_player(points, size * size, 20);
     // print_coords(points);
     // draw_square_2(points, g_player_img, MMAP_WALL_COLOR, size);
-    call_hooks();
+    // call_hooks();
     mlx_image_to_window(g_mlx, g_player_img, pos.x, pos.y);
 }
 

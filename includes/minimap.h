@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 17:03:08 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:50:01 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 // #define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
+#define WALL '1'
+#define EMPTY '0'
+#define STRAFE_SPEED 0.1
 
 extern int color;
 
@@ -234,6 +237,7 @@ int         valid_coord(t_coord coord, t_map *map);
 t_coord     get_coord(int x, int y);
 void        call_hooks();
 void        esc_keyhook(mlx_key_data_t data, void *param);
+void        handle_input(void *param);
 
 // void glfw_clear_window(GLFWwindow* window)
 // {

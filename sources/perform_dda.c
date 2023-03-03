@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:14:30 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 16:14:25 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:58:39 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void init_dda(t_game_data *game)
             game->side = 1;
         }
         // printf("map_pos.x = %d, map_pos.y = %d\n", game->map_pos.x, game->map_pos.y);
-        if (game->map->map[game->map_pos.x][game->map_pos.y] == '1')
+        if (game->map->map[game->map_pos.x][game->map_pos.y] == WALL)
             game->hit = 1;
     }
     game->perp_wall_dis = calculate_perp(game);

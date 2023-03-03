@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:52:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 16:43:56 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:47:59 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void   ready_start(void *ptr)
 
     game = (t_game_data *)ptr;
     // g_game = game;
-    // mlx_delete_image(game->cube->mlx, game->img);
+    // game->img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
+    // mlx_image_to_window(game->mlx, game->img, 0, 0);
     init_player(game);
     init_game_vars(game);
     // mlx_clear_window(game->cube->mlx, game->cube->win);

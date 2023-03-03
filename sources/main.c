@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 16:01:38 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 16:01:38 by ssabbaji         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minimap.h"
 
 int color = 0x00FF0000;
@@ -60,7 +48,8 @@ int	main(int argc, char **argv)
         exit(0);
     draw_floor_ceiling(game);
     mlx_image_to_window(game->mlx, game->img, 0, 0);
-    mlx_key_hook(game->mlx, &esc_keyhook, NULL);
+    // mlx_key_hook(game->mlx, &esc_keyhook, game);
+    mlx_loop_hook(game->mlx, &handle_input, game);
     mlx_loop_hook(game->mlx, &ready_start, game);
     mlx_loop(game->mlx);
     mlx_terminate(game->mlx);

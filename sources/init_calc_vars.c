@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 14:05:10 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:10:41 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,14 @@ void    drawing_calc(t_game_data *game)
     game->map_pos.y = (int)game->pos.x;
     game->hit = 0;
     //initialize deltaDist vars aaaand done with drawing calc
-    game->delta_dist.x = sqrt(1 + (game->ray_dir.y * game->ray_dir.y) / (game->ray_dir.x * game->ray_dir.x));
+    // game->delta_dist.x = sqrt(1 + (game->ray_dir.y * game->ray_dir.y) / (pow(game->ray_dir.x, 2)));
     //this calculation is to avoid division by 0 (we're not in c++ hehe) and is the same as doing the following
-    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2)) 
+    game->delta_dist.x = sqrt(1 + pow(game->ray_dir.y, 2) / pow(game->ray_dir.x, 2));
     // / pow(game->ray_dir->x, 2);
     // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2))    
     // / pow(game->ray_dir->x, 2);
-    game->delta_dist.y = sqrt(1 + (game->ray_dir.x * game->ray_dir.x) / (game->ray_dir.y * game->ray_dir.y));
+    game->delta_dist.y = sqrt(1 + pow(game->ray_dir.x, 2) / pow(game->ray_dir.y, 2)); 
+    // game->delta_dist.y = sqrt(1 + (game->ray_dir.x * game->ray_dir.x) / (game->ray_dir.y * game->ray_dir.y));
     // if (game->delta_dist->x == 0) the rest to implement in a separate function
 }
 

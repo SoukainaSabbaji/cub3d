@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/28 13:57:22 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:52:42 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,13 @@ void draw_line(t_game_data *game, int color)
 
     t_coord p1;
     t_coord p2;
-
-    p1.x = game->x;
-    p1.y = game->draw_start;
-    p2.x = game->x;
-    p2.y = game->draw_end;
+    int steps;
+    
+    steps = 0;
+    p1 = (t_coord){game->x, game->draw_start};
+    p2 = (t_coord){game->x, game->draw_end};
     int dx = p2.x - p1.x;
     int dy = p2.y - p1.y;
-    int steps = 0;
     float x = p1.x + 0.5;
     float y = p1.y + 0.5;
     int i = 0;
