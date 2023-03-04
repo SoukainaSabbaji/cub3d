@@ -47,10 +47,12 @@ int	main(int argc, char **argv)
     if (!game->mlx)
         exit(0);
     draw_floor_ceiling(game);
+    init_player(game);
+    init_game_vars(game);
+    start_drawing(game);
     mlx_image_to_window(game->mlx, game->img, 0, 0);
-    // mlx_key_hook(game->mlx, &esc_keyhook, game);
     mlx_loop_hook(game->mlx, &handle_input, game);
-    mlx_loop_hook(game->mlx, &ready_start, game);
+    // mlx_loop_hook(game->mlx, &ready_start, game);
     mlx_loop(game->mlx);
     mlx_terminate(game->mlx);
     return (EXIT_SUCCESS);
