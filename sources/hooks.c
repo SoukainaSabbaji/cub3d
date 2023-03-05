@@ -3,107 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:53:01 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/04 16:11:48 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:56:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 
+
+t_fcoord movement_distance(t_game_data *game, t_fcoord mov, double max_distance)
+{
+    t_raycast   wall_tester;
+
+    init_raycast(&wall_tester, &game->player, mov);
+    start_dda(&wall_tester, game->map, game->player.map_pos);
+    if (wall_tester.side == 0)
+    {
+        if (fabs(wall_tester.side_dist.x - wall_tester.delta_dist.x) < max_distance)
+            return scale_vector(mov, 0);
+        return scale_vector(mov, max_distance);
+    }
+    else
+    {
+        if (fabs(wall_tester.side_dist.y - wall_tester.delta_dist.y) < max_distance)
+            return scale_vector(mov, 0);
+        return scale_vector(mov, max_distance);
+    }   
+}
+
 void    move_forback(t_game_data *game)
 {
-    normalize_vector(game->player->dir);
-    if (mlx_is_key_down(game->mlx, MLX_KEY_W) )
+    t_fcoord new_pos;
+    t_fcoord orientation;
+    t_fcoord mov;
+
+    orientation = normalize_vector(game->player.dir);
+    if (mlx_is_key_down(game->mlx, MLX_KEY_W) || mlx_is_key_down(game->mlx, MLX_KEY_S))
     {
-        printf("move forward\n");
-        if (game->map->map[(int)(game->pos.x + game->player->dir.x * game->move_speed)][(int)(game->pos.y)] == '0')
-            game->pos.x += game->player->dir.x * game->move_speed;
-        if (game->map->map[(int)(game->pos.x)][(int)(game->pos.y + game->player->dir.y * game->move_speed)] == '0')
-            game->pos.y += game->player->dir.y * game->move_speed;
-    }
-    if (mlx_is_key_down(game->mlx, MLX_KEY_S) )
-    {
-        printf("move backward\n");
-        if (game->map->map[(int)(game->pos.x - game->player->dir.x * game->move_speed)][(int)(game->pos.y)] == '0')
-            game->pos.x -= game->player->dir.x * game->move_speed;
-        if (game->map->map[(int)(game->pos.x)][(int)(game->pos.y - game->player->dir.y * game->move_speed)] == '0')
-            game->pos.y -= game->player->dir.y * game->move_speed;
+        if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+            mov = movement_distance(game, orientation, game->move_speed);
+        else
+            mov = movement_distance(game, scale_vector(orientation, -1), game->move_speed);
+        new_pos = add_vector(game->player.world_pos, mov);
+        game->player.world_pos = new_pos;
+        game->player.map_pos =  (t_coord){ .x = (int)new_pos.x, .y = (int)new_pos.y};
     }
 }
 
 void    move_straf(t_game_data *game)
 {
-    double dx;
-    double dy;
+    t_fcoord new_pos;
+    t_fcoord side_vector;
+    t_fcoord mov;
 
-    dx = 0;
-    dy = 0;
-    if (mlx_is_key_down(game->mlx, MLX_KEY_A) )
+    side_vector = game->player.camera_plane;
+    if (mlx_is_key_down(game->mlx, MLX_KEY_A) || mlx_is_key_down(game->mlx, MLX_KEY_D))
     {
-        // printf("straf left\n");
-        // dx = -game->player->dir.y;
-        // dy = game->player->dir.x;
-        // dx /= vector_size((t_fcoord){dx, dy});
-        // dy /= vector_size((t_fcoord){dx, dy});
-        // game->pos.x -= dx * STRAFE_SPEED;
-        // game->pos.y -= dy * STRAFE_SPEED;
-	    // if (game->map->map[(int)(game->pos.x)][(int)(\
-	    // 	game->pos.y + game->player->dir.y - game->plane.y)] == '0')
-	    // {
-	    // 	game->pos.y -= game->plane.y * game->move_speed;
-	    // 	game->pos.x -= game->plane.x * game->move_speed;
-	    // }
-        if (game->map->map[(int)(game->pos.x - game->plane.x * game->move_speed)][(int)(game->pos.y)] == '0')
-            game->pos.x -= game->plane.x * game->move_speed;
-        if (game->map->map[(int)(game->pos.x)][(int)(game->pos.y - game->plane.y * game->move_speed)] == '0')
-            game->pos.y -= game->plane.y * game->move_speed;
+        if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+            mov = movement_distance(game, side_vector, game->move_speed);
+        else
+            mov = movement_distance(game, scale_vector(side_vector, -1), game->move_speed);
+        new_pos = add_vector(game->player.world_pos, mov);
+        game->player.world_pos = new_pos;
+        game->player.map_pos =  (t_coord){ .x = (int)new_pos.x, .y = (int)new_pos.y};
     }
-    if (mlx_is_key_down(game->mlx, MLX_KEY_D) )
-    {
-        // printf("straf right\n");
-        // dx = game->player->dir.y;
-        // dy = -game->player->dir.x;
-        // dx /= vector_size((t_fcoord){dx, dy});;
-        // dy /= vector_size((t_fcoord){dx, dy});
-        // game->pos.x += dx * STRAFE_SPEED;
-        // game->pos.y += dy * STRAFE_SPEED;
-	    // if (game->map->map[(int)(game->pos.x)][(int)(\
-	    // 	game->pos.y + game->player->dir.y + game->plane.y)] == '0')
-	    // {
-	    // 	game->pos.y += game->plane.y * game->move_speed;
-	    // 	game->pos.x += game->plane.x * game->move_speed;
-	    // }
-        if (game->map->map[(int)(game->pos.x + game->plane.x * game->move_speed)][(int)(game->pos.y)] == '0')
-            game->pos.x += game->plane.x * game->move_speed;
-        if (game->map->map[(int)(game->pos.x)][(int)(game->pos.y + game->plane.y * game->move_speed)] == '0')
-            game->pos.y += game->plane.y * game->move_speed;
-    }
+}
 
+t_fcoord  rotate_angle(t_fcoord vector, float angle)
+{
+    t_fcoord new_vector;
+    new_vector.x = vector.x * cos(angle) - vector.y * sin(angle);
+    new_vector.y = vector.x * sin(angle) + vector.y * cos(angle);
+    return (new_vector);
 }
 
 void    rotate_fov(t_game_data *game)
 {
     t_fcoord old_dir;
     t_fcoord old_plane;
-    old_dir = game->player->dir;
-    old_plane = game->plane;
+    old_dir = game->player.dir;
+    old_plane = game->player.camera_plane;
     if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
     {
-        printf("left\n");
-        game->player->dir.x = game->player->dir.x * cos(game->rot_angle) - game->player->dir.y * sin(game->rot_angle);
-        game->player->dir.y = old_dir.x * sin(game->rot_angle) + game->player->dir.y * cos(game->rot_angle);
-        game->plane.x = game->plane.x * cos(game->rot_angle) - game->plane.y * sin(game->rot_angle);
-        game->plane.y = old_plane.x * sin(game->rot_angle) + game->plane.y * cos(game->rot_angle);
+        game->player.dir = rotate_angle(game->player.dir, game->rot_angle);
+        game->player.camera_plane = rotate_angle(game->player.camera_plane, game->rot_angle);
     }
     if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
     {
-        printf("right\n");
-        game->player->dir.x = game->player->dir.x * cos(-game->rot_angle) - game->player->dir.y * sin(-game->rot_angle);
-        game->player->dir.y = old_dir.x * sin(-game->rot_angle) + game->player->dir.y * cos(-game->rot_angle);
-        game->plane.x = game->plane.x * cos(-game->rot_angle) - game->plane.y * sin(-game->rot_angle);
-        game->plane.y = old_plane.x * sin(-game->rot_angle) + game->plane.y * cos(-game->rot_angle);
+        game->player.dir = rotate_angle(game->player.dir, -game->rot_angle);
+        game->player.camera_plane = rotate_angle(game->player.camera_plane, -game->rot_angle);
     }
 }
 

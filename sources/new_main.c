@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:57:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/02 13:40:36 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:57:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,7 @@ int     main(int argc, char **argv)
     if (argc != 2)
         return (0);
     map = get_map(argv[1]);
-    print_map_array(map);
+    // print_map_array(map);
     draw_map(map);
     return (0);
 }
-
