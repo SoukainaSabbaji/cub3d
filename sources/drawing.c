@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/27 15:11:10 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/05 11:34:24 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,48 @@ void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size)
 }
 
 
-void draw_line(t_coord p1, t_coord p2, int color , mlx_image_t *ray_img)
+// void draw_line(t_coord p1, t_coord p2, int color ,mlx_image_t *img)
+// {
+//     int dx = p2.x - p1.x;
+//     int dy = p2.y - p1.y;
+//     int steps = 0;
+//     float x = p1.x + 0.5;
+//     float y = p1.y + 0.5;
+//     int i = 0;
+
+//     if (abs(dx) > abs(dy))
+//         steps = abs(dx);
+//     else
+//         steps = abs(dy);
+//     float x_inc = dx / (float)steps;
+//     float y_inc = dy / (float)steps;
+//     while (i <= steps)
+//     {
+//         // if (x >= 0 && x < dims.x && y >= 0 && y < dims.y)
+//         mlx_put_pixel(img, x, y, color);
+//         x += x_inc;
+//         y += y_inc;
+//         i++;
+//     }
+// }
+
+void draw_line(t_game_data *game, int color)
 {
+
+    t_coord p1;
+    t_coord p2;
+    int steps;
+    
+    steps = 0;
+    p1 = (t_coord){game->x, game->draw_start};
+    p2 = (t_coord){game->x, game->draw_end};
     int dx = p2.x - p1.x;
     int dy = p2.y - p1.y;
-    int steps = 0;
     float x = p1.x + 0.5;
     float y = p1.y + 0.5;
     int i = 0;
-
+    // printf("p1.x = %d, p1.y = %d, p2.x = %d, p2.y = %d", p1.x, p1.y, p2.x, p2.y);
+    (void)color;
     if (abs(dx) > abs(dy))
         steps = abs(dx);
     else
@@ -92,8 +125,7 @@ void draw_line(t_coord p1, t_coord p2, int color , mlx_image_t *ray_img)
     float y_inc = dy / (float)steps;
     while (i <= steps)
     {
-        // if (x >= 0 && x < dims.x && y >= 0 && y < dims.y)
-        mlx_put_pixel(ray_img, x, y, color);
+        mlx_put_pixel(game->img, x, y, color);
         x += x_inc;
         y += y_inc;
         i++;
@@ -146,4 +178,48 @@ void ft_drawline(t_coord p1, t_coord p2, int color)
             p1.y += y.slope;
         }
     }
+}
+
+int     conv_rgb(t_rgb color)
+{
+    return (color.r << 16 | color.g << 8 | color.b);
+}
+
+void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color)
+{
+    t_iter iter = {0, 0, 0};
+    while (iter.i < dims.x)
+    {
+        while (iter.j < dims.y)
+        {
+            int nx = pos.x + iter.i;
+            int ny = pos.y + iter.j;
+            if (nx >= 0 && nx < dims.x && ny >= 0 && ny < dims.y)
+            {
+                mlx_put_pixel(img, nx, ny, color);
+            }
+            iter.j++;
+        }
+        iter.j = 0;
+        iter.i++;
+    }
+}
+
+void    draw_floor_ceiling(t_game_data *game)
+{
+    t_coord pos;
+    t_coord dims;
+    int color;
+
+    pos.x = 0;
+    pos.y = 0;
+    dims.x = game->screen_width;
+    dims.y = game->screen_height;
+    color = conv_rgb(game->map->floor);
+    draw_rectangles(game->img, pos, dims, RAY_COLOR);
+    pos.y = 0;
+    dims.x = game->screen_width;
+    dims.y = game->screen_height / 2;
+    color = conv_rgb(game->map->ceiling);
+    draw_rectangles(game->img, pos, dims, PLAYER_COLOR);
 }

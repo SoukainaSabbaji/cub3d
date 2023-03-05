@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/05 11:28:01 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/05 11:38:13 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 #include "math.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
+#include "/Users/ssabbaji/.brew/Cellar/glfw/3.3.8/include/GLFW/glfw3.h"
+
+// #include "../MLX42/include/MLX42/MLX42_Int.h"
 
 #define WALL_SIZE 64
 #define PLAYER_SIZE 16
@@ -37,7 +40,11 @@
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
 #define BPP sizeof(int32_t)
+#define WALL '1'
+#define EMPTY '0'
+#define STRAFE_SPEED 0.1
 
+extern int color;
 
 typedef struct s_fcoord
 {
@@ -81,6 +88,15 @@ typedef struct s_player
     
 }   t_player;
 
+
+typedef struct s_image
+{
+    void    *img_ptr;
+    char    *img_data;
+    int     bpp;
+    int     size_line;
+    int     endian;
+}   t_image;
 typedef struct s_map
 {
     char        **map;
@@ -121,13 +137,6 @@ typedef struct s_iter
     int k;
 }   t_iter;
 
-typedef struct s_ray
-{
-    t_fcoord    ray_dir; //direction of the ray in world space matches the player's direction
-    t_fcoord    ray_origin; //origin of the ray in world space matches the player's position
-    // t_coord     step; //step to take in the map
-}   t_ray;
-
 typedef struct s_player_map
 {
 	mlx_t		*mlx;
@@ -139,11 +148,12 @@ typedef struct s_player_map
 typedef struct s_game_data
 {
     t_map       *map;
+    void        *mlx;
     t_player    *player;
     t_wall      *wall;
-    t_ray       *ray;
     t_cube      *cube;
     mlx_image_t *img;
+    t_image     *image;
     t_fcoord    camera_plane;
     t_fcoord    ray_dir;
     t_fcoord    plane;
@@ -153,7 +163,7 @@ typedef struct s_game_data
     t_coord     map_pos;
     t_fcoord    side_dist;
     t_fcoord    delta_dist;
-    double      perp_wall_dist;
+    double      perp_wall_dis;
     t_coord     step;
     int         x;
     int         hit;
@@ -164,8 +174,8 @@ typedef struct s_game_data
     double      move_speed;
     double      rot_angle;
     double      frame_time;
-    int         screeen_width;
-    int         screeen_height;
+    int         screen_width;
+    int         screen_height;
     char        start_dir;
 }   t_game_data;
 
@@ -179,8 +189,8 @@ void hook_2(void *param);
 void hook(void *param);
 
 t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_line(t_coord p1, t_coord p2, int color , mlx_image_t *ray_img);
-void	ft_drawline(t_coord p1, t_coord p2, int color);
+void    draw_line(t_game_data *game, int color);
+// void draw_line(t_coord p1, t_coord p2, int color ,mlx_image_t *img);
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size);
 
@@ -211,7 +221,7 @@ t_rgb	ft_rgberr(void);
 t_rgb	ft_getcolors(char *str);
 int		ft_2darrlen(char **arr);
 void	ft_free2darr(char **arr);
-
+int	    ft_getnbrof_lines(char *file_name);
 mlx_image_t	*ft_putray(mlx_t *mlx, mlx_image_t *player, mlx_image_t *ray_img, double j);
 mlx_image_t	*ft_initrays(mlx_t *mlx, mlx_image_t *player);
 void		ft_putmap(mlx_t *mlx, char **map);
@@ -224,17 +234,36 @@ void my_minimapkeyhook(mlx_key_data_t keydata, void* param);
 int	ft_check_wall(t_player_map *player_map, int i, char x_y);
 
 /******************* - teh fun stuff - *******************/
-void    drawing_calc(t_game_data *game);
-void    calculate_step(t_game_data *game);
-void    init_game_dir(t_game_data *game);
-void    ready_start(void *ptr);
-void    start_drawing(t_game_data *game);
-void    init_pregame_parse(t_game_data *game);
-void    init_map(t_game_data *game);
-void    init_player(t_game_data *game);
-void    init_game_vars(t_game_data *game);
-void    init_dda(t_game_data *data);
-void    calculate_line_height(t_game_data *data);
+void        drawing_calc(t_game_data *game);
+void        calculate_step(t_game_data *game);
+void        init_game_dir(t_game_data *game);
+void        ready_start(void *ptr);
+void        start_drawing(t_game_data *game);
+void        init_pregame_parse(t_game_data *game, char **argv);
+void        init_map(t_game_data *game);
+void        init_player(t_game_data *game);
+void        init_game_vars(t_game_data *game);
+void        init_dda(t_game_data *data);
+void        calculate_line_height(t_game_data *data);
+void        draw_floor_ceiling(t_game_data *game);
+void        draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
+int         conv_rgb(t_rgb color);
+int         ft_getnbrof_cols(char **map);
+float       vector_size(t_fcoord coord);
+t_fcoord    normalize_vector(t_fcoord vector);
+int         valid_coord(t_coord coord, t_map *map);
+t_coord     get_coord(int x, int y);
+void        call_hooks();
+void        esc_keyhook(mlx_key_data_t data, void *param);
+void        handle_input(void *param);
+
+// void glfw_clear_window(GLFWwindow* window)
+// {
+//     int width, height;
+//     glfwGetFramebufferSize(window, &width, &height);
+//     glViewport(0, 0, width, height);
+//     glClear(GL_COLOR_BUFFER_BIT);
+// }
 
 
 mlx_image_t *g_img;//replaced by game->cube->img
@@ -243,5 +272,6 @@ mlx_t *g_mlx; // replaced by game->cube->mlx
 t_player *g_player; //replaced by game->player
 t_wall *g_wall;
 t_map *g_map;
+t_game_data *g_game;
 
 #endif

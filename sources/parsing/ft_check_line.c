@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:52:07 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/19 18:53:20 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:22:56 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 void	ft_check_first_line(char **table)
 {

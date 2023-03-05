@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getcolors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:57:47 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/22 18:01:16 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:23:20 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 int	ft_getclr(char *str, int r_g_b);
 int	ft_check_isdigit(char *str);

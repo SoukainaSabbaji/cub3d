@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getpath.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:54:36 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/22 18:02:05 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:23:35 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 char	*ft_getname(char *str);
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_player.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:53:47 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/19 18:54:46 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:23:12 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 void	ft_check_player(char **table)
 {

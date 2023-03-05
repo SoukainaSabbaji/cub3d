@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getrgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:55:38 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/22 18:00:08 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:23:42 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 t_rgb	ft_getrgb(char *file_name, char *f_c)
 {

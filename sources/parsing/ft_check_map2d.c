@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_map2d.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:57:01 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/19 18:57:59 by makacem          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:23:05 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 void	ft_check_map2d(char **map2d)
 {

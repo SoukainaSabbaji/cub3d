@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:57:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/01/16 16:46:41 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:40:36 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void    print_map_array(t_map *map)
             printf("%c ", map->map[i][j]);
             j++;
         }
-        printf("\n");
         j = 0;
         i++;
     }

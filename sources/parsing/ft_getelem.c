@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minimap.h"
+#include "../../includes/minimap.h"
 
 t_map	*ft_getmap(char *map_filename)
 {
@@ -36,6 +36,8 @@ t_map	*ft_getmap(char *map_filename)
 	if (elem->ceiling.r == -1 || elem->ceiling.g == -1 || elem->ceiling.b == -1)
 		printf("Error: invalid ceiling rgb\n");
 	elem->map = ft_getmap2d(map_filename);
+	if (elem->map == NULL)
+		printf("Error: map not found\n");
 	ft_check_map2d(elem->map);
 	return (elem);
 }
