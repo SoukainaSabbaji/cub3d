@@ -2,6 +2,7 @@
     "files.associations": {
         "get_next_line.h": "c",
         "minimap.h": "c",
-        "locale": "c"
+        "locale": "c",
+        "complex": "c"
     }
 }

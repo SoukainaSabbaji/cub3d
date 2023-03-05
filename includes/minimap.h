@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/25 20:36:15 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/05 11:28:01 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 // #define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
+#define BPP sizeof(int32_t)
 
 
 typedef struct s_fcoord
@@ -127,6 +128,14 @@ typedef struct s_ray
     // t_coord     step; //step to take in the map
 }   t_ray;
 
+typedef struct s_player_map
+{
+	mlx_t		*mlx;
+    mlx_image_t *player_img;
+	mlx_image_t *ray_img;
+    char **map;
+}   t_player_map;
+
 typedef struct s_game_data
 {
     t_map       *map;
@@ -170,7 +179,7 @@ void hook_2(void *param);
 void hook(void *param);
 
 t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_line(t_coord p1, t_coord p2, int color, t_coord dims);
+void    draw_line(t_coord p1, t_coord p2, int color , mlx_image_t *ray_img);
 void	ft_drawline(t_coord p1, t_coord p2, int color);
 void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
 void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size);
@@ -203,7 +212,16 @@ t_rgb	ft_getcolors(char *str);
 int		ft_2darrlen(char **arr);
 void	ft_free2darr(char **arr);
 
-
+mlx_image_t	*ft_putray(mlx_t *mlx, mlx_image_t *player, mlx_image_t *ray_img, double j);
+mlx_image_t	*ft_initrays(mlx_t *mlx, mlx_image_t *player);
+void		ft_putmap(mlx_t *mlx, char **map);
+void		ft_putgrid(mlx_t *mlx, char **map);
+mlx_image_t	*ft_putplayer(mlx_t *mlx, char **map);
+int	ft_getwidth(char **map);
+int	ft_getheight(char **map);
+void	ft_putcolor(mlx_image_t *img);
+void my_minimapkeyhook(mlx_key_data_t keydata, void* param);
+int	ft_check_wall(t_player_map *player_map, int i, char x_y);
 
 /******************* - teh fun stuff - *******************/
 void    drawing_calc(t_game_data *game);

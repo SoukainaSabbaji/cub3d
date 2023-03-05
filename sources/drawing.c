@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/02/17 11:37:21 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:11:10 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size)
 }
 
 
-void draw_line(t_coord p1, t_coord p2, int color ,t_coord dims)
+void draw_line(t_coord p1, t_coord p2, int color , mlx_image_t *ray_img)
 {
     int dx = p2.x - p1.x;
     int dy = p2.y - p1.y;
@@ -92,9 +92,8 @@ void draw_line(t_coord p1, t_coord p2, int color ,t_coord dims)
     float y_inc = dy / (float)steps;
     while (i <= steps)
     {
-        (void)dims;
         // if (x >= 0 && x < dims.x && y >= 0 && y < dims.y)
-        mlx_put_pixel(g_img, x, y, color);
+        mlx_put_pixel(ray_img, x, y, color);
         x += x_inc;
         y += y_inc;
         i++;

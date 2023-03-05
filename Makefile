@@ -6,7 +6,7 @@
 #    By: makacem <makacem@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/02/24 17:34:55 by makacem          ###   ########.fr        #
+#    Updated: 2023/03/05 11:30:37 by makacem          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ SOURCES_LIST = parsing.c main.c lodev.c drawing.c helper.c ft_check_input.c \
 				ft_getmap.c ft_check_line.c ft_check_map2d.c ft_check_player.c \
 				perform_dda.c \
 				ft_getcolors.c ft_getelem.c ft_getpath.c ft_getrgb.c \
+				ft_check_wall.c ft_getheight.c ft_getwidth.c \
+				ft_initrays.c ft_putcolor.c ft_putgrid.c \
+				ft_putmap.c ft_putplayer.c ft_putray.c \
+				my_minimapkeyhook.c \
 
 
 ################################################################################
