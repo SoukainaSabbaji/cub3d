@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 11:12:40 by makacem           #+#    #+#             */
-/*   Updated: 2023/03/05 11:14:39 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/06 10:38:21 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,24 @@ mlx_image_t	*ft_putray(mlx_t *mlx, mlx_image_t *player, mlx_image_t *ray_img, do
 	p1.y = ray_img->height / 2;
 	
 
-	p2.x = p1.x;
-	p2.y = 800;
+	p2.x = ray_img->width;
+	p2.y = ray_img->height / 2;
 
 	x1 = p2.x;
 	y1 = p2.y;
 
 	x1 = x1-p1.x;
 	y1 = y1-p1.y;
-	i = -30 + j;
-	while (i < 30 + j)
-	{
-		p2.x = x1 * cos(i * M_PI / 180) - y1 * sin(i * M_PI / 180);
-		p2.y = x1 * sin(i * M_PI / 180) + y1 * cos(i * M_PI / 180);
+	i = j;
+	// while (i < 30 + j)
+	// {
+		p2.x = x1 * cos(-i * M_PI / 180) - y1 * sin(-i * M_PI / 180);
+		p2.y = x1 * sin(-i * M_PI / 180) + y1 * cos(-i * M_PI / 180);
 		p2.x = p2.x+p1.x;
 		p2.y = p2.y+p1.y;
-		draw_line(p2, p1, 0xFF0000FF, ray_img);
-		i = i + 0.5;
-	}
+		printf("ray(%d, %d)  angle = %f   player(%d, %d)\n", p2.x, p2.y, i, p1.x, p1.y);
+		ft_drawlinedda(p2, p1, 0xFF0000FF, ray_img);
+	// 	i = i + 0.5;
+	// }
 	return (ray_img);
 }

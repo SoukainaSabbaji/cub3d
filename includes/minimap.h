@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/05 11:38:13 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/05 13:39:03 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 #include "math.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
-#include "/Users/ssabbaji/.brew/Cellar/glfw/3.3.8/include/GLFW/glfw3.h"
 
 // #include "../MLX42/include/MLX42/MLX42_Int.h"
 
@@ -232,6 +231,7 @@ int	ft_getheight(char **map);
 void	ft_putcolor(mlx_image_t *img);
 void my_minimapkeyhook(mlx_key_data_t keydata, void* param);
 int	ft_check_wall(t_player_map *player_map, int i, char x_y);
+void ft_drawlinedda(t_coord p1, t_coord p2, int color , mlx_image_t *ray_img);
 
 /******************* - teh fun stuff - *******************/
 void        drawing_calc(t_game_data *game);
