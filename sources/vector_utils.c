@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:04:23 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/05 17:55:48 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:35:21 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_fcoord normalize_vector(t_fcoord vector)
     vector.y /= len;
     return (vector);
 }
-
 
 t_fcoord scale_vector(t_fcoord vector, float scalar)
 {

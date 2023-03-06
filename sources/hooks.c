@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:53:01 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/05 17:56:39 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:37:05 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
-
 
 t_fcoord movement_distance(t_game_data *game, t_fcoord mov, double max_distance)
 {

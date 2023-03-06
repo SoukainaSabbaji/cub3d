@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   new_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:57:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/05 17:57:56 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:38:07 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
-
-mlx_image_t	*g_img;
 
 void    get_map_dims(FILE *mapFile, int *height , int *width)
 {

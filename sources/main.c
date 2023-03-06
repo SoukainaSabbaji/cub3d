@@ -52,7 +52,6 @@ int	main(int argc, char **argv)
     start_drawing(game);
     mlx_image_to_window(game->mlx, game->img, 0, 0);
     mlx_loop_hook(game->mlx, &handle_input, game);
-    // // mlx_loop_hook(game->mlx, &ready_start, game);
     mlx_loop(game->mlx);
     mlx_terminate(game->mlx);
     return (EXIT_SUCCESS);

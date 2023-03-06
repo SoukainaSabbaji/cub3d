@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/05 17:56:44 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:36:59 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 #include "math.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
-//#include "/Users/ssabbaji/.brew/Cellar/glfw/3.3.8/include/GLFW/glfw3.h"
-
-// #include "../MLX42/include/MLX42/MLX42_Int.h"
 
 #define WALL_SIZE 64
 #define PLAYER_SIZE 16 
