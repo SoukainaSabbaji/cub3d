@@ -3,102 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   init_calc_vars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/03 13:10:41 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:57:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 
-
-void    init_game_dir(t_game_data *game)
+void    init_game_dir(t_player *player, char start_dir)
 {
-    //initial direction vector 
-    if (game->start_dir == 'N')
+    if (start_dir == 'N')
     {
-        game->player->dir.x = -1;
-        game->player->dir.y = 0;
-        game->plane.x = 0;
-        game->plane.y = 0.66;
+        player->dir = (t_fcoord){ .x = -1, .y = 0 };
+        player->camera_plane = (t_fcoord){ .x = 0, .y = 0.66 };
     }
-    else if (game->start_dir == 'S')
+    if (start_dir == 'S')
     {
-        game->player->dir.x = 1;
-        game->player->dir.y = 0;
-        game->plane.x = 0;
-        game->plane.y = -0.66;
+        player->dir = (t_fcoord){ .x = 1, .y = 0 };
+        player->camera_plane = (t_fcoord){ .x = 0, .y = -0.66 };
     }
-    else if (game->start_dir == 'E')
+    if (start_dir == 'E')
     {
-        game->player->dir.x = 0;
-        game->player->dir.y = 1;
-        game->plane.x = 0.66;
-        game->plane.y = 0;
+        player->dir = (t_fcoord){ .x = 0, .y = 1 };
+        player->camera_plane = (t_fcoord){ .x = 0.66, .y = 0 };
     }
-    else if (game->start_dir == 'W')
+    if (start_dir == 'W')
     {
-        game->player->dir.x = 0;
-        game->player->dir.y = -1;
-        game->plane.x = -0.66;
-        game->plane.y = 0;
+        player->dir = (t_fcoord){ .x = 0, .y = -1 };
+        player->camera_plane = (t_fcoord){ .x = -0.66, .y = 0 };
     }
 }
 
-
-void    calculate_step(t_game_data *game)
+void    init_raycast(t_raycast *raycast, t_player *player, t_fcoord ray_dir)
 {
     //calculate step and initial sideDist
-    if (game->ray_dir.x < 0)
-    {
-        game->step.x = -1;
-        game->side_dist.x = (game->pos.x - game->map_pos.x) * game->delta_dist.x;
-    }
+    raycast->hit = 0;
+    raycast->ray_dir = ray_dir;
+    raycast->step.x = fabs(ray_dir.x) / ray_dir.x;
+    raycast->step.y = fabs(ray_dir.y) / ray_dir.y;
+    raycast->delta_dist.x = (ray_dir.x != 0) ? sqrt(1 + pow(ray_dir.y, 2) / pow(ray_dir.x, 2)) : INT32_MAX;
+    raycast->delta_dist.y = (ray_dir.y != 0) ? sqrt(1 + pow(ray_dir.x, 2) / pow(ray_dir.y, 2)) :  INT32_MAX;
+    if (ray_dir.x < 0)
+        raycast->side_dist.x = player->world_pos.x - player->map_pos.x;
     else
-    {
-        game->step.x = 1;
-        game->side_dist.x = (game->map_pos.x + 1.0 - game->pos.x) * game->delta_dist.x;
-    }
-    if (game->ray_dir.y < 0)
-    {
-        game->step.y = -1;
-        game->side_dist.y = (game->pos.y - game->map_pos.y) * game->delta_dist.y;
-    }
+        raycast->side_dist.x = player->map_pos.x + 1.0 - player->world_pos.x;
+    raycast->side_dist.x *=  raycast->delta_dist.x;
+    if (ray_dir.y < 0)
+        raycast->side_dist.y = player->world_pos.y - player->map_pos.y;
     else
-    {
-        game->step.y = 1;
-        game->side_dist.y = (game->map_pos.y + 1.0 - game->pos.y) * game->delta_dist.y;
-    }
-    
+        raycast->side_dist.y = player->map_pos.y + 1.0 - player->world_pos.y;
+    raycast->side_dist.y *= raycast->delta_dist.y;
 }
 
 void    drawing_calc(t_game_data *game)
 {
-    // calculate ray position and direction
-    //camerax is different from planex
-    //planex and y are the 2d raycaster version of camera plane
-    //camera plane is the 3d version of planex and y , we normalize 
-    //it by dividing it by the screen width so the camera plane
-    //is always the same size and always centered on the player 
-    game->camera_plane.x = 2 * game->x / (double)game->screen_width - 1; //x-coordinate in camera space
-    game->ray_dir.x = game->player->dir.x + game->plane.x * game->camera_plane.x ;
-    game->ray_dir.y = game->player->dir.y + game->plane.y * game->camera_plane.x;  
-    //which box of the map we're in
-    game->map_pos.x = (int)game->pos.x;
-    game->map_pos.y = (int)game->pos.x;
-    game->hit = 0;
-    //initialize deltaDist vars aaaand done with drawing calc
-    // game->delta_dist.x = sqrt(1 + (game->ray_dir.y * game->ray_dir.y) / (pow(game->ray_dir.x, 2)));
-    //this calculation is to avoid division by 0 (we're not in c++ hehe) and is the same as doing the following
-    game->delta_dist.x = sqrt(1 + pow(game->ray_dir.y, 2) / pow(game->ray_dir.x, 2));
-    // / pow(game->ray_dir->x, 2);
-    // game->delta_dist->x = sqrt(1 + pow(game->ray_dir->y, 2) / pow(game->ray_dir->x, 2))    
-    // / pow(game->ray_dir->x, 2);
-    game->delta_dist.y = sqrt(1 + pow(game->ray_dir.x, 2) / pow(game->ray_dir.y, 2)); 
-    // game->delta_dist.y = sqrt(1 + (game->ray_dir.x * game->ray_dir.x) / (game->ray_dir.y * game->ray_dir.y));
-    // if (game->delta_dist->x == 0) the rest to implement in a separate function
+    float       plane_factor;
+    t_fcoord    ray_dir;
+
+    plane_factor = 2 * game->x / (double)game->screen_width - 1;
+    ray_dir.x = game->player.dir.x + game->player.camera_plane.x * plane_factor;
+    ray_dir.y = game->player.dir.y + game->player.camera_plane.y * plane_factor;
+    init_raycast(&game->raycast, &game->player, ray_dir);
 }
-
-
-

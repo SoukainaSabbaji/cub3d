@@ -3,60 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   perform_dda.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:14:30 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/04 14:18:21 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:58:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 
-double  calculate_perp(t_game_data *game)
+double calculate_perp(t_raycast raycast)
 {
-    t_fcoord delta;
-    double perp_wall_dis;
+    double euclidian_dist;
 
-    delta.x = game->map_pos.x - game->player->world_pos.x + (1 - game->step.x) / 2;
-    delta.y = game->map_pos.y - game->player->world_pos.y + (1 - game->step.y) / 2;
-    if (game->side == 0)
+    if (raycast.side == 0)
     {
-        if (game->ray_dir.x == 0)
-            perp_wall_dis = INFINITY;
-        else
-            perp_wall_dis = fabs(delta.x / game->ray_dir.x);
+        euclidian_dist = raycast.side_dist.x - raycast.delta_dist.x;
+        return (fabs(euclidian_dist / raycast.delta_dist.x / raycast.ray_dir.x));
     }
     else
     {
-        if (game->ray_dir.y == 0)
-            perp_wall_dis = INFINITY;
-        else
-            perp_wall_dis = fabs(delta.y / game->ray_dir.y);
+        euclidian_dist = raycast.side_dist.y - raycast.delta_dist.y;
+        return (fabs(euclidian_dist / raycast.delta_dist.y / raycast.ray_dir.y));
     }
-    return (perp_wall_dis);
 }
 
-void init_dda(t_game_data *game)
+void start_dda(t_raycast *raycast, t_map *map, t_coord start_pos)
 {
-    while (!game->hit && valid_coord(game->map_pos, game->map))
+    while (!raycast->hit)
     {
-        if (game->side_dist.x < game->side_dist.y)
+        if (raycast->side_dist.x < raycast->side_dist.y)
         {
-            game->side_dist.x += game->delta_dist.x;
-            game->map_pos.x += game->step.x;
-            game->side = 0;
+            raycast->side_dist.x += raycast->delta_dist.x;
+            start_pos.x += raycast->step.x;
+            raycast->side = 0;
         }
         else
         {
-            game->side_dist.y += game->delta_dist.y;
-            game->map_pos.y += game->step.y;
-            game->side = 1;
+            raycast->side_dist.y += raycast->delta_dist.y;
+            start_pos.y += raycast->step.y;
+            raycast->side = 1;
         }
-        // printf("map_pos.x = %d, map_pos.y = %d\n", game->map_pos.x, game->map_pos.y);
-        if (game->map->map[game->map_pos.x][game->map_pos.y] == WALL)
-            game->hit = 1;
+        if (map->map[start_pos.y][start_pos.x] == WALL)
+            raycast->hit = 1;
     }
-    game->perp_wall_dis = calculate_perp(game);
 }
 
 void calculate_line_height(t_game_data *game)
@@ -66,12 +56,13 @@ void calculate_line_height(t_game_data *game)
     game->line_height = (int)(game->screen_height / game->perp_wall_dis);
     // calculate lowest and highest pixel to fill in current stripe
     game->draw_start = -game->line_height / 2 + game->screen_height / 2;
+    
     if (game->draw_start < 0)
         game->draw_start = 0;
     game->draw_end = game->line_height / 2 + game->screen_height / 2;
     if (game->draw_end >= game->screen_height)
         game->draw_end = game->screen_height - 1;
-    if (game->side == 0)
+    if (game->raycast.side == 0)
         color = MMAP_WALL_COLOR;
     else 
         color = MMAP_EMPTY_COLOR;

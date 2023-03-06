@@ -6,7 +6,7 @@
 #    By: makacem <makacem@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/03/05 13:40:13 by makacem          ###   ########.fr        #
+#    Updated: 2023/03/06 11:23:23 by makacem          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = gcc
 FLAGS = -Werror -Wextra -Wall -g
 
 ifeq ($(shell uname), Darwin)
-	LIBRARIES = -I include -lglfw -L "/Users/makacem/goinfre/homebrew/Cellar/glfw/3.3.8/lib"
+	LIBRARIES = -I include -lglfw -L "/Users/ssabbaji/.brew/opt/glfw/lib/"
 else
 	LIBRARIES = -ldl -lglfw3 -pthread -lm -I ./includes/minimap.h
 endif
