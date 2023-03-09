@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:52:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/06 14:45:15 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:48:58 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,3 @@ void    start_drawing(t_game_data *game)
         game->x++;
     }
 }
-
-void   ready_start(void *ptr)
-{
-    t_game_data *game;
-
-    game = (t_game_data *)ptr;
-    init_game_vars(game);
-    start_drawing(game);
-}
-xpm 

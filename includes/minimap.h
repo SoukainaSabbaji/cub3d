@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:46:35 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/06 11:36:59 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:59:00 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 #define MMAP_WALL_COLOR  0xFFFFFFFF
 #define MMAP_EMPTY_COLOR 0xFF000000
 #define PLAYER_COLOR 0xFF0000FF
+#define OTHER_COL 0xCC1436
 // #define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
@@ -142,6 +143,24 @@ typedef struct s_raycast
     int         side;
     int         hit;
 }               t_raycast;
+
+typedef struct s_text
+{
+    void    *img_ptr;
+    int     width;
+    int     height;
+    char    *img_data;
+    int     bpp;
+    int     size_line;
+    int     endian;
+    mlx_texture_t   *s_tex;
+    mlx_texture_t   *n_tex;
+    mlx_texture_t   *w_tex;
+    mlx_texture_t   *e_tex;
+
+    
+}   t_text;
+
 typedef struct s_game_data
 {
     t_map       *map;
@@ -156,7 +175,7 @@ typedef struct s_game_data
     double      time;
     double      old_time;
     double      perp_wall_dis;
-    
+    t_text      *text;
     int         x;
     int         side;
     int         line_height;
@@ -227,8 +246,8 @@ void        init_game_vars(t_game_data *game);
 void        start_dda(t_raycast *raycast, t_map *map, t_coord start_pos);
 void        calculate_line_height(t_game_data *data);
 void        draw_floor_ceiling(t_game_data *game);
-void        draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color);
-int         conv_rgb(t_rgb color);
+void        draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, unsigned int color);
+unsigned int         conv_rgb(t_rgb color);
 int         ft_getnbrof_cols(char **map);
 float       vector_size(t_fcoord coord);
 t_fcoord    normalize_vector(t_fcoord vector);

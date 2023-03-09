@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/03 15:52:42 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:08:31 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,12 +180,12 @@ void ft_drawline(t_coord p1, t_coord p2, int color)
     }
 }
 
-int     conv_rgb(t_rgb color)
+unsigned int     conv_rgb(t_rgb color)
 {
     return (color.r << 16 | color.g << 8 | color.b);
 }
 
-void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color)
+void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, unsigned int color)
 {
     t_iter iter = {0, 0, 0};
     while (iter.i < dims.x)
@@ -195,9 +195,7 @@ void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, int color)
             int nx = pos.x + iter.i;
             int ny = pos.y + iter.j;
             if (nx >= 0 && nx < dims.x && ny >= 0 && ny < dims.y)
-            {
                 mlx_put_pixel(img, nx, ny, color);
-            }
             iter.j++;
         }
         iter.j = 0;
@@ -209,17 +207,16 @@ void    draw_floor_ceiling(t_game_data *game)
 {
     t_coord pos;
     t_coord dims;
-    int color;
 
     pos.x = 0;
     pos.y = 0;
     dims.x = game->screen_width;
     dims.y = game->screen_height;
-    color = conv_rgb(game->map->floor);
-    draw_rectangles(game->img, pos, dims, RAY_COLOR);
+    // draw_rectangles(game->img, pos, dims, conv_rgb(game->map->floor));
+    draw_rectangles(game->img, pos, dims, OTHER_COL);
+    pos.x = 0;
     pos.y = 0;
     dims.x = game->screen_width;
     dims.y = game->screen_height / 2;
-    color = conv_rgb(game->map->ceiling);
-    draw_rectangles(game->img, pos, dims, PLAYER_COLOR);
+    draw_rectangles(game->img, pos, dims, conv_rgb(game->map->ceiling));
 }
