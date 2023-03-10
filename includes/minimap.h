@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/10 18:48:01 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 18:57:01 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,11 @@
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
 
-#define WALL_SIZE 64
-#define PLAYER_SIZE 16 
-#define PLAYER_RATIO PLAYER_SIZE / WALL_SIZE
 #define MMAP_WALL_COLOR  0xFFFFFFFF
 #define MMAP_EMPTY_COLOR 0xFF000000
 #define PLAYER_COLOR 0xFF0000FF
 #define OTHER_COL 0xFF1364CC
-// #define RAY_COLOR 0xE5FF7A
+#define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
 #define WALL '1'
