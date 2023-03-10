@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/10 15:03:55 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 18:37:47 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,29 @@ void    find_player_pos(t_map *map, t_player *player)
         i++;
     }
 }
+void    init_text(t_text *text)
+{
+    text->width = 64;
+    text->height = 64;
+    text->tex_x = 0;
+    text->tex_y = 0;
+    text->step = 0;
+    text->wall_x = 0;
+}
 
 void    init_game_vars(t_game_data *game)
 {
     //posx and posy start position are the same as
     // the position of the player in the map
+    game->text = malloc(sizeof(t_text));
+    init_text(game->text);
+    if (!game->text)
+        ft_error();
     game->move_speed = 0.05;
     game->rot_angle = 0.03;
     find_player_pos(game->map, &game->player);
 }
+
 
 void    print_map_arr(char **map)
 {

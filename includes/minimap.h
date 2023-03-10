@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/10 17:36:35 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 18:48:01 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ typedef struct s_fcoord
 {
     float x;
     float y;
-    // float dx;
-    // float dy;
 }               t_fcoord;
 
 typedef struct s_rgb
@@ -62,19 +60,11 @@ typedef struct s_rgb
     int b;
 }   t_rgb;
 
-typedef struct s_cord
-{
-    int d;
-    int error;
-    int slope;
-}               t_cord;
 
 typedef struct s_coord
 {
     int x;
     int y;
-    // int dx;
-    // int dy;
 }               t_coord;
 
 typedef struct s_player
@@ -83,25 +73,11 @@ typedef struct s_player
     t_fcoord        world_pos;
     t_fcoord        dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
     t_fcoord        camera_plane;
-    t_fcoord        current_ray;
-    mlx_image_t     *img;
-    float           rot_angle;
-    float           fov;
 }   t_player;
 
-
-typedef struct s_image
-{
-    void    *img_ptr;
-    char    *img_data;
-    int     bpp;
-    int     size_line;
-    int     endian;
-}   t_image;
 typedef struct s_map
 {
     char        **map;
-    FILE        *map_file;
     int         height;
     int         width;
     char        *n_texture;
@@ -110,26 +86,14 @@ typedef struct s_map
     char        *e_texture;
     t_rgb       floor;
     t_rgb       ceiling;
-    int         nbr_of_walls;
-    // t_player    *player;
 }   t_map; 
 
-typedef struct s_cube
-{
-    void    *mlx;
-    void    *win;
-    t_map   *map;
-    char    *img_data;
-    void    *img_ptr;
-}   t_cube;
 
 typedef struct s_wall
 {
     int x;
     int y;
 }   t_wall;
-
-
 
 typedef struct s_iter
 {
@@ -151,21 +115,13 @@ typedef struct s_raycast
 
 typedef struct s_text
 {
-    void    *img_ptr;
     unsigned int     width;
     unsigned int     height;
-    char    *img_data;
-    int     tex_num;
-    int     bpp;
-    int     size_line;
-    int     endian;
     int     tex_x;
     int     tex_y;
     double  tex_pos;
     double  step;
     double  wall_x;
-
-    
 }   t_text;
 
 typedef struct s_game_data
@@ -173,20 +129,15 @@ typedef struct s_game_data
     t_map       *map;
     void        *mlx;
     t_player    player;
-    t_wall      *wall;
-    t_cube      *cube;
     mlx_image_t *img;
-    t_image     *image;
     t_raycast   raycast;
-    t_fcoord    pos; //position of the player in the world
-    double      time;
-    double      old_time;
     double      perp_wall_dis;
     mlx_texture_t   *s_tex;
     mlx_texture_t   *n_tex;
     mlx_texture_t   *w_tex;
     mlx_texture_t   *e_tex;
     t_text      *text;
+    int         tex_height;
     int         x;
     int         side;
     int         line_height;
@@ -194,30 +145,12 @@ typedef struct s_game_data
     int         draw_end;
     double      move_speed;
     double      rot_angle;
-    double      frame_time;
     int         screen_width;
     int         screen_height;
-    char        start_dir;
 }   t_game_data;
 
 /**********************-Functions**********************/
-void    get_map_dims(t_map *map);
 
-void draw_player(t_coord pos, t_coord mini_map_size, int size);
-
-
-void hook_2(void *param);
-void hook(void *param);
-
-t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_line(t_game_data *game, int color);
-// void draw_line(t_coord p1, t_coord p2, int color ,mlx_image_t *img);
-void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size);
-
-void	move_player(t_fcoord move);
-
-int		count_walls(FILE *mapFile);
 
 void	ft_error(void);
 int		min(int a, int b);
@@ -272,29 +205,16 @@ t_fcoord    scale_vector(t_fcoord vector, float scalar);
 t_fcoord    add_vector(t_fcoord vector1, t_fcoord vector2);
 void        init_raycast(t_raycast *raycast, t_player *player, t_fcoord ray_dir);
 void        get_textures(t_game_data *game);
-void        calculate_tex_infos(t_game_data *game, mlx_texture_t *tex);
+void    calculate_tex_infos(t_game_data *game, t_text *text, mlx_texture_t *tex);
 void        draw_wall_text(t_game_data *game);
 void        calculate_text_x(t_text *text, t_fcoord intersect);
 double      find_wall_intersect(t_game_data *game);
 void        draw_wall_text(t_game_data *game);
 unsigned int	my_mlx_get_colour(mlx_texture_t *img, unsigned int x, unsigned int y);
+void draw_line(t_game_data *game, int color);
 
 
-// void glfw_clear_window(GLFWwindow* window)
-// {
-//     int width, height;
-//     glfwGetFramebufferSize(window, &width, &height);
-//     glViewport(0, 0, width, height);
-//     glClear(GL_COLOR_BUFFER_BIT);
-// }
 
 
-mlx_image_t *g_img;//replaced by game->cube->img
-mlx_image_t *g_player_img; //wouldnt need this after moving to a 3D engine
-mlx_t *g_mlx; // replaced by game->cube->mlx
-t_player *g_player; //replaced by game->player
-t_wall *g_wall;
-t_map *g_map;
-t_game_data *g_game;
 
 #endif

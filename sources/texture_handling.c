@@ -28,21 +28,22 @@ void    get_textures(t_game_data *game)
             ft_error();
 }
 
-void    calculate_tex_infos(t_game_data *game, mlx_texture_t *tex)
+void    calculate_tex_infos(t_game_data *game, t_text *text, mlx_texture_t *tex)
 {
-    double    wall_x;
-    game->text->height = tex->height;
-    game->text->width = tex->width;
-    game->text->tex_num = game->map->map[game->player.map_pos.y][game->player.map_pos.y] - 1;
+    double    wall_x = 0;
+
+    // game->tex_height = tex->height;
+    // text->height = tex->height;
+    // text->width = tex->width;
     wall_x = find_wall_intersect(game);
-    game->text->tex_x = (int)(game->text->wall_x * (double) game->text->width);
+    text->tex_x = (int)(text->wall_x * (double) tex->width);
     if (game->side == 0 && game->raycast.ray_dir.x < 0)
-        game->text->tex_x = game->text->width - game->text->tex_x - 1;
+        text->tex_x = tex->width - text->tex_x - 1;
     if (game->side == 1 && game->raycast.ray_dir.y > 0)
-        game->text->tex_x = game->text->width - game->text->tex_x - 1;
-    game->text->step = 1.0 * game->text->height / game->line_height;
-    game->text->tex_pos = (game->draw_start - game->screen_height / 2 + game->line_height / 2) \
-        * game->text->step;
+        text->tex_x = tex->width - text->tex_x - 1;
+    text->step = 1.0 * tex->height / game->line_height;
+    text->tex_pos = (game->draw_start - game->screen_height / 2 + game->line_height / 2) \
+        * text->step;
 }
 
 void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x)
@@ -54,7 +55,7 @@ void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x)
     {
         game->text->tex_y = (int) game->text->tex_pos;
         if (game->text->tex_y >= (int) wall->height)
-            game->text->tex_y = game->text->height - 1;
+            game->text->tex_y = wall->height - 1;
         game->text->tex_pos += game->text->step;
         mlx_put_pixel(game->img, x, y_coord, \
             my_mlx_get_colour(wall, game->text->tex_x, game->text->tex_y));
@@ -67,25 +68,25 @@ void   draw_wall_text(t_game_data *game)
 {
     if (game->side == 0 && game->raycast.step.x == -1)
     {
-        calculate_tex_infos(game, game->n_tex);
-        draw_column(game,  game->n_tex, game->x);
+        calculate_tex_infos(game, game->text, game->n_tex);
+        // draw_column(game,  game->n_tex, game->x);
     }
     if (game->side == 0 && game->raycast.step.x == 1)
     {
-        calculate_tex_infos(game, game->s_tex);
-        draw_column(game, game->s_tex, game->x);
+        calculate_tex_infos(game, game->text, game->s_tex);
+        // draw_column(game, game->s_tex, game->x);
 
     }
     if (game->side == 1 && game->raycast.step.y == -1)
     {
-        calculate_tex_infos(game, game->w_tex);
-        draw_column(game, game->w_tex, game->x);
+        calculate_tex_infos(game, game->text, game->w_tex);
+        // draw_column(game, game->w_tex, game->x);
 
     }
     if (game->side == 1 && game->raycast.step.y == 1)
     {
-        calculate_tex_infos(game, game->e_tex);
-        draw_column(game, game->e_tex, game->x);
+        calculate_tex_infos(game, game->text, game->e_tex);
+        // draw_column(game, game->e_tex, game->x);
 
     }
 }
