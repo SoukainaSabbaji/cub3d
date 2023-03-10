@@ -12,44 +12,96 @@
 
 #include "../includes/minimap.h"
 
-// void    get_textures(t_game_data *game)
-// {
-//     if (game->side == 0 && game->raycast.step.x == -1)
-//     //north
-//     if (game->side == 0 && game->raycast.step.x == 1)
-//     //south
-//     if (game->side == 1 && game->raycast.step.y == -1)
-//     //west
-//     if (game->side == 1 && game->raycast.step.y == 1)
-//     //east
-//         game->text->n_tex = mlx_load_png(game->map->n_texture);
-//         game->text->s_tex = mlx_load_png(game->map->s_texture);
-//         game->text->w_tex = mlx_load_png(game->map->w_texture);
-//         game->text->e_tex = mlx_load_png(game->map->e_texture);
-// }
+void    get_textures(t_game_data *game)
+{
+        game->n_tex = mlx_load_png("./textures/ac007c51eea4b4bc24500d579b7a8428.png");
+        if (game->n_tex == NULL)
+            ft_error();
+        game->s_tex = mlx_load_png("./textures/images.png");
+        if (game->s_tex == NULL)
+            ft_error();
+        game->w_tex = mlx_load_png("./textures/maxresdefault.png");
+        if (game->w_tex == NULL)
+            ft_error();
+        game->e_tex = mlx_load_png("./textures/311.png");
+        if (game->e_tex == NULL)
+            ft_error();
+}
+
+void    calculate_tex_infos(t_game_data *game, mlx_texture_t *tex)
+{
+    double    wall_x;
+    game->text->height = tex->height;
+    game->text->width = tex->width;
+    game->text->tex_num = game->map->map[game->player.map_pos.y][game->player.map_pos.y] - 1;
+    wall_x = find_wall_intersect(game);
+    game->text->tex_x = (int)(game->text->wall_x * (double) game->text->width);
+    if (game->side == 0 && game->raycast.ray_dir.x < 0)
+        game->text->tex_x = game->text->width - game->text->tex_x - 1;
+    if (game->side == 1 && game->raycast.ray_dir.y > 0)
+        game->text->tex_x = game->text->width - game->text->tex_x - 1;
+    game->text->step = 1.0 * game->text->height / game->line_height;
+    game->text->tex_pos = (game->draw_start - game->screen_height / 2 + game->line_height / 2) \
+        * game->text->step;
+}
+
+void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x)
+{
+    int    y_coord;
+
+    y_coord = game->draw_start;
+    while (y_coord <= game->draw_end)
+    {
+        game->text->tex_y = (int) game->text->tex_pos;
+        if (game->text->tex_y >= (int) wall->height)
+            game->text->tex_y = game->text->height - 1;
+        game->text->tex_pos += game->text->step;
+        mlx_put_pixel(game->img, x, y_coord, \
+            my_mlx_get_colour(wall, game->text->tex_x, game->text->tex_y));
+        y_coord++;
+    }
+}
 
 
-// /*
-// to find the point of intersection for each ray that hits the wall by doing IntersectionPoint = PlayerPos + rayDir * distance
-// then if you have an intersection on the horizontal axis you will calculate the fractional part of the X
-// and scale it by the size of the texture
-// and the other way around for Y and vertical axis
+void   draw_wall_text(t_game_data *game)
+{
+    if (game->side == 0 && game->raycast.step.x == -1)
+    {
+        calculate_tex_infos(game, game->n_tex);
+        draw_column(game,  game->n_tex, game->x);
+    }
+    if (game->side == 0 && game->raycast.step.x == 1)
+    {
+        calculate_tex_infos(game, game->s_tex);
+        draw_column(game, game->s_tex, game->x);
+
+    }
+    if (game->side == 1 && game->raycast.step.y == -1)
+    {
+        calculate_tex_infos(game, game->w_tex);
+        draw_column(game, game->w_tex, game->x);
+
+    }
+    if (game->side == 1 && game->raycast.step.y == 1)
+    {
+        calculate_tex_infos(game, game->e_tex);
+        draw_column(game, game->e_tex, game->x);
+
+    }
+}
 
 
-// */
-// void    find_wall_intersect(t_game_data *game)
-// {
-//     t_fcoord   intersect;
-//     if (game->side == 0)
-//     {
-//         intersect.y = game->player.world_pos.y + game->perp_wall_dis * game->raycast.ray_dir.y;
-//         intersect.x = game->player.world_pos.x + (intersect.y - game->player.world_pos.y) / tan(game->player.rot_angle);    
-//     }
-//     else
-//     {
-//         intersect.x = game->player.world_pos.x + game->perp_wall_dis * game->raycast.ray_dir.x;
-//         intersect.y = game->player.world_pos.y + (intersect.x - game->player.world_pos.x) * tan(game->player.rot_angle);
-//     }
-//     game->wall->x -= floor(game->wall->x);
 
-// }
+double  find_wall_intersect(t_game_data *game)
+{
+    t_fcoord   intersect;
+    t_fcoord   scaled;
+    normalize_vector(game->raycast.ray_dir);
+    scaled = scale_vector(game->raycast.ray_dir, game->raycast.euclid_dist);
+    if (game->side == 0)
+        intersect.x = game->player.world_pos.y + scaled.y;
+    else
+        intersect.x = game->player.world_pos.x + scaled.x;
+   intersect.x -= floor(intersect.x);
+   return (intersect.x);
+}

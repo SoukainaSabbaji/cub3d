@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/07 16:34:11 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:03:55 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void    init_game_vars(t_game_data *game)
 {
     //posx and posy start position are the same as
     // the position of the player in the map
-    game->move_speed = 0.06;
+    game->move_speed = 0.05;
     game->rot_angle = 0.03;
     find_player_pos(game->map, &game->player);
 }

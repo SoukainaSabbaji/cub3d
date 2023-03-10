@@ -51,6 +51,7 @@ int	main(int argc, char **argv)
     init_game_vars(game);
     start_drawing(game);
     mlx_image_to_window(game->mlx, game->img, 0, 0);
+    get_textures(game);
     mlx_loop_hook(game->mlx, &handle_input, game);
     mlx_loop(game->mlx);
     mlx_terminate(game->mlx);

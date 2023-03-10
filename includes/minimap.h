@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/10 10:00:00 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 17:36:35 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 #define MMAP_WALL_COLOR  0xFFFFFFFF
 #define MMAP_EMPTY_COLOR 0xFF000000
 #define PLAYER_COLOR 0xFF0000FF
-#define OTHER_COL 0xCC1436
+#define OTHER_COL 0xFF1364CC
 // #define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
@@ -143,6 +143,7 @@ typedef struct s_raycast
     t_fcoord    ray_dir;
     t_fcoord    side_dist;
     t_fcoord    delta_dist;
+    double      euclid_dist;
     t_coord     step;
     int         side;
     int         hit;
@@ -151,16 +152,18 @@ typedef struct s_raycast
 typedef struct s_text
 {
     void    *img_ptr;
-    int     width;
-    int     height;
+    unsigned int     width;
+    unsigned int     height;
     char    *img_data;
+    int     tex_num;
     int     bpp;
     int     size_line;
     int     endian;
-    mlx_texture_t   *s_tex;
-    mlx_texture_t   *n_tex;
-    mlx_texture_t   *w_tex;
-    mlx_texture_t   *e_tex;
+    int     tex_x;
+    int     tex_y;
+    double  tex_pos;
+    double  step;
+    double  wall_x;
 
     
 }   t_text;
@@ -179,6 +182,10 @@ typedef struct s_game_data
     double      time;
     double      old_time;
     double      perp_wall_dis;
+    mlx_texture_t   *s_tex;
+    mlx_texture_t   *n_tex;
+    mlx_texture_t   *w_tex;
+    mlx_texture_t   *e_tex;
     t_text      *text;
     int         x;
     int         side;
@@ -264,6 +271,14 @@ double      calculate_perp(t_raycast raycast);
 t_fcoord    scale_vector(t_fcoord vector, float scalar);
 t_fcoord    add_vector(t_fcoord vector1, t_fcoord vector2);
 void        init_raycast(t_raycast *raycast, t_player *player, t_fcoord ray_dir);
+void        get_textures(t_game_data *game);
+void        calculate_tex_infos(t_game_data *game, mlx_texture_t *tex);
+void        draw_wall_text(t_game_data *game);
+void        calculate_text_x(t_text *text, t_fcoord intersect);
+double      find_wall_intersect(t_game_data *game);
+void        draw_wall_text(t_game_data *game);
+unsigned int	my_mlx_get_colour(mlx_texture_t *img, unsigned int x, unsigned int y);
+
 
 // void glfw_clear_window(GLFWwindow* window)
 // {

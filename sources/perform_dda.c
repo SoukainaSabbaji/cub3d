@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:14:30 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/06 11:38:30 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:47:35 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ double calculate_perp(t_raycast raycast)
         euclidian_dist = raycast.side_dist.y - raycast.delta_dist.y;
         return (fabs(euclidian_dist / raycast.delta_dist.y / raycast.ray_dir.y));
     }
+    raycast.euclid_dist = euclidian_dist;
 }
 
 void start_dda(t_raycast *raycast, t_map *map, t_coord start_pos)

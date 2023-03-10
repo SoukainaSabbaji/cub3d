@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:52:45 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/09 18:48:58 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 17:35:25 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,16 @@ void    start_drawing(t_game_data *game)
         start_dda(&game->raycast, game->map, game->player.map_pos);
         game->perp_wall_dis = calculate_perp(game->raycast);
         calculate_line_height(game);
-        draw_line(game, color);
+        // draw_line(game, color);
+        draw_wall_text(game);
         game->x++;
     }
+}
+
+unsigned int	my_mlx_get_colour(mlx_texture_t *img, unsigned int x, unsigned int y)
+{
+	unsigned int	*colour;
+
+	colour = (unsigned int *)(img->pixels + ((x + y * img->width) * sizeof(unsigned int)));
+	return (*colour);
 }

@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:55:06 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/09 19:08:31 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:57:55 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size)
 //     }
 // }
 
+
 void draw_line(t_game_data *game, int color)
 {
 
@@ -115,8 +116,6 @@ void draw_line(t_game_data *game, int color)
     float x = p1.x + 0.5;
     float y = p1.y + 0.5;
     int i = 0;
-    // printf("p1.x = %d, p1.y = %d, p2.x = %d, p2.y = %d", p1.x, p1.y, p2.x, p2.y);
-    (void)color;
     if (abs(dx) > abs(dy))
         steps = abs(dx);
     else
@@ -180,9 +179,14 @@ void ft_drawline(t_coord p1, t_coord p2, int color)
     }
 }
 
+// unsigned int     conv_rgb(t_rgb color)
+// {
+//     return (0xFF << 24 | color.b << 16 | color.g << 8 | color.g);
+// }
+
 unsigned int     conv_rgb(t_rgb color)
 {
-    return (color.r << 16 | color.g << 8 | color.b);
+    return (color.r << 24 | color.g << 16| color.b << 8 | 0xFF);
 }
 
 void    draw_rectangles(mlx_image_t *img, t_coord pos, t_coord dims, unsigned int color)
@@ -213,7 +217,7 @@ void    draw_floor_ceiling(t_game_data *game)
     dims.x = game->screen_width;
     dims.y = game->screen_height;
     // draw_rectangles(game->img, pos, dims, conv_rgb(game->map->floor));
-    draw_rectangles(game->img, pos, dims, OTHER_COL);
+    draw_rectangles(game->img, pos, dims, conv_rgb(game->map->floor));
     pos.x = 0;
     pos.y = 0;
     dims.x = game->screen_width;

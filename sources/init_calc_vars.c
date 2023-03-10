@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/06 11:37:15 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 10:43:35 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,16 @@ void    init_raycast(t_raycast *raycast, t_player *player, t_fcoord ray_dir)
     raycast->ray_dir = ray_dir;
     raycast->step.x = fabs(ray_dir.x) / ray_dir.x;
     raycast->step.y = fabs(ray_dir.y) / ray_dir.y;
-    raycast->delta_dist.x = (ray_dir.x != 0) ? sqrt(1 + pow(ray_dir.y, 2) / pow(ray_dir.x, 2)) : INT32_MAX;
-    raycast->delta_dist.y = (ray_dir.y != 0) ? sqrt(1 + pow(ray_dir.x, 2) / pow(ray_dir.y, 2)) :  INT32_MAX;
+    // raycast->delta_dist.x = (ray_dir.x != 0) ? sqrt(1 + pow(ray_dir.y, 2) / pow(ray_dir.x, 2)) : INT32_MAX;
+    // raycast->delta_dist.y = (ray_dir.y != 0) ? sqrt(1 + pow(ray_dir.x, 2) / pow(ray_dir.y, 2)) :  INT32_MAX;
+    if (ray_dir.x != 0)
+        raycast->delta_dist.x = sqrt(1 + pow(ray_dir.y, 2) / pow(ray_dir.x, 2));
+    else
+        raycast->delta_dist.x = INT32_MAX;
+    if (ray_dir.y != 0)
+        raycast->delta_dist.y = sqrt(1 + pow(ray_dir.x, 2) / pow(ray_dir.y, 2));
+    else
+        raycast->delta_dist.y = INT32_MAX;     
     if (ray_dir.x < 0)
         raycast->side_dist.x = player->world_pos.x - player->map_pos.x;
     else
