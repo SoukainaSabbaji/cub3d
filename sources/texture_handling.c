@@ -30,18 +30,18 @@ void    get_textures(t_game_data *game)
 
 void    calculate_tex_infos(t_game_data *game, mlx_texture_t *tex)
 {
-    double    wall_x;
+    // double    wall_x;
     game->text->height = tex->height;
     game->text->width = tex->width;
-    wall_x = find_wall_intersect(game);
-    game->text->tex_x = (int)(game->text->wall_x * (double) game->text->width);
-    if (game->side == 0 && game->raycast.ray_dir.x < 0)
-        game->text->tex_x = game->text->width - game->text->tex_x - 1;
-    if (game->side == 1 && game->raycast.ray_dir.y > 0)
-        game->text->tex_x = game->text->width - game->text->tex_x - 1;
-    game->text->step = 1.0 * game->text->height / game->line_height;
-    game->text->tex_pos = (game->draw_start - game->screen_height / 2 + game->line_height / 2) \
-        * game->text->step;
+    // wall_x = find_wall_intersect(game);
+    // game->text->tex_x = (int)(game->text->wall_x * (double) game->text->width);
+    // if (game->side == 0 && game->raycast.ray_dir.x < 0)
+    //     game->text->tex_x = game->text->width - game->text->tex_x - 1;
+    // if (game->side == 1 && game->raycast.ray_dir.y > 0)
+    //     game->text->tex_x = game->text->width - game->text->tex_x - 1;
+    // game->text->step = 1.0 * game->text->height / game->line_height;
+    // game->text->tex_pos = (game->draw_start - game->screen_height / 2 + game->line_height / 2) \
+    //     * game->text->step;
 }
 
 void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x)
@@ -65,28 +65,13 @@ void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x)
 void   draw_wall_text(t_game_data *game)
 {
     if (game->side == 0 && game->raycast.step.x == -1)
-    {
         calculate_tex_infos(game, game->n_tex);
-        draw_column(game,  game->n_tex, game->x);
-    }
     if (game->side == 0 && game->raycast.step.x == 1)
-    {
         calculate_tex_infos(game, game->s_tex);
-        draw_column(game, game->s_tex, game->x);
-
-    }
     if (game->side == 1 && game->raycast.step.y == -1)
-    {
         calculate_tex_infos(game, game->w_tex);
-        draw_column(game, game->w_tex, game->x);
-
-    }
     if (game->side == 1 && game->raycast.step.y == 1)
-    {
         calculate_tex_infos(game, game->e_tex);
-        draw_column(game, game->e_tex, game->x);
-
-    }
 }
 
 

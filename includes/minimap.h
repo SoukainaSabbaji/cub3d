@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/10 18:57:01 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:05:39 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ t_fcoord    scale_vector(t_fcoord vector, float scalar);
 t_fcoord    add_vector(t_fcoord vector1, t_fcoord vector2);
 void        init_raycast(t_raycast *raycast, t_player *player, t_fcoord ray_dir);
 void        get_textures(t_game_data *game);
-void    calculate_tex_infos(t_game_data *game, t_text *text, mlx_texture_t *tex);
+void        calculate_tex_infos(t_game_data *game, mlx_texture_t *tex);
 void        draw_wall_text(t_game_data *game);
 void        calculate_text_x(t_text *text, t_fcoord intersect);
 double      find_wall_intersect(t_game_data *game);
