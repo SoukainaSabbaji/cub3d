@@ -38,6 +38,11 @@ t_map	*ft_getmap(char *map_filename)
 	elem->map = ft_getmap2d(map_filename);
 	if (elem->map == NULL)
 		printf("Error: map not found\n");
+	if (elem->n_texture == NULL || elem->s_texture == NULL || elem->w_texture == NULL
+		|| elem->e_texture == NULL || elem->floor.r == -1 || elem->floor.g == -1
+		|| elem->floor.b == -1 || elem->ceiling.r == -1 || elem->ceiling.g == -1
+		|| elem->ceiling.b == -1 || elem->map == NULL)
+			exit(EXIT_FAILURE);
 	ft_check_map2d(elem->map);
 	return (elem);
 }

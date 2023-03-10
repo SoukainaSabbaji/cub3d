@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:16:10 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/25 15:26:32 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/06 14:38:31 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ char	**ft_getmap2d(char *file_name)
 
 	nbrof_lines = ft_getnbrof_lines(file_name);
 	map2d = ft_getmap2d_table(nbrof_lines, file_name);
+	if (*map2d == NULL)
+	{
+		free(map2d);
+		return (NULL);
+	}
 	return (map2d);
 }
 
