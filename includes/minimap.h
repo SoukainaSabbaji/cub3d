@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/10 19:05:39 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:35:22 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ typedef struct s_raycast
 
 typedef struct s_text
 {
-    unsigned int     width;
-    unsigned int     height;
+    uint32_t     width;
+    uint32_t     height;
     int     tex_x;
     int     tex_y;
     double  tex_pos;
@@ -208,7 +208,9 @@ void        calculate_text_x(t_text *text, t_fcoord intersect);
 double      find_wall_intersect(t_game_data *game);
 void        draw_wall_text(t_game_data *game);
 unsigned int	my_mlx_get_colour(mlx_texture_t *img, unsigned int x, unsigned int y);
-void draw_line(t_game_data *game, int color);
+void        draw_line(t_game_data *game, int color);
+void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x);
+
 
 
 

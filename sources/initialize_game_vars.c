@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/10 18:55:50 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:31:24 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ void    init_game_vars(t_game_data *game)
     // the position of the player in the map
     game->text = malloc(sizeof(t_text));
     init_text(game->text);
-    game->s_tex = NULL;
-    game->n_tex = NULL;
-    game->e_tex = NULL;
-    game->w_tex = NULL;
+    get_textures(game);
     if (!game->text)
         ft_error();
     game->move_speed = 0.05;
@@ -87,5 +84,5 @@ void    init_pregame_parse(t_game_data *game, char **argv)
     game->map->width = ft_getnbrof_cols(game->map->map);
     game->screen_height = 720;
     game->screen_width = 1080;
-    print_map_arr(game->map->map);
+    // print_map_arr(game->map->map);
 }
