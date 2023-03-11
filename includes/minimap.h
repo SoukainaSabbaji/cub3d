@@ -6,13 +6,9 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/10 19:35:22 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 11:42:40 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
-
 
 #ifndef MINIMAP_H
 #define MINIMAP_H
@@ -41,8 +37,6 @@
 #define WALL '1'
 #define EMPTY '0'
 #define STRAFE_SPEED 0.1
-
-extern int color;
 
 typedef struct s_fcoord
 {
@@ -209,8 +203,9 @@ double      find_wall_intersect(t_game_data *game);
 void        draw_wall_text(t_game_data *game);
 unsigned int	my_mlx_get_colour(mlx_texture_t *img, unsigned int x, unsigned int y);
 void        draw_line(t_game_data *game, int color);
-void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x);
-
+void        draw_column(t_game_data *game, mlx_texture_t *wall,  int x);
+t_fcoord    rotate_angle(t_fcoord vector, float angle);
+void        rotate_fov(t_game_data *game);
 
 
 
