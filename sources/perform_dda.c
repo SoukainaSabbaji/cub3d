@@ -6,34 +6,31 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:14:30 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/11 12:45:32 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:21:50 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minimap.h"
 
-double	calculate_perp(t_raycast raycast)
+double	calculate_perp(t_raycast *raycast)
 {
-	double	euclidian_dist;
-
-	if (raycast.side == 0)
+	if (raycast->side == 0)
 	{
-		euclidian_dist = raycast.side_dist.x - raycast.delta_dist.x;
-		return (fabs(euclidian_dist / raycast.delta_dist.x
-				/ raycast.ray_dir.x));
+		raycast->euclid_dist = raycast->side_dist.x - raycast->delta_dist.x;
+		return (fabs(raycast->euclid_dist / raycast->delta_dist.x
+				/ raycast->ray_dir.x));
 	}
 	else
 	{
-		euclidian_dist = raycast.side_dist.y - raycast.delta_dist.y;
-		return (fabs(euclidian_dist / raycast.delta_dist.y
-				/ raycast.ray_dir.y));
+		raycast->euclid_dist = raycast->side_dist.y - raycast->delta_dist.y;
+		return (fabs(raycast->euclid_dist / raycast->delta_dist.y
+				/ raycast->ray_dir.y));
 	}
-	raycast.euclid_dist = euclidian_dist;
 }
 
 void	start_dda(t_raycast *raycast, t_map *map, t_coord start_pos)
 {
-	while (!raycast->hit)
+	while (!raycast->hit && start_pos.x > 0 && start_pos.y > 0)
 	{
 		if (raycast->side_dist.x < raycast->side_dist.y)
 		{

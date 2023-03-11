@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/11 12:40:48 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:59:41 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,5 @@ void	init_pregame_parse(t_game_data *game, char **argv)
 	game->map->width = ft_getnbrof_cols(game->map->map);
 	game->screen_height = 720;
 	game->screen_width = 1080;
+	print_map_arr(game->map->map);
 }

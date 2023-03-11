@@ -14,10 +14,10 @@
 
 void    get_textures(t_game_data *game)
 {
-        game->n_tex = mlx_load_png("./textures/ac007c51eea4b4bc24500d579b7a8428.png");
+        game->n_tex = mlx_load_png("./textures/images.png");
         if (game->n_tex == NULL)
             ft_error();
-        game->s_tex = mlx_load_png("./textures/images.png");
+        game->s_tex = mlx_load_png("./textures/ac007c51eea4b4bc24500d579b7a8428.png");
         if (game->s_tex == NULL)
             ft_error();
         game->w_tex = mlx_load_png("./textures/maxresdefault.png");
@@ -37,9 +37,9 @@ t_text  *get_tex_infos(t_game_data *game, mlx_texture_t *tex)
     text->width = tex->width;
     text->wall_x = find_wall_intersect(game);
     text->tex_x = (int)(text->wall_x * (double) text->width);
-    if (game->side == 0 && game->raycast.ray_dir.x < 0)
+    if (game->raycast.side == 0 && game->raycast.ray_dir.x < 0)
         text->tex_x = text->width - text->tex_x - 1;
-    if (game->side == 1 && game->raycast.ray_dir.y > 0)
+    if (game->raycast.side == 1 && game->raycast.ray_dir.y > 0)
         text->tex_x = text->width - text->tex_x - 1;
     text->step = 1.0 * text->height / game->line_height;
     game->text->tex_pos = (game->draw_start - game->screen_height / 2 + game->line_height / 2) \
@@ -49,23 +49,23 @@ t_text  *get_tex_infos(t_game_data *game, mlx_texture_t *tex)
 
 void   draw_wall_text(t_game_data *game)
 {
-    if (game->side == 0 && game->raycast.step.x == -1)
+    if (game->raycast.side == 0 && game->raycast.step.x == -1)
     {
         game->text = get_tex_infos(game, game->n_tex);
         draw_column(game, game->n_tex, game->x);
     }
-    if (game->side == 0 && game->raycast.step.x == 1)
+    if (game->raycast.side == 0 && game->raycast.step.x == 1)
     {
         game->text = get_tex_infos(game, game->s_tex);
         draw_column(game, game->s_tex, game->x);
     }
-    if (game->side == 1 && game->raycast.step.y == -1)
+    if (game->raycast.side == 1 && game->raycast.step.y == -1)
     {
         game->text = get_tex_infos(game, game->w_tex);
         draw_column(game, game->w_tex, game->x);
 
     }
-    if (game->side == 1 && game->raycast.step.y == 1)
+    if (game->raycast.side == 1 && game->raycast.step.y == 1)
     {
         game->text = get_tex_infos(game, game->e_tex);
         draw_column(game, game->e_tex, game->x);
@@ -74,7 +74,7 @@ void   draw_wall_text(t_game_data *game)
 
 void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x)
 {
-    int    y_coord;
+    int y_coord;
 
     y_coord = game->draw_start;
     while (y_coord <= game->draw_end)
@@ -89,20 +89,21 @@ void    draw_column(t_game_data *game, mlx_texture_t *wall,  int x)
     }
 }
 
-
 double  find_wall_intersect(t_game_data *game)
 {
     t_fcoord  intersect;
     t_fcoord  scaled;
+    t_fcoord normdir;
     double  text_idx;
 
-    normalize_vector(game->raycast.ray_dir);
-    scaled = scale_vector(game->raycast.ray_dir, game->raycast.euclid_dist);
+    normdir = normalize_vector(game->raycast.ray_dir);
+    scaled = scale_vector(normdir, game->raycast.euclid_dist);
     intersect = add_vector(game->player.world_pos, scaled);
-    text_idx = intersect.x;
-    if (game->side == 0)
+    if (game->raycast.side == 0)
         text_idx = intersect.y;
-    text_idx -= (int)text_idx;
+    else
+        text_idx = intersect.x;
+    text_idx = text_idx - (int)text_idx;
     return (text_idx);
 }
 

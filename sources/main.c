@@ -43,6 +43,7 @@ int	main(int argc, char **argv)
 	game = malloc(sizeof(t_game_data));
 	ft_memset(game, 0, sizeof(t_game_data));
 	ft_check_input(argc, argv);
+    // print_map_array(game->map->map);
 	init_pregame_parse(game, argv);
 	game->mlx = mlx_init(game->screen_width, game->screen_height, "cub3D",
 			true);
