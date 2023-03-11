@@ -6,13 +6,9 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/10 10:00:00 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:03:13 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
-
 
 #ifndef MINIMAP_H
 #define MINIMAP_H
@@ -31,28 +27,21 @@
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
 
-#define WALL_SIZE 64
-#define PLAYER_SIZE 16 
-#define PLAYER_RATIO PLAYER_SIZE / WALL_SIZE
 #define MMAP_WALL_COLOR  0xFFFFFFFF
 #define MMAP_EMPTY_COLOR 0xFF000000
 #define PLAYER_COLOR 0xFF0000FF
-#define OTHER_COL 0xCC1436
-// #define RAY_COLOR 0xE5FF7A
+#define OTHER_COL 0xFF1364CC
+#define RAY_COLOR 0xE5FF7A
 #define RAY_COLOR 0xE5FF7A
 #define PI 3.14159265359
 #define WALL '1'
 #define EMPTY '0'
 #define STRAFE_SPEED 0.1
 
-extern int color;
-
 typedef struct s_fcoord
 {
     float x;
     float y;
-    // float dx;
-    // float dy;
 }               t_fcoord;
 
 typedef struct s_rgb
@@ -62,19 +51,11 @@ typedef struct s_rgb
     int b;
 }   t_rgb;
 
-typedef struct s_cord
-{
-    int d;
-    int error;
-    int slope;
-}               t_cord;
 
 typedef struct s_coord
 {
     int x;
     int y;
-    // int dx;
-    // int dy;
 }               t_coord;
 
 typedef struct s_player
@@ -83,25 +64,11 @@ typedef struct s_player
     t_fcoord        world_pos;
     t_fcoord        dir; //direction of the player , vector of 1,0 if the ray is shot from his left for example
     t_fcoord        camera_plane;
-    t_fcoord        current_ray;
-    mlx_image_t     *img;
-    float           rot_angle;
-    float           fov;
 }   t_player;
 
-
-typedef struct s_image
-{
-    void    *img_ptr;
-    char    *img_data;
-    int     bpp;
-    int     size_line;
-    int     endian;
-}   t_image;
 typedef struct s_map
 {
     char        **map;
-    FILE        *map_file;
     int         height;
     int         width;
     char        *n_texture;
@@ -110,26 +77,14 @@ typedef struct s_map
     char        *e_texture;
     t_rgb       floor;
     t_rgb       ceiling;
-    int         nbr_of_walls;
-    // t_player    *player;
 }   t_map; 
 
-typedef struct s_cube
-{
-    void    *mlx;
-    void    *win;
-    t_map   *map;
-    char    *img_data;
-    void    *img_ptr;
-}   t_cube;
 
 typedef struct s_wall
 {
     int x;
     int y;
 }   t_wall;
-
-
 
 typedef struct s_iter
 {
@@ -143,6 +98,7 @@ typedef struct s_raycast
     t_fcoord    ray_dir;
     t_fcoord    side_dist;
     t_fcoord    delta_dist;
+    double      euclid_dist;
     t_coord     step;
     int         side;
     int         hit;
@@ -150,19 +106,13 @@ typedef struct s_raycast
 
 typedef struct s_text
 {
-    void    *img_ptr;
-    int     width;
-    int     height;
-    char    *img_data;
-    int     bpp;
-    int     size_line;
-    int     endian;
-    mlx_texture_t   *s_tex;
-    mlx_texture_t   *n_tex;
-    mlx_texture_t   *w_tex;
-    mlx_texture_t   *e_tex;
-
-    
+    uint32_t     width;
+    uint32_t     height;
+    int     tex_x;
+    int     tex_y;
+    double  tex_pos;
+    double  step;
+    double  wall_x;
 }   t_text;
 
 typedef struct s_game_data
@@ -170,16 +120,15 @@ typedef struct s_game_data
     t_map       *map;
     void        *mlx;
     t_player    player;
-    t_wall      *wall;
-    t_cube      *cube;
     mlx_image_t *img;
-    t_image     *image;
     t_raycast   raycast;
-    t_fcoord    pos; //position of the player in the world
-    double      time;
-    double      old_time;
     double      perp_wall_dis;
+    mlx_texture_t   *s_tex;
+    mlx_texture_t   *n_tex;
+    mlx_texture_t   *w_tex;
+    mlx_texture_t   *e_tex;
     t_text      *text;
+    int         tex_height;
     int         x;
     int         side;
     int         line_height;
@@ -187,30 +136,12 @@ typedef struct s_game_data
     int         draw_end;
     double      move_speed;
     double      rot_angle;
-    double      frame_time;
     int         screen_width;
     int         screen_height;
-    char        start_dir;
 }   t_game_data;
 
 /**********************-Functions**********************/
-void    get_map_dims(t_map *map);
 
-void draw_player(t_coord pos, t_coord mini_map_size, int size);
-
-
-void hook_2(void *param);
-void hook(void *param);
-
-t_coord *draw_square(t_coord *points,mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_line(t_game_data *game, int color);
-// void draw_line(t_coord p1, t_coord p2, int color ,mlx_image_t *img);
-void    draw_circle(mlx_image_t *img, t_coord pos, t_coord dims, int color, int size);
-void    draw_square_2(t_coord *points, mlx_image_t *img, int color, int size);
-
-void	move_player(t_fcoord move);
-
-int		count_walls(FILE *mapFile);
 
 void	ft_error(void);
 int		min(int a, int b);
@@ -260,26 +191,24 @@ t_coord     get_coord(int x, int y);
 void        call_hooks();
 void        esc_keyhook(mlx_key_data_t data, void *param);
 void        handle_input(void *param);
-double      calculate_perp(t_raycast raycast);
+double      calculate_perp(t_raycast *raycast);
 t_fcoord    scale_vector(t_fcoord vector, float scalar);
 t_fcoord    add_vector(t_fcoord vector1, t_fcoord vector2);
 void        init_raycast(t_raycast *raycast, t_player *player, t_fcoord ray_dir);
+void        get_textures(t_game_data *game);
+void        calculate_tex_infos(t_game_data *game, mlx_texture_t *tex);
+void        draw_wall_text(t_game_data *game);
+void        calculate_text_x(t_text *text, t_fcoord intersect);
+double      find_wall_intersect(t_game_data *game);
+void        draw_wall_text(t_game_data *game);
+uint32_t	my_mlx_get_colour(mlx_texture_t *img, unsigned int x, unsigned int y);
+void        draw_line(t_game_data *game, int color);
+void        draw_column(t_game_data *game, mlx_texture_t *wall,  int x);
+t_fcoord    rotate_angle(t_fcoord vector, float angle);
+void        rotate_fov(t_game_data *game);
 
-// void glfw_clear_window(GLFWwindow* window)
-// {
-//     int width, height;
-//     glfwGetFramebufferSize(window, &width, &height);
-//     glViewport(0, 0, width, height);
-//     glClear(GL_COLOR_BUFFER_BIT);
-// }
 
 
-mlx_image_t *g_img;//replaced by game->cube->img
-mlx_image_t *g_player_img; //wouldnt need this after moving to a 3D engine
-mlx_t *g_mlx; // replaced by game->cube->mlx
-t_player *g_player; //replaced by game->player
-t_wall *g_wall;
-t_map *g_map;
-t_game_data *g_game;
+
 
 #endif
