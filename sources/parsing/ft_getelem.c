@@ -14,6 +14,7 @@
 
 void	ft_check_fornull(t_map *elem);
 void	ft_get_textures(t_map *elem, char *map_filename);
+void	ft_add_ones(char **old_map, int nbrof_lines);
 
 t_map	*ft_getmap(char *map_filename)
 {
@@ -32,6 +33,7 @@ t_map	*ft_getmap(char *map_filename)
 		printf("Error: map not found\n");
 	ft_check_fornull(elem);
 	ft_check_map2d(elem->map);
+	ft_add_ones(elem->map, ft_getnbrof_lines(map_filename));
 	return (elem);
 }
 

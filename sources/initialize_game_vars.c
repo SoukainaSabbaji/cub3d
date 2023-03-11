@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_game_vars.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/07 16:34:11 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:22:24 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void    print_map_arr(char **map)
             printf("%c", map[i][j]);
             j++;
         }
+        printf("\n");
         j = 0;
         i++;
     }
