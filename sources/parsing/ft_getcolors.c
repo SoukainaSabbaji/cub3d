@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getcolors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:57:47 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/24 13:23:20 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 13:41:25 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minimap.h"
 
-int	ft_getclr(char *str, int r_g_b);
-int	ft_check_isdigit(char *str);
+int		ft_getclr(char *str, int r_g_b);
+int		ft_check_isdigit(char *str);
 char	*ft_select_free(char *elem, char *str1, char *str2);
 
 t_rgb	ft_getcolors(char *str)
@@ -44,7 +44,7 @@ int	ft_getclr(char *str, int r_g_b)
 {
 	char	**arr;
 	char	*elem;
-	int 	nbr;
+	int		nbr;
 
 	nbr = -1;
 	arr = ft_split(str, ',');
@@ -68,7 +68,6 @@ int	ft_getclr(char *str, int r_g_b)
 	return (nbr);
 }
 
-
 int	ft_check_isdigit(char *str)
 {
 	while (*str != '\0' && *str != '\n')
@@ -77,7 +76,7 @@ int	ft_check_isdigit(char *str)
 			return (-1);
 		str++;
 	}
-	return(0);
+	return (0);
 }
 
 char	*ft_select_free(char *elem, char *str1, char *str2)

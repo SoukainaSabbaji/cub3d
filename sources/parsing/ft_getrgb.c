@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getrgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:55:38 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/24 13:23:42 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 14:33:30 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ t_rgb	ft_getrgb(char *file_name, char *f_c)
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);
-	return (rgb);
+	return (close(fd), rgb);
 }
 
 t_rgb	ft_rgberr(void)
@@ -54,7 +53,7 @@ t_rgb	ft_rgberr(void)
 
 int	ft_2darrlen(char **arr)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (*arr != NULL)

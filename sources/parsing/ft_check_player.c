@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_player.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:53:47 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/24 13:23:12 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 13:40:43 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	ft_check_player(char **table)
 
 int	ft_count_nbrof_player(char **table)
 {
-	int i;
-	int j;
-	int nbr;
+	int	i;
+	int	j;
+	int	nbr;
 
 	i = 0;
 	j = 0;
@@ -44,7 +44,7 @@ int	ft_count_nbrof_player(char **table)
 
 void	ft_check_nbrof_players(char **table)
 {
-	int nbr;
+	int	nbr;
 
 	nbr = ft_count_nbrof_player(table);
 	if (nbr == 0)
@@ -59,6 +59,12 @@ void	ft_check_nbrof_players(char **table)
 	}
 }
 
+void	ft_return_error(void)
+{
+	printf("Error: Invalid map.\n");
+	exit(0);
+}
+
 void	ft_check_player_position(char **table)
 {
 	int		i;
@@ -70,15 +76,16 @@ void	ft_check_player_position(char **table)
 	{
 		while (table[i][j] != '\0')
 		{
-			if (((table[i][j] == 'N' || table[i][j] == 'S'|| table[i][j] == 'E' || table[i][j] == 'W')
+			if (((table[i][j] == 'N' || table[i][j] == 'S' || table[i][j] == 'E'
+				|| table[i][j] == 'W')
 				&& ((table[i - 1][j] != '1' && table[i - 1][j] != '0')
 				|| (table[i + 1][j] != '1' && table[i + 1][j] != '0')))
-				|| ((table[i][j] == 'N' || table[i][j] == 'S'|| table[i][j] == 'E' || table[i][j] == 'W')
+				|| ((table[i][j] == 'N' || table[i][j] == 'S'
+				|| table[i][j] == 'E' || table[i][j] == 'W')
 				&& ((table[i][j - 1] != '1' && table[i][j - 1] != '0')
 				|| (table[i][j + 1] != '1' && table[i][j + 1] != '0'))))
 			{
-				printf("Error: Invalid map.\n");
-				exit(0);
+				ft_return_error();
 			}
 			j++;
 		}

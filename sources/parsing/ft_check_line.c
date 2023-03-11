@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:52:07 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/24 13:22:56 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 13:33:38 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_check_first_line(char **table)
 
 void	ft_check_last_line(char **table)
 {
-	char *line;
+	char	*line;
 
 	while (*(table + 1) != NULL)
 		table++;

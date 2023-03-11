@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getpath.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:54:36 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/24 13:23:35 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 14:33:00 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minimap.h"
 
 char	*ft_getname(char *str);
+void	ft_removenl(char *str);
 
 char	*ft_getpath(char	*file_name, char *direction)
 {
@@ -34,13 +35,13 @@ char	*ft_getpath(char	*file_name, char *direction)
 			path = ft_getname(line);
 			free(line);
 			close(fd);
+			ft_removenl(path);
 			return (path);
 		}
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);
-	return (NULL);
+	return (close(fd), NULL);
 }
 
 char	*ft_getname(char *str)
@@ -53,4 +54,14 @@ char	*ft_getname(char *str)
 	free(*arr);
 	free(arr);
 	return (path);
+}
+
+void	ft_removenl(char *str)
+{
+	while (*str != '\0')
+	{
+		if (*str == '\n')
+			*str = '\0';
+		str++;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_map2d.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 18:57:01 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/24 13:23:05 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/11 13:34:24 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	ft_check_frst_lst_char(char **table)
 	char	**line;
 
 	line = table;
-	while(*(line + 1) != NULL)
+	while (*(line + 1) != NULL)
 	{
 		if ((**line != '1' && **line != ' ')
 			|| (*(*line + ft_strlen(*line) - 2) != '1'
-			&& *(*line + ft_strlen(*line) - 2) != '0'))
+				&& *(*line + ft_strlen(*line) - 2) != '0'))
 		{
 			printf("Error: Invalid map.\n");
 			exit(0);
