@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_drawlinedda.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 13:33:57 by makacem           #+#    #+#             */
-/*   Updated: 2023/03/05 13:38:53 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/09 19:14:04 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void ft_drawlinedda(t_coord p1, t_coord p2, int color , mlx_image_t *ray_img)
     float x = p1.x + 0.5;
     float y = p1.y + 0.5;
     int i = 0;
-
     if (abs(dx) > abs(dy))
         steps = abs(dx);
     else
