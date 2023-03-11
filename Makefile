@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+         #
+#    By: makacem <makacem@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/03/10 09:59:01 by ssabbaji         ###   ########.fr        #
+#    Updated: 2023/03/11 21:14:59 by makacem          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = gcc
 FLAGS = -Werror -Wextra -Wall -g
 
 ifeq ($(shell uname), Darwin)
-	LIBRARIES = -I include -lglfw -L "/Users/ssabbaji/.brew/opt/glfw/lib/"
+	LIBRARIES = -I include -lglfw -L "/Users/makacem/goinfre/homebrew/Cellar/glfw/3.3.8/lib/"
 else
 	LIBRARIES = -ldl -lglfw3 -pthread -lm -I ./includes/minimap.h
 endif
@@ -34,12 +34,10 @@ SOURCES_DIRECTORY = ./sources/
 
 PARSING = ft_getmap.c ft_check_line.c ft_check_map2d.c ft_check_player.c \
 		  ft_getcolors.c ft_getelem.c ft_getpath.c ft_getrgb.c ft_check_input.c 
-SOURCES_LIST = parsing.c main.c lodev.c drawing.c hooks.c helper.c minimap.c \
+SOURCES_LIST = parsing.c main.c lodev.c drawing.c hooks.c helper.c \
 			   init_calc_vars.c vector_utils.c coord_utils.c \
 			   perform_dda.c initialize_game_vars.c start_game.c \
-			   ft_getheight.c ft_getwidth.c ft_initrays.c ft_putgrid.c \
-			   ft_putmap.c ft_putplayer.c ft_putray.c my_minimapkeyhook.c \
-			   ft_drawlinedda.c ft_check_wall.c ft_putcolor.c \
+			   ft_drawlinedda.c \
 			   $(addprefix parsing/, $(PARSING))
 
 
