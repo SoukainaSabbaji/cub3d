@@ -6,11 +6,13 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:55:38 by makacem           #+#    #+#             */
-/*   Updated: 2023/03/11 14:33:30 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/12 12:31:21 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minimap.h"
+
+int	ft_count_getrgb(char *file_name, char *f_c);
 
 t_rgb	ft_getrgb(char *file_name, char *f_c)
 {
@@ -20,15 +22,12 @@ t_rgb	ft_getrgb(char *file_name, char *f_c)
 
 	rgb = ft_rgberr();
 	fd = open(file_name, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error: open() failed\n");
+	if (fd == -1 || ft_count_getrgb(file_name, f_c) != 1)
 		return (rgb);
-	}
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		if (line && ft_strncmp(f_c, line, 1) == 0)
+		if (line && ft_strncmp(f_c, line, 2) == 0)
 		{
 			rgb = ft_getcolors(line);
 			free(line);
@@ -75,4 +74,28 @@ void	ft_free2darr(char **arr)
 		arr++;
 	}
 	free(temp);
+}
+
+int	ft_count_getrgb(char *file_name, char *f_c)
+{
+	char	*line;
+	int		fd;
+	int		nbr;
+
+	nbr = 0 ;
+	fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error: open() failed\n");
+		return (0);
+	}
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		if (line && ft_strncmp(f_c, line, 2) == 0)
+			nbr++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (close(fd), nbr);
 }

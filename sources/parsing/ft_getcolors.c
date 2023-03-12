@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:57:47 by makacem           #+#    #+#             */
-/*   Updated: 2023/03/11 13:41:25 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/12 12:13:36 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ int		ft_getclr(char *str, int r_g_b);
 int		ft_check_isdigit(char *str);
 char	*ft_select_free(char *elem, char *str1, char *str2);
 
+int	ft_count_nbrof_c(char *str)
+{
+	int		nbrof_c;
+
+	nbrof_c = 0;
+	while (*str != '\0')
+	{
+		if (*str == ',')
+			nbrof_c++;
+		str++;
+	}
+	return (nbrof_c);
+}
+
 t_rgb	ft_getcolors(char *str)
 {
 	t_rgb	rgb;
@@ -23,6 +37,8 @@ t_rgb	ft_getcolors(char *str)
 	char	**arr;
 
 	rgb = ft_rgberr();
+	if (ft_count_nbrof_c(str) != 2)
+		return (rgb);
 	arr = ft_split(str, ' ');
 	if (*(arr + 1) == NULL)
 	{

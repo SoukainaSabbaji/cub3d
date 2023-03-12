@@ -15,6 +15,7 @@
 void	ft_check_fornull(t_map *elem);
 void	ft_get_textures(t_map *elem, char *map_filename);
 void	ft_add_ones(char **old_map, int nbrof_lines);
+int		ft_count_nbrof_elem(char *file_name, char *direction);
 
 t_map	*ft_getmap(char *map_filename)
 {
@@ -22,10 +23,10 @@ t_map	*ft_getmap(char *map_filename)
 
 	elem = malloc(sizeof(t_map));
 	ft_get_textures(elem, map_filename);
-	elem->floor = ft_getrgb(map_filename, "F");
+	elem->floor = ft_getrgb(map_filename, "F ");
 	if (elem->floor.r == -1 || elem->floor.g == -1 || elem->floor.b == -1)
 		printf("Error: invalid floor rgb\n");
-	elem->ceiling = ft_getrgb(map_filename, "C");
+	elem->ceiling = ft_getrgb(map_filename, "C ");
 	if (elem->ceiling.r == -1 || elem->ceiling.g == -1 || elem->ceiling.b == -1)
 		printf("Error: invalid ceiling rgb\n");
 	elem->map = ft_getmap2d(map_filename);
@@ -51,16 +52,16 @@ void	ft_check_fornull(t_map *elem)
 
 void	ft_get_textures(t_map *elem, char *map_filename)
 {
-	elem->n_texture = ft_getpath(map_filename, "NO");
+	elem->n_texture = ft_getpath(map_filename, "NO ");
 	if (elem->n_texture == NULL)
 		printf("Error: n_texture texture not found\n");
-	elem->s_texture = ft_getpath(map_filename, "SO");
+	elem->s_texture = ft_getpath(map_filename, "SO ");
 	if (elem->s_texture == NULL)
 		printf("Error: s_texture texture not found\n");
-	elem->w_texture = ft_getpath(map_filename, "WE");
+	elem->w_texture = ft_getpath(map_filename, "WE ");
 	if (elem->w_texture == NULL)
 		printf("Error: w_texture texture not found\n");
-	elem->e_texture = ft_getpath(map_filename, "EA");
+	elem->e_texture = ft_getpath(map_filename, "EA ");
 	if (elem->e_texture == NULL)
 		printf("Error: e_texture texture not found\n");
 }
