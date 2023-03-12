@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 14:53:01 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/11 12:37:55 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:22:49 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,15 @@ t_fcoord	movement_distance(t_game_data *game, t_fcoord mov,
 	start_dda(&wall_tester, game->map, game->player.map_pos);
 	if (wall_tester.side == 0)
 	{
-		if (fabs(wall_tester.side_dist.x
-				- wall_tester.delta_dist.x) < max_distance)
-			return (scale_vector(mov, 0));
-		return (scale_vector(mov, max_distance));
+		if (wall_tester.euclid_dist >= max_distance)
+			return (scale_vector(mov, max_distance));
 	}
 	else
 	{
-		if (fabs(wall_tester.side_dist.y
-				- wall_tester.delta_dist.y) < max_distance)
-			return (scale_vector(mov, 0));
-		return (scale_vector(mov, max_distance));
+		if (wall_tester.euclid_dist >= max_distance)
+			return (scale_vector(mov, max_distance));
 	}
+	return ((t_fcoord){.x = 0, .y = 0});
 }
 
 void	move_forback(t_game_data *game)

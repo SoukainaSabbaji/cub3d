@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:47:28 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/11 12:39:54 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/12 13:42:48 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	init_game_dir(t_player *player, char start_dir)
 {
-	if (start_dir == 'N')
+	if (start_dir == 'W')
 	{
 		player->dir = (t_fcoord){.x = -1, .y = 0};
 		player->camera_plane = (t_fcoord){.x = 0, .y = 0.66};
 	}
-	if (start_dir == 'S')
+	if (start_dir == 'E')
 	{
 		player->dir = (t_fcoord){.x = 1, .y = 0};
 		player->camera_plane = (t_fcoord){.x = 0, .y = -0.66};
 	}
-	if (start_dir == 'E')
+	if (start_dir == 'S')
 	{
 		player->dir = (t_fcoord){.x = 0, .y = 1};
 		player->camera_plane = (t_fcoord){.x = 0.66, .y = 0};
 	}
-	if (start_dir == 'W')
+	if (start_dir == 'N')
 	{
 		player->dir = (t_fcoord){.x = 0, .y = -1};
 		player->camera_plane = (t_fcoord){.x = -0.66, .y = 0};

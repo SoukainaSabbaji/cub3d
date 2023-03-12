@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:50:04 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/16 14:11:11 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/12 12:44:59 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,26 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 	int			read_retrun_value;
-	static char	*temp_buffer;
+	static char	*tmp_buf;
 
-	line = ft_calloc_gnl(1, sizeof(char));
-	if (temp_buffer != NULL)
+	line = cllc_gnl(1, sizeof(char));
+	if (tmp_buf != NULL)
 	{
-		line = ft_strjoin_gnl(line, temp_buffer);
-		temp_buffer = NULL;
+		line = ft_strjoin_gnl(line, tmp_buf);
+		tmp_buf = NULL;
 	}
 	while (!(ft_strchr_gnl(line, '\n')))
 	{
-		buffer = ft_calloc_gnl(BUFFER_SIZE + 1, sizeof(char));
+		buffer = cllc_gnl(BUFFER_SIZE + 1, sizeof(char));
 		read_retrun_value = read(fd, buffer, BUFFER_SIZE);
 		line = ft_strjoin_gnl(line, buffer);
-		if (ft_strlen_gnl(line) == 0)
+		if (strlen_2(line) == 0)
 			return (return_null(line));
 		if (read_retrun_value <= 0)
 			return (line);
 	}
-	temp_buffer = ft_calloc_gnl(ft_strlen_gnl(line) - cnl(line) + 1, sizeof(char));
-	ft_strlcpy_gnl(temp_buffer, line + cnl(line), ft_strlen_gnl(line + cnl(line)) + 1);
+	tmp_buf = cllc_gnl(strlen_2(line) - cnl(line) + 1, sizeof(char));
+	strlcpy_2(tmp_buf, line + cnl(line), strlen_2(line + cnl(line)) + 1);
 	*(line + cnl(line)) = '\0';
 	return (line);
 }

@@ -6,16 +6,12 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/12 11:07:43 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/12 12:45:54 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIMAP_H
 #define MINIMAP_H
-
-#define WALL '1'
-#define EMPTY '0'
-#define PLAYER 'P'
 
 #include <stdio.h>
 #include <stdlib.h>

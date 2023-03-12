@@ -54,23 +54,23 @@ void	draw_wall_text(t_game_data *game)
 {
 	if (game->raycast.side == 0 && game->raycast.step.x == -1)
 	{
-		game->text = get_tex_infos(game, game->n_tex);
-		draw_column(game, game->n_tex, game->x);
+		game->text = get_tex_infos(game, game->e_tex);
+		draw_column(game, game->e_tex, game->x);
 	}
 	if (game->raycast.side == 0 && game->raycast.step.x == 1)
-	{
-		game->text = get_tex_infos(game, game->s_tex);
-		draw_column(game, game->s_tex, game->x);
-	}
-	if (game->raycast.side == 1 && game->raycast.step.y == -1)
 	{
 		game->text = get_tex_infos(game, game->w_tex);
 		draw_column(game, game->w_tex, game->x);
 	}
+	if (game->raycast.side == 1 && game->raycast.step.y == -1)
+	{
+		game->text = get_tex_infos(game, game->s_tex);
+		draw_column(game, game->s_tex, game->x);
+	}
 	if (game->raycast.side == 1 && game->raycast.step.y == 1)
 	{
-		game->text = get_tex_infos(game, game->e_tex);
-		draw_column(game, game->e_tex, game->x);
+		game->text = get_tex_infos(game, game->n_tex);
+		draw_column(game, game->n_tex, game->x);
 	}
 }
 

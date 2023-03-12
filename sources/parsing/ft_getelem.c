@@ -54,14 +54,14 @@ void	ft_get_textures(t_map *elem, char *map_filename)
 {
 	elem->n_texture = ft_getpath(map_filename, "NO ");
 	if (elem->n_texture == NULL)
-		printf("Error: n_texture texture not found\n");
+		printf("Error: error with n_texture \n");
 	elem->s_texture = ft_getpath(map_filename, "SO ");
 	if (elem->s_texture == NULL)
-		printf("Error: s_texture texture not found\n");
+		printf("Error: error with s_texture \n");
 	elem->w_texture = ft_getpath(map_filename, "WE ");
 	if (elem->w_texture == NULL)
-		printf("Error: w_texture texture not found\n");
+		printf("Error: error with w_texture \n");
 	elem->e_texture = ft_getpath(map_filename, "EA ");
 	if (elem->e_texture == NULL)
-		printf("Error: e_texture texture not found\n");
+		printf("Error: error with e_texture \n");
 }

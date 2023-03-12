@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:50:42 by makacem           #+#    #+#             */
-/*   Updated: 2023/02/16 14:10:46 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/12 12:44:59 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen_gnl(const char *str)
+size_t	strlen_2(const char *str)
 {
 	int	i;
 
@@ -27,13 +27,13 @@ size_t	ft_strlen_gnl(const char *str)
 	return (i);
 }
 
-size_t	ft_strlcpy_gnl(char *dst, char *src, size_t size)
+size_t	strlcpy_2(char *dst, char *src, size_t size)
 {
 	unsigned int	i;
 	int				s_size;
 
 	i = 0;
-	s_size = ft_strlen_gnl((char *)src);
+	s_size = strlen_2((char *)src);
 	if (size == 0)
 		return (s_size);
 	while (*src && (i < size - 1 && (size != 0)))
@@ -54,10 +54,10 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	len = ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1;
-	ptr = ft_calloc_gnl(len, sizeof(char));
-	ft_strlcpy_gnl(ptr, s1, len);
-	ft_strlcpy_gnl(ptr + ft_strlen_gnl(ptr), s2, len);
+	len = strlen_2(s1) + strlen_2(s2) + 1;
+	ptr = cllc_gnl(len, sizeof(char));
+	strlcpy_2(ptr, s1, len);
+	strlcpy_2(ptr + strlen_2(ptr), s2, len);
 	free(s1);
 	free(s2);
 	return (ptr);
@@ -81,7 +81,7 @@ char	*ft_strchr_gnl(char *s, int c)
 	return (NULL);
 }
 
-void	*ft_calloc_gnl(size_t count, size_t size)
+void	*cllc_gnl(size_t count, size_t size)
 {
 	char	*ptr;
 	char	*c;

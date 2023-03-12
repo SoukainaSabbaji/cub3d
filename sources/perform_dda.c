@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:14:30 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/12 11:05:25 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:16:03 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ double	calculate_perp(t_raycast *raycast)
 {
 	if (raycast->side == 0)
 	{
-		raycast->euclid_dist = raycast->side_dist.x - raycast->delta_dist.x;
 		return (fabs(raycast->euclid_dist / raycast->delta_dist.x
 				/ raycast->ray_dir.x));
 	}
 	else
 	{
-		raycast->euclid_dist = raycast->side_dist.y - raycast->delta_dist.y;
 		return (fabs(raycast->euclid_dist / raycast->delta_dist.y
 				/ raycast->ray_dir.y));
 	}
@@ -36,12 +34,14 @@ void	start_dda(t_raycast *raycast, t_map *map, t_coord start_pos)
 		if (raycast->side_dist.x < raycast->side_dist.y)
 		{
 			raycast->side_dist.x += raycast->delta_dist.x;
+			raycast->euclid_dist = raycast->side_dist.x - raycast->delta_dist.x;
 			start_pos.x += raycast->step.x;
 			raycast->side = 0;
 		}
 		else
 		{
 			raycast->side_dist.y += raycast->delta_dist.y;
+			raycast->euclid_dist = raycast->side_dist.y - raycast->delta_dist.y;
 			start_pos.y += raycast->step.y;
 			raycast->side = 1;
 		}

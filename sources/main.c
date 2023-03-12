@@ -40,6 +40,11 @@ int	main(int argc, char **argv)
 {
 	t_game_data	*game;
 
+	if (argc != 2)
+	{
+		ft_putstr("Error : Wrong number of arguments\n");
+		exit(0);
+	}
 	game = malloc(sizeof(t_game_data));
 	ft_memset(game, 0, sizeof(t_game_data));
 	ft_check_input(argc, argv);
