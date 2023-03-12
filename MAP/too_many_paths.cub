@@ -1,7 +1,8 @@
-NO IMG/Wolfenstein/bluestone.png
-SO IMG/Wolfenstein/greystone.png
-WE IMG/Wolfenstein/wood.png
-EA IMG/Wolfenstein/redbrick.png
+NO ./textures/north_text.png
+SO ./textures/south_text.png
+WE ./textures/west_text.png
+EA ./textures/east_text.png
+EA ./textures/east_text.png
 
 F 220,100,0
 C 225,30,0

@@ -1,10 +1,10 @@
-NO ./textures/ac007c51eea4b4bc24500d579b7a8428.png
-SO ./textures/images.png
-WE ./textures/maxresdefault.png
-EA ./textures/311.png
+NO ./textures/north_text.png
+SO ./textures/south_text.png
+WE ./textures/west_text.png
+EA ./textures/east_text.png
 
 F 220,100,0
-C 225,8                ,66                 
+C 225,8,66                 
 
 111111111
 100000001

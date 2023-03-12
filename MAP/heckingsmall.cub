@@ -1,11 +1,11 @@
 
-       NO IMG/SUPER/grains.png
-    SO IMG/SUPER/seafood.png
-WE IMG/SUPER/ramen.png
-    EA IMG/SUPER/leon-milk.png
+     NO ./textures/north_text.png
+        SO ./textures/south_text.png
+ WE ./textures/west_text.png
+    EA ./textures/east_text.png
 
 
-C 125,   222,100
+C 125,222  ,100
 F  0,0,0
 
 111
