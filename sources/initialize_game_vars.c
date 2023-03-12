@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:55:31 by ssabbaji          #+#    #+#             */
-/*   Updated: 2023/03/11 21:33:14 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/11 21:35:08 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	print_map_arr(char **map)
 			printf("%c", map[i][j]);
 			j++;
 		}
+		printf("\n");
 		j = 0;
 		i++;
 	}

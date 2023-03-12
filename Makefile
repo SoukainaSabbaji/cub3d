@@ -6,7 +6,7 @@
 #    By: makacem <makacem@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 14:34:30 by ssabbaji          #+#    #+#              #
-#    Updated: 2023/03/11 21:32:09 by makacem          ###   ########.fr        #
+#    Updated: 2023/03/11 21:33:35 by makacem          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ else
 endif
 MINILIBX = $(MINILIBX_DIRECTORY)libmlx42.a
 LIBFT = $(LIBFT_DIRECTORY)libft.a
-MINILIBX_DIRECTORY = ./MLX42/
+MINILIBX_DIRECTORY = ./MLX42/build/
 LIBFT_DIRECTORY = ./libft/
 MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)
