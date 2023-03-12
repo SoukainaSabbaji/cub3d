@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:54:36 by makacem           #+#    #+#             */
-/*   Updated: 2023/03/12 12:26:48 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/12 15:42:11 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,17 @@ char	*ft_getpath(char *file_name, char *direction)
 char	*ft_getname(char *str)
 {
 	char	*path;
-	char	**arr;
+	char	*temp;
 
-	arr = ft_split(str, ' ');
-	path = *(arr + 1);
-	free(*arr);
-	free(arr);
+	while (*str == 'N' || *str == 'O'
+		|| *str == 'S' || *str == 'W'
+		|| *str == 'E' || *str == 'A'
+		|| *str == ' ')
+		str++;
+	temp = ft_strdup(str);
+	ft_removenl(temp);
+	path = ft_strtrim(temp, " ");
+	free(temp);
 	return (path);
 }
 

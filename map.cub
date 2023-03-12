@@ -3,8 +3,7 @@ SO ./textures/images.png
 WE ./textures/maxresdefault.png
 EA ./textures/311.png
 
-
-F 78,55,255
+F   8,55,255    
 C 120,78,86
 
         1111111111111111111111111
