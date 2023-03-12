@@ -6,7 +6,7 @@
 /*   By: ssabbaji <ssabbaji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/11 15:03:13 by ssabbaji         ###   ########.fr       */
+/*   Updated: 2023/03/12 11:07:43 by ssabbaji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 #define WALL '1'
 #define EMPTY '0'
 #define STRAFE_SPEED 0.1
-
 typedef struct s_fcoord
 {
     float x;
@@ -202,7 +201,6 @@ void        calculate_text_x(t_text *text, t_fcoord intersect);
 double      find_wall_intersect(t_game_data *game);
 void        draw_wall_text(t_game_data *game);
 uint32_t	my_mlx_get_colour(mlx_texture_t *img, unsigned int x, unsigned int y);
-void        draw_line(t_game_data *game, int color);
 void        draw_column(t_game_data *game, mlx_texture_t *wall,  int x);
 t_fcoord    rotate_angle(t_fcoord vector, float angle);
 void        rotate_fov(t_game_data *game);
