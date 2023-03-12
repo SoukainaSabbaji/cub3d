@@ -6,7 +6,7 @@
 /*   By: makacem <makacem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:57:47 by makacem           #+#    #+#             */
-/*   Updated: 2023/03/12 12:13:36 by makacem          ###   ########.fr       */
+/*   Updated: 2023/03/12 15:49:06 by makacem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		ft_getclr(char *str, int r_g_b);
 int		ft_check_isdigit(char *str);
+void	ft_removenl(char *str);
 char	*ft_select_free(char *elem, char *str1, char *str2);
 
 int	ft_count_nbrof_c(char *str)
@@ -34,21 +35,17 @@ t_rgb	ft_getcolors(char *str)
 {
 	t_rgb	rgb;
 	char	*rgbline;
-	char	**arr;
+	char	*temp;
 
 	rgb = ft_rgberr();
 	if (ft_count_nbrof_c(str) != 2)
 		return (rgb);
-	arr = ft_split(str, ' ');
-	if (*(arr + 1) == NULL)
-	{
-		free(arr);
-		free(*arr);
-		return (rgb);
-	}
-	rgbline = *(arr + 1);
-	free(*arr);
-	free(arr);
+	while (*str == 'F' || *str == 'C' || *str == ' ')
+		str++;
+	temp = ft_strdup(str);
+	ft_removenl(temp);
+	rgbline = ft_strtrim(temp, " ");
+	free(temp);
 	rgb.r = ft_getclr(rgbline, 'r');
 	rgb.g = ft_getclr(rgbline, 'g');
 	rgb.b = ft_getclr(rgbline, 'b');
